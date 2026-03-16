@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konuşma Pratiği</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #1b2235;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+.hero {
+  width: 100%;
+  background: #1b2235;
+  text-align: center;
+  padding: 40px 20px 50px;
+  border-bottom: 2px solid #c8a84b33;
+}
+.hero-badge {
+  display: inline-block;
+  border: 2px solid #c8a84b;
+  color: #c8a84b;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  padding: 7px 22px;
+  border-radius: 50px;
+  margin-bottom: 28px;
+  font-weight: 600;
+}
+.hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 900;
+  color: #c8a84b;
+  line-height: 1.15;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-stars { color: #c8a84b; font-size: 1.4rem; letter-spacing: 6px; margin-bottom: 6px; }
+.hero-divider { width: 60px; height: 2px; background: #c8a84b; margin: 0 auto 22px; border-radius: 2px; }
+.hero-sub { color: #e0c97a; font-size: 0.9rem; font-weight: 600; margin-bottom: 22px; }
+.btn-telegram {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #c8a84b; color: #1b2235; font-weight: 700; font-size: 1rem;
+  padding: 15px 36px; border-radius: 10px; text-decoration: none;
+  transition: background 0.2s, transform 0.2s; border: none; cursor: pointer;
+}
+.btn-telegram:hover { background: #e0c060; transform: translateY(-2px); }
+.btn-telegram svg { width: 22px; height: 22px; }
+.container { text-align: center; padding: 40px 20px; max-width: 650px; width: 100%; }
+.card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 40px 30px;
+  backdrop-filter: blur(10px);
+}
+.btn-start {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff; border: none; padding: 18px 60px;
+  font-size: 1.2rem; border-radius: 50px; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(102,126,234,0.4);
+}
+.btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(102,126,234,0.6); }
+.question-box {
+  background: rgba(102,126,234,0.15);
+  border: 2px solid rgba(102,126,234,0.4);
+  border-radius: 15px; padding: 25px; margin-bottom: 30px;
+  font-size: 1.3rem; font-weight: 600; color: #e0e0ff; display: none;
+}
+.timer-section { display: none; margin: 20px 0; }
+.timer-label { font-size: 1rem; color: #a0a0cc; margin-bottom: 8px; }
+.timer-count { font-size: 3.5rem; font-weight: 700; color: #667eea; }
+.timer-count.recording { color: #ff6b6b; }
+.wave-container {
+  display: none; align-items: center; justify-content: center;
+  gap: 4px; margin: 20px 0; height: 50px;
+}
+.wave-bar {
+  width: 5px; background: #ff6b6b; border-radius: 3px;
+  animation: wave 0.8s ease-in-out infinite;
+}
+.wave-bar:nth-child(1){animation-delay:0s}
+.wave-bar:nth-child(2){animation-delay:0.1s}
+.wave-bar:nth-child(3){animation-delay:0.2s}
+.wave-bar:nth-child(4){animation-delay:0.3s}
+.wave-bar:nth-child(5){animation-delay:0.4s}
+.wave-bar:nth-child(6){animation-delay:0.3s}
+.wave-bar:nth-child(7){animation-delay:0.2s}
+.wave-bar:nth-child(8){animation-delay:0.1s}
+.wave-bar:nth-child(9){animation-delay:0s}
+@keyframes wave { 0%,100%{height:8px} 50%{height:40px} }
+.rec-label {
+  display: none; color: #ff6b6b; font-size: 0.9rem;
+  font-weight: 600; letter-spacing: 2px; margin-bottom: 5px;
+}
+.rec-label::before { content:"● "; animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.timeout-msg {
+  display: none; color: #ffcc44; font-size: 1.1rem; font-weight: 600;
+  padding: 12px; background: rgba(255,204,68,0.1); border-radius: 10px; margin: 15px 0;
+}
+.transcript-box {
+  display: none; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2); border-radius: 12px;
+  padding: 20px; margin: 20px 0; text-align: left;
+  font-size: 0.95rem; color: #d0d0f0; line-height: 1.6;
+}
+.transcript-box .tbox-label {
+  font-size: 0.75rem; color: #a0a0cc;
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+}
+.result-box { display: none; margin-top: 25px; }
+.score-display { font-size: 3rem; font-weight: 800; margin: 10px 0; }
+.score-label { font-size: 1rem; color: #a0a0cc; margin-bottom: 5px; }
+.eval-text {
+  background: rgba(255,255,255,0.05); border-radius: 12px;
+  padding: 18px; text-align: left; font-size: 0.93rem;
+  line-height: 1.7; color: #d0d0f0; margin: 15px 0;
+}
+.ai-warning {
+  font-size: 0.78rem; color: #8080aa;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 10px 15px;
+  margin-top: 15px; font-style: italic;
+}
+.loading-text { color: #a0a0cc; font-size: 0.95rem; margin: 15px 0; display: none; }
+.dots::after { content:''; animation: dots 1.5s infinite; }
+@keyframes dots { 0%{content:''} 33%{content:'.'} 66%{content:'..'} 100%{content:'...'} }
+</style>
+</head>
+<body>
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <div class="hero-badge">✦ KONUŞMA TESTİ ✦</div>
+  <div class="hero-title">HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</div>
+  <div class="hero-stars">★ ★ ★ ★ ★</div>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">Daha fazla içeriğe ücretsiz ulaşmak için Telegram kanalımıza katılın!</p>
+  <a class="btn-telegram" href="https://t.me/TurkcheOzbekche" target="_blank">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    Kanala Katıl
+  </a>
+</div>
+
+<!-- UYGULAMA -->
+<div class="container">
+  <div class="card">
+    <div id="startScreen">
+      <p style="color:#a0a0cc;margin-bottom:30px;font-size:0.95rem;">Soruyu okuyun, hazırlanın ve Türkçe olarak cevap verin.</p>
+      <button class="btn-start" onclick="startApp()">▶ Başla</button>
+    </div>
+
+    <div class="question-box" id="questionBox">❓ Bir gününüzü anlatınız.</div>
+
+    <div class="timer-section" id="prepSection">
+      <div class="timer-label">⏳ Hazırlanma süreniz:</div>
+      <div class="timer-count" id="prepCount">5</div>
+    </div>
+
+    <div class="timer-section" id="recSection">
+      <div class="timer-label">🎤 Cevaplama süreniz:</div>
+      <div class="timer-count recording" id="recCount">30</div>
+    </div>
+    <div class="rec-label" id="recLabel">KAYIT YAPILIYOR</div>
+    <div class="wave-container" id="waveContainer">
+      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    </div>
+
+    <div class="timeout-msg" id="timeoutMsg">⏰ Süreniz bitmiştir.</div>
+
+    <div class="transcript-box" id="transcriptBox">
+      <div class="tbox-label">📝 Cevabınız:</div>
+      <div id="transcriptText"></div>
+    </div>
+
+    <div class="loading-text" id="loadingText">🤖 Yapay zeka değerlendiriyor<span class="dots"></span></div>
+
+    <div class="result-box" id="resultBox">
+      <div class="score-label">Aldığınız Puan</div>
+      <div class="score-display" id="scoreDisplay"></div>
+      <div class="eval-text" id="evalText"></div>
+      <div class="ai-warning">⚠️ Bu bir yapay zeka uygulamasıdır. Değerlendirme otomatik olarak yapılmaktadır. Gerçek sınavlarda sonuçlar farklılık gösterebilir.</div>
+      <br>
+      <button class="btn-start" style="font-size:1rem;padding:14px 40px;" onclick="resetApp()">🔄 Tekrar Dene</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let mediaRecorder, audioChunks = [], recognition, transcript = '';
+let prepTimer, recTimer, recInterval;
+
+function startApp() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('questionBox').style.display = 'block';
+  startPrep();
+}
+
+function startPrep() {
+  const sec = document.getElementById('prepSection');
+  const cnt = document.getElementById('prepCount');
+  sec.style.display = 'block';
+  let t = 5;
+  cnt.textContent = t;
+  prepTimer = setInterval(() => {
+    t--;
+    cnt.textContent = t;
+    if (t <= 0) {
+      clearInterval(prepTimer);
+      sec.style.display = 'none';
+      startRecording();
+    }
+  }, 1000);
+}
+
+async function startRecording() {
+  transcript = '';
+
+  // Önce mikrofon izni al
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch(err) {
+    alert('Mikrofon izni verilmedi. Lütfen tarayıcı ayarlarından mikrofon iznini açın.');
+    resetApp();
+    return;
+  }
+
+  // UI göster
+  document.getElementById('recSection').style.display = 'block';
+  document.getElementById('recLabel').style.display = 'block';
+  document.getElementById('waveContainer').style.display = 'flex';
+
+  // MediaRecorder başlat
+  try {
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+    mediaRecorder.start(100);
+  } catch(e) { console.log('MediaRecorder hatası:', e); }
+
+  // SpeechRecognition başlat
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SR) {
+    try {
+      recognition = new SR();
+      recognition.lang = 'tr-TR';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.onresult = (e) => {
+        let final = '';
+        for (let i = 0; i < e.results.length; i++) {
+          if (e.results[i].isFinal) final += e.results[i][0].transcript + ' ';
+        }
+        transcript = final.trim();
+      };
+      recognition.onerror = (e) => { console.log('SR hata:', e.error); };
+      recognition.onend = () => {
+        // Otomatik kapanırsa yeniden başlat (iOS için)
+        if (recInterval) {
+          try { recognition.start(); } catch(e){}
+        }
+      };
+      recognition.start();
+    } catch(e) { console.log('SpeechRecognition başlatılamadı:', e); }
+  }
+
+  // Geri sayım
+  let t = 30;
+  const cnt = document.getElementById('recCount');
+  cnt.textContent = t;
+  recInterval = setInterval(() => {
+    t--;
+    cnt.textContent = t;
+    if (t <= 0) {
+      clearInterval(recInterval);
+      recInterval = null;
+      stopRecording();
+    }
+  }, 1000);
+}
+
+function stopRecording() {
+  if (recognition) { try { recognition.stop(); } catch(e){} recognition = null; }
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    mediaRecorder.stream.getTracks().forEach(t => t.stop());
+  }
+
+  document.getElementById('recSection').style.display = 'none';
+  document.getElementById('recLabel').style.display = 'none';
+  document.getElementById('waveContainer').style.display = 'none';
+  document.getElementById('timeoutMsg').style.display = 'block';
+
+  setTimeout(showTranscriptAndEvaluate, 800);
+}
+
+function showTranscriptAndEvaluate() {
+  const tbox = document.getElementById('transcriptBox');
+  const ttext = document.getElementById('transcriptText');
+  const finalText = transcript || '(Ses algılanamadı. Lütfen Chrome tarayıcısı kullanın ve Türkçe klavye/dil ayarı yapın.)';
+  ttext.textContent = finalText;
+  tbox.style.display = 'block';
+
+  if (transcript) {
+    document.getElementById('loadingText').style.display = 'block';
+    evaluateWithAI(transcript);
+  } else {
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('scoreDisplay').textContent = '— / 5';
+    document.getElementById('evalText').textContent = 'Ses tanıma yapılamadığı için değerlendirme yapılamadı.';
+  }
+}
+
+async function evaluateWithAI(text) {
+  const prompt = `Aşağıdaki metin, bir Türkçe konuşma pratiği sınavında "Bir gününüzü anlatınız." sorusuna verilen 30 saniyelik sözlü cevabın transkriptidir.
+
+Metni şu kriterler açısından değerlendir:
+1. Kelime seçimi ve zenginliği
+2. Cümle yapısı ve dilbilgisi
+3. Konuya uygunluk ve akıcılık
+4. Genel Türkçe kullanımı
+
+Değerlendirmeni MUTLAKA şu formatta ver:
+PUAN: [1-5 arası tam sayı]
+DEĞERLENDİRME: [Her kriter için kısa yorum, hataları ve güçlü yönleri belirt]
+
+Metin:
+"${text}"`;
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const reply = data.content[0].text;
+    parseAndShowResult(reply);
+  } catch(e) {
+    document.getElementById('loadingText').style.display = 'none';
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('scoreDisplay').textContent = '— / 5';
+    document.getElementById('evalText').textContent = 'Değerlendirme sırasında bir hata oluştu. İnternet bağlantınızı kontrol edin.';
+  }
+}
+
+function parseAndShowResult(reply) {
+  document.getElementById('loadingText').style.display = 'none';
+  let score = 0;
+  const m = reply.match(/PUAN:\s*([1-5])/);
+  if (m) score = parseInt(m[1]);
+
+  let evalText = reply.replace(/PUAN:\s*[1-5]/g, '').replace('DEĞERLENDİRME:', '').trim();
+
+  const scoreEl = document.getElementById('scoreDisplay');
+  scoreEl.textContent = score + ' / 5';
+  if (score <= 2) scoreEl.style.color = '#ff4444';
+  else if (score === 3) scoreEl.style.color = '#ffcc00';
+  else if (score === 4) scoreEl.style.color = '#90ee90';
+  else scoreEl.style.color = '#2e7d32';
+
+  document.getElementById('evalText').textContent = evalText;
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+function resetApp() {
+  clearInterval(prepTimer);
+  clearInterval(recTimer);
+  clearInterval(recInterval);
+  recInterval = null;
+  transcript = '';
+  ['startScreen'].forEach(id => document.getElementById(id).style.display = 'block');
+  ['questionBox','prepSection','recSection','recLabel','waveContainer',
+   'timeoutMsg','transcriptBox','loadingText','resultBox'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  document.getElementById('prepCount').textContent = '5';
+  document.getElementById('recCount').textContent = '30';
+}
+</script>
+</body>
+</html>
