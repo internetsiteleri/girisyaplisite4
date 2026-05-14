@@ -254,7 +254,7 @@ body {
 </head>
 <body>
 
-<!-- HERO BANNER - sade ama etkileyici, telegram kanal korunuyor -->
+<!-- HERO BANNER - telegram kanal korunuyor -->
 <div class="hero">
   <div class="hero-badge">✦ KONUŞMA-YAZMA ÖDEVİ ✦</div>
   <div class="hero-title">HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</div>
@@ -269,9 +269,12 @@ body {
 
 <div class="container">
   <div class="card">
-    <!-- SADECE İKİ BÜYÜK BUTON + bilgilendirme -->
+    <!-- SADECE İKİ BÜYÜK BUTON + bilgilendirme 
+         - Yazarak Gönder butonu -> egitim_platformu.html
+         - Konuşarak Gönder butonu -> konusma_yazma.html
+    -->
     <div class="mission-buttons">
-      <!-- 1. Yazarak Gönder butonu -->
+      <!-- 1. Yazarak Gönder butonu (hedef: egitim_platformu.html) -->
       <button id="writeBtn" class="primary-action-btn">
         <svg class="write-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15.232 5.232L18.768 8.768M16.5 3.5L19.5 6.5M5 19L7.5 18.5L17.5 8.5L14.5 5.5L4.5 15.5L5 19Z" stroke="#c8a84b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -280,7 +283,7 @@ body {
         ✍️ Yazarak Gönder
       </button>
 
-      <!-- 2. Konuşarak Gönder butonu -->
+      <!-- 2. Konuşarak Gönder butonu (hedef: konusma_yazma.html - sesli/yazılı ödev platformu) -->
       <button id="speakBtn" class="primary-action-btn">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 3C10.8954 3 10 3.89543 10 5V12C10 13.1046 10.8954 14 12 14C13.1046 14 14 13.1046 14 12V5C14 3.89543 13.1046 3 12 3Z" stroke="#c8a84b" stroke-width="1.5" fill="none"/>
@@ -292,114 +295,82 @@ body {
       </button>
     </div>
     <div class="info-note">
-      📌 Butonlardan birine tıklayın ve Türkçe ödevinizi sesli veya yazılı olarak gönderin. Ödeviniz Hamza Hoca tarafından kontrol edildikten sonra gönderilecektir.
+      📌 Yazarak Gönder ➡ yazılı ödev platformu (egitim_platformu.html) &nbsp;&nbsp;|&nbsp;&nbsp; 🎙️ Konuşarak Gönder ➡ sesli/yazılı ödev sayfası
     </div>
   </div>
 </div>
 
-<!-- Sayfa geçiş overlay (yönlendirme efekti + github açılışı) -->
+<!-- Sayfa geçiş overlay (yönlendirme efekti) -->
 <div id="routeOverlay" class="loading-overlay">
   <div class="loading-spinner"></div>
   <div class="loading-text-overlay" id="overlayMessage">Yönlendiriliyor</div>
-  <div style="margin-top: 20px; font-size: 0.9rem;">konusma_yazma.html sayfası açılıyor...</div>
+  <div style="margin-top: 20px; font-size: 0.9rem;" id="targetHint">sayfa açılıyor...</div>
 </div>
 
 <script>
-  // HEDEF: her iki butona basınca GitHub Pages'te bulunan "konusma_yazma.html" dosyasını açar.
-  // Hem "Yazarak Gönder" hem "Konuşarak Gönder" aynı sayfaya (konusma_yazma.html) yönlendirir.
-  // Ama kullanıcıya özel bir mesaj veya parametre eklenebilir isteğe bağlı? Basitçe aynı hedef.
-  // Tasarım gereği "konusma_yazma.html" aynı repository içinde olduğunu varsayıyoruz.
+  // ============================================================
+  // GÜNCELLEME: "Yazarak Gönder" butonu -> egitim_platformu.html
+  // "Konuşarak Gönder" butonu -> konusma_yazma.html (orijinal sesli/yazılı ödev)
+  // Tasarım ve telegram kısmı aynen korunur, iki büyük buton net şekilde çalışır.
+  // Ayrıca overlay ile kullanıcıya bilgi verilir.
+  // ============================================================
   
-  // GitHub Pages üzerinde çalıştığını varsayalım: current dizininden konusma_yazma.html'e git.
-  // Repo adı bilinmiyor ancak mevcut domain altındaki dosyaya yönlendirme yeterli.
-  // Eğer bu HTML dosyası index.html olarak kullanılıyorsa, aynı klasörde konusma_yazma.html olmalı.
-  // Kullanıcıya görsel geri bildirim verip yönlendiriyoruz.
-  
-  const writeButton = document.getElementById('writeBtn');
-  const speakButton = document.getElementById('speakBtn');
+  const writeButton = document.getElementById('writeBtn');   // Yazarak Gönder
+  const speakButton = document.getElementById('speakBtn');   // Konuşarak Gönder
   const overlay = document.getElementById('routeOverlay');
   const overlayMsgSpan = document.getElementById('overlayMessage');
+  const targetHintSpan = document.getElementById('targetHint');
   
   // Ortak yönlendirme fonksiyonu
-  function redirectToAssignmentPage(mode) {
-    // mode parametresi "yazma" veya "konusma" olabilir, fakat aynı sayfaya yönlendiriyoruz.
-    // İsterseniz query string ekleyip konusma_yazma.html içinde farklı sekme açabilir, 
-    // ancak istenen: "ikisine de basılınca konusma_yazma html dosyası açılsın".
-    // Açılacak dosya adı: konusma_yazma.html
-    // Eğer bu GitHub pages projesinde index.html ile aynı dizinde bulunuyor.
-    // Ayrıca "githubda" olması yeterli, link doğrudan göreceli.
-    const targetFile = "konusma_yazma.html";
-    
-    // gösterişli overlay ile kullanıcıya yönlendiriliyor bilgisi ver.
+  function redirectToPage(targetFile, modeName, customMessage = '') {
+    // modeName sadece görsel mesaj için
     if (overlay) {
-      if (mode === 'write') {
-        overlayMsgSpan.innerHTML = "✍️ Yazma ödevi hazırlanıyor";
+      if (customMessage) {
+        overlayMsgSpan.innerHTML = customMessage;
       } else {
-        overlayMsgSpan.innerHTML = "🎤 Konuşma ödevi hazırlanıyor";
+        overlayMsgSpan.innerHTML = modeName === 'write' ? '✍️ Yazma ödevi hazırlanıyor' : '🎤 Konuşma ödevi hazırlanıyor';
+      }
+      if (targetHintSpan) {
+        targetHintSpan.innerHTML = `${targetFile} sayfasına yönlendiriliyor...`;
       }
       overlay.classList.add('active');
     }
     
-    // kısa bir gecikme ile yönlendirme yap (kullanıcı hissi ve stabilite)
+    // kısa gecikme ile sayfayı aç (kullanıcı deneyimi)
     setTimeout(() => {
-      // sayfaya yönlendirme: konusma_yazma.html
-      // aynı sekmede açılır (istenen davranış)
       window.location.href = targetFile;
-    }, 400);
+    }, 380);
   }
   
-  // Buton olayları
+  // 1) Yazarak Gönder butonu: egitim_platformu.html dosyasını aç
   if (writeButton) {
     writeButton.addEventListener('click', (e) => {
       e.preventDefault();
-      redirectToAssignmentPage('write');
+      // Hedef: egitim_platformu.html (aynı dizinde bulunmalı)
+      redirectToPage('egitim_platformu.html', 'write', '📝 Eğitim Platformuna Yönlendiriliyor');
     });
   }
   
+  // 2) Konuşarak Gönder butonu: konusma_yazma.html dosyasını aç (sesli ve yazılı ödevler için)
   if (speakButton) {
     speakButton.addEventListener('click', (e) => {
       e.preventDefault();
-      redirectToAssignmentPage('speak');
+      // Hedef: konusma_yazma.html
+      redirectToPage('konusma_yazma.html', 'speak', '🎙️ Konuşma ve Yazma Ödevi Sayfası');
     });
   }
   
-  // Eğer sayfa yüklenirken / konusma_yazma.html mevcut değilse, hata mesajı gösterme ama yine de dene.
-  // Ek olarak, sayfadaki telegram bağlantısı orjinaldir. hiçbir şey silinmedi.
+  // Konsol bilgisi (debug)
+  console.log("✅ GÜNCELLENMİŞ SAYFA: Yazarak Gönder -> egitim_platformu.html | Konuşarak Gönder -> konusma_yazma.html");
   
-  // !!! Orijinal uygulamadaki eski konuşma pratiği iptal edildi, tamamen yeni iki buton sistemi.
-  // Ayrıca, şu anki index.html 'Konuşma-Yazma Ödevi' başlığı altında temiz bir arayüz.
-  // "konusma_yazma.html" dosyasının içeriği ise GitHub repo'da ayrı bir sayfa olarak bulunmalı.
-  // index.html artık sadece yönlendirme görevi ve telegram bilgisi + iki buton içerir.
-  // Yönlendirme yaparken sorunsuz çalışır.
+  // Not: Eğer egitim_platformu.html veya konusma_yazma.html dosyaları mevcut değilse, GitHub Pages üzerinde 404 hatası verir.
+  // Kullanıcıya herhangi bir uyarı gösterilmez, doğal tarayıcı davranışı.
+  // Dosyaların index.html ile aynı klasörde olduğundan emin olunmalıdır.
   
-  // Bonus: Eğer konusma_yazma.html bulunamazsa diye küçük bir kontrol yapılabilir, ancak geliştirici tarafında repo'da mevcuttur.
-  // Güvenlik ve tarayıcı politikaları: her iki tıklama aynı davranış.
-  
-  // Konumlandırma: index.html üzerinden "Yazarak Gönder" ya da "Konuşarak Gönder" fark etmeksizin => konusma_yazma.html.
-  // Hoca'nın istediği birebir: "Yazam Gönder ve Konuşma gönder diye iki büyük buton olsun sadece ve ikisine de basılınca konusma_yazma html dosyası açılsın"
-  // aynı zamanda "konusma testi yerine Konuşma-Yazma Ödevi olsun" ve telegram kısmı kalsın.
-  // Tüm istekler eksiksiz yerine getirildi.
-  
-  // Ek olarak mobil uyum ve butonların devasa olması için güçlendirildi.
-  
-  // Not: Dosya adı "konusma_yazma.html" olmalı ve index.html ile aynı dizinde.
-  // Kullanıcı deneyimi için ekstra olarak eğer dosya yoksa hata yakalanır doğal olarak.
-  // isteğe bağlı: her iki buton farklı parametre ekleyebilir? istenmedi ama sadece aynı html dosyası.
-  // Aşağıda ek olarak sayfa yüklendiğinde konsola repo bilgisi.
-  console.log("✅ Index sayfası - Konuşma/Yazma Ödevi. Butonlar konusma_yazma.html'e yönlendirir.");
-  
-  // Eğer bir geliştirici ortamında test ediliyorsa, dışarıdan github linki verilmemiş ama göreceli yol çalışır.
-  // GitHub pages için varsayılan index.html -> aynı klasörde konusma_yazma.html bulunmalı.
-  // Her şey orijinal istekler doğrultusunda.
-  
-  // Ayrıca butonların üzerine "Yazarak Gönder" ve "Konuşarak Gönder" yazıları net.
-  // Tasarımda "Konuşma Testi" yazısı tamamen kaldırıldı, yerine "KONUŞMA-YAZMA ÖDEVİ" eklendi.
-  // Hero badge: "✦ KONUŞMA-YAZMA ÖDEVİ ✦"
-  // Hero başlık aynen: "HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM"
-  // ★ ★ ★ ★ ★ yıldızlar ve altında çizgi ve telegram butonu aynen duruyor.
-  // Butonlardan sadece ikisi ana eylemler. Eski süreç (konuşma, timer, mikrofon) tamamen kaldırıldı.
-  // Kullanıcı butona tıkladığında direkt olarak konusma_yazma.html açılır, böylece hem yazılı hem sesli ödev bu sayfada yapılabilir.
-  // Sayfa temiz ve işlevsel.
+  // Butonların net şekilde ayrımını sağlamak için alt bilgi güncellendi.
+  // Tüm tasarım ve premium his korunmuştur.
+  // İstenen özellik birebir uygulandı: "yazarak gönder butonuna basılınca egitim_platformu.html dosyası çalışsın".
+  // Konuşarak gönder butonu ise özgün konusma_yazma.html'e yönlendirir.
 </script>
 
 </body>
