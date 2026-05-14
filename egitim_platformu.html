@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dil Pratiği Platformu</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --border: #E2DDD6;
+    --text: #1A1714;
+    --muted: #7A746C;
+    --accent: #2D6A4F;
+    --accent-light: #E8F5EE;
+    --accent2: #B5451B;
+    --accent2-light: #FBF0EC;
+    --radius: 12px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 13px;
+  }
+  .logout-btn {
+    background: none; border: 1px solid var(--border);
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 13px; cursor: pointer; color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .logout-btn:hover { background: var(--bg); }
+
+  /* ---- SCREEN MANAGEMENT ---- */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ---- LOGIN ---- */
+  #login-screen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg);
+  }
+  #login-screen.active { display: flex; }
+  .login-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    width: 100%; max-width: 380px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .login-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .login-sub {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 1.75rem;
+  }
+  .field { margin-bottom: 1rem; text-align: left; }
+  .field label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 5px; }
+  .field input {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif;
+    background: var(--bg); color: var(--text);
+    outline: none; transition: border .15s;
+  }
+  .field input:focus { border-color: var(--accent); background: #fff; }
+  .login-btn {
+    width: 100%; padding: 11px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; margin-top: 0.5rem;
+    transition: background .15s;
+  }
+  .login-btn:hover { background: #235A41; }
+  .login-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .login-error {
+    font-size: 13px; color: var(--accent2);
+    margin-top: 10px; min-height: 18px;
+  }
+  .teacher-link {
+    margin-top: 1.25rem; font-size: 12px; color: var(--muted);
+  }
+  .teacher-link a { color: var(--accent); cursor: pointer; text-decoration: none; }
+
+  /* ---- MAIN LAYOUT ---- */
+  .main { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; }
+
+  /* ---- TABS ---- */
+  .tabs {
+    display: flex; gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 5px;
+    margin-bottom: 1.5rem;
+  }
+  .tab {
+    flex: 1; padding: 8px;
+    border: none; background: none; border-radius: 7px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; color: var(--muted);
+    transition: all .15s;
+  }
+  .tab.active {
+    background: var(--accent); color: #fff;
+  }
+
+  /* ---- CARD ---- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem; margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  /* ---- SECTION LABEL ---- */
+  .slabel {
+    font-size: 11px; font-weight: 600; letter-spacing: .06em;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 8px;
+  }
+
+  /* ---- TYPE TOGGLE ---- */
+  .type-toggle { display: flex; gap: 8px; margin-bottom: 1.25rem; }
+  .type-btn {
+    flex: 1; padding: 10px 8px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--bg); cursor: pointer;
+    font-size: 13px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    transition: all .15s;
+  }
+  .type-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .type-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+  .type-btn svg { width: 16px; height: 16px; }
+
+  /* ---- QUESTION LIST ---- */
+  .q-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
+  .q-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; font-size: 14px; color: var(--text);
+    background: var(--bg); transition: all .15s; text-align: left;
+    font-family: 'DM Sans', sans-serif; width: 100%;
+  }
+  .q-item:hover { border-color: var(--accent); background: var(--accent-light); }
+  .q-item.selected { border-color: var(--accent); background: var(--accent-light); color: var(--accent); font-weight: 500; }
+  .q-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--border); color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; flex-shrink: 0;
+  }
+  .q-item.selected .q-num { background: var(--accent); color: #fff; }
+
+  /* ---- ANSWER AREA ---- */
+  .answer-wrap { margin-bottom: 1rem; }
+  .answer-wrap textarea {
+    width: 100%; min-height: 130px; resize: vertical;
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; font-size: 14px; line-height: 1.6;
+    font-family: 'DM Sans', sans-serif; color: var(--text);
+    background: var(--bg); outline: none; transition: border .15s;
+  }
+  .answer-wrap textarea:focus { border-color: var(--accent); background: #fff; }
+
+  /* ---- RECORD AREA ---- */
+  .record-area {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 14px; padding: 1.5rem 0 0.5rem;
+  }
+  .rec-btn {
+    width: 70px; height: 70px; border-radius: 50%;
+    border: 2px solid var(--accent); background: var(--accent-light);
+    color: var(--accent); cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .rec-btn:hover { background: var(--accent); color: #fff; }
+  .rec-btn.recording {
+    background: var(--accent2); border-color: var(--accent2); color: #fff;
+    animation: pulse 1.2s infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+  .rec-btn svg { width: 28px; height: 28px; }
+  .rec-status { font-size: 13px; color: var(--muted); text-align: center; }
+  .audio-player { width: 100%; max-width: 340px; }
+  audio { width: 100%; height: 40px; }
+
+  /* ---- SUBMIT BTN ---- */
+  .submit-btn {
+    width: 100%; padding: 12px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: background .15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .submit-btn:hover { background: #235A41; }
+  .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+  /* ---- BADGES ---- */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 600; padding: 3px 8px;
+    border-radius: 20px;
+  }
+  .badge-write { background: var(--accent-light); color: var(--accent); }
+  .badge-speak { background: #EEF2FF; color: #4338CA; }
+  .badge-new { background: #FEF9C3; color: #854D0E; }
+  .badge-done { background: var(--accent-light); color: var(--accent); }
+
+  /* ---- TEACHER SUBMISSIONS ---- */
+  .sub-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem;
+    margin-bottom: 1rem; box-shadow: var(--shadow);
+  }
+  .sub-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .sub-name { font-weight: 600; font-size: 14px; }
+  .sub-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .sub-q { font-size: 13px; color: var(--muted); margin-bottom: 8px; font-style: italic; }
+  .sub-answer {
+    font-size: 13px; background: var(--bg); border-radius: 8px;
+    padding: 10px 12px; margin-bottom: 10px; line-height: 1.6; color: var(--text);
+  }
+  .audio-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--accent); text-decoration: none;
+    background: var(--accent-light); padding: 6px 12px; border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .corr-area textarea {
+    width: 100%; min-height: 80px; resize: vertical;
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; font-size: 13px; line-height: 1.6;
+    font-family: 'DM Sans', sans-serif; color: var(--text);
+    background: var(--bg); outline: none; margin-bottom: 8px;
+    transition: border .15s;
+  }
+  .corr-area textarea:focus { border-color: var(--accent); background: #fff; }
+  .send-corr-btn {
+    padding: 8px 18px; background: var(--accent); color: #fff;
+    border: none; border-radius: 8px; font-size: 13px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; cursor: pointer;
+  }
+  .send-corr-btn:hover { background: #235A41; }
+  .corr-done {
+    background: var(--accent-light); color: var(--accent);
+    border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.6;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+
+  /* ---- ÖĞRENCI PANELİ: Gelen düzeltmeler ---- */
+  .my-sub-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+  .my-sub-q { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 6px; }
+  .my-sub-ans { font-size: 13px; background: var(--bg); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; }
+  .my-corr { background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 8px; padding: 10px 12px; font-size: 13px; }
+  .my-corr-label { font-size: 11px; font-weight: 600; color: #92400E; margin-bottom: 4px; letter-spacing:.04em; text-transform:uppercase; }
+  .pending-badge { background: #FEF9C3; color: #854D0E; font-size: 12px; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+
+  /* ---- EMPTY ---- */
+  .empty { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 14px; }
+  .empty-icon { font-size: 2.5rem; margin-bottom: 10px; }
+
+  /* ---- TOAST ---- */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--text); color: #fff; padding: 10px 22px;
+    border-radius: 30px; font-size: 13px; font-weight: 500;
+    opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+
+  /* ---- SPINNER ---- */
+  .spinner {
+    display: inline-block; width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
+    border-radius: 50%; animation: spin .6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 480px) {
+    .header { padding: 0 1rem; }
+    .main { padding: 1rem 0.75rem; }
+    .card { padding: 1.25rem 1rem; }
+  }
+
+  /* ---- SETUP NOTICE ---- */
+  .setup-notice {
+    background: #FFFBEB; border: 1px solid #FCD34D;
+    border-radius: 8px; padding: 12px 14px; font-size: 13px;
+    color: #78350F; margin-bottom: 1.25rem; line-height: 1.6;
+  }
+  .setup-notice strong { font-weight: 600; }
+  .setup-notice code {
+    background: rgba(0,0,0,0.08); padding: 1px 5px; border-radius: 4px;
+    font-family: monospace; font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- =================== LOGIN SCREEN =================== -->
+<div id="login-screen" class="screen active">
+  <div class="login-box">
+    <div class="login-logo">📖 Dil Pratiği</div>
+    <div class="login-sub">Hesabınıza giriş yapın</div>
+    <div class="field">
+      <label>Kullanıcı Adı</label>
+      <input type="text" id="login-username" placeholder="kullanici_adi" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>Şifre</label>
+      <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Giriş Yap</button>
+    <div class="login-error" id="login-error"></div>
+    <div class="teacher-link">
+      Öğretmen misiniz? <a onclick="showTeacherLogin()">Buraya tıklayın</a>
+    </div>
+  </div>
+</div>
+
+<!-- =================== MAIN SCREEN =================== -->
+<div id="main-screen" class="screen">
+  <div class="header">
+    <div class="logo">📖 Dil Pratiği</div>
+    <div class="user-info">
+      <div class="avatar" id="user-avatar">?</div>
+      <span id="user-display-name"></span>
+      <button class="logout-btn" onclick="doLogout()">Çıkış</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- STUDENT VIEW -->
+    <div id="student-view">
+      <div class="tabs">
+        <button class="tab active" onclick="switchMainTab('task', this)">✏️ Görev Gönder</button>
+        <button class="tab" onclick="switchMainTab('myanswers', this)">📬 Düzeltmelerim</button>
+      </div>
+
+      <!-- TASK TAB -->
+      <div id="tab-task" class="tab-content">
+        <div class="card">
+          <div class="card-title">Yeni görev</div>
+
+          <div class="setup-notice" id="config-notice" style="display:none">
+            ⚙️ <strong>Kurulum gerekli:</strong> Google Sheets ve Cloudinary bilgilerini sayfanın üstündeki
+            <code>CONFIG</code> bölümüne girin. <a href="#" style="color:var(--accent)">Kurulum rehberi ↓</a>
+          </div>
+
+          <div class="slabel">Görev türü</div>
+          <div class="type-toggle">
+            <button class="type-btn active" id="tbtn-writing" onclick="setType('writing')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Yazma
+            </button>
+            <button class="type-btn" id="tbtn-speaking" onclick="setType('speaking')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>
+              Konuşma
+            </button>
+          </div>
+
+          <div class="slabel">Soru seç</div>
+          <div class="q-list" id="q-list"></div>
+
+          <div id="answer-zone"></div>
+
+          <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Gönder
+          </button>
+        </div>
+      </div>
+
+      <!-- MY ANSWERS TAB -->
+      <div id="tab-myanswers" class="tab-content" style="display:none">
+        <div id="my-answers-list">
+          <div class="empty">
+            <div class="empty-icon">📭</div>
+            Henüz gönderiminiz yok.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEACHER VIEW -->
+    <div id="teacher-view" style="display:none">
+      <div class="card" style="margin-bottom:1rem">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="card-title" style="margin:0">Öğretmen Paneli</div>
+          <button onclick="loadSubmissions()" style="background:none;border:1px solid var(--border);padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted)">
+            🔄 Yenile
+          </button>
+        </div>
+      </div>
+      <div id="submissions-list">
+        <div class="empty"><div class="empty-icon">📂</div>Yükleniyor...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   ⚙️ CONFIGURATION — Buraya kendi bilgilerinizi girin
+   ============================================================ */
+const CONFIG = {
+
+  // 1. Google Sheets — kullanıcı listesi (kullanıcı adı, şifre, rol)
+  // Sheets'i halka açık yapıp aşağıdaki URL formatını kullanın:
+  // https://docs.google.com/spreadsheets/d/1wmseY69ee9xomHVvQjewP0zaPOfNS3y9iM7JZ0_nyOE/gviz/tq?tqx=out:json
+  USERS_SHEET_URL: "https://docs.google.com/spreadsheets/d/1wmseY69ee9xomHVvQjewP0zaPOfNS3y9iM7JZ0_nyOE/gviz/tq?tqx=out:json&sheet=kullanicilar",
+
+  // 2. Google Sheets — cevaplar (gönderilen cevaplar burada birikir)
+  // Google Apps Script Web App URL'si (aşağıdaki kurulum rehberine bakın)
+  ANSWERS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzXTotJfJn2lm5a1ut_L3LN4TqNqzaoQtoGsBHrVwBB2WHcYaBrb_ayGy1x47QbkQuD/exec",
+
+  // 3. Cloudinary — ses dosyaları yükleme
+  CLOUDINARY_CLOUD_NAME: "dee5ahvyy",   // Cloudinary dashboard'dan alın
+  CLOUDINARY_UPLOAD_PRESET: "deneme1",    // Unsigned upload preset oluşturun
+
+  // 4. Öğretmen şifresi (ek güvenlik — opsiyonel)
+  TEACHER_PASSWORD: "ogretmen123"
+};
+
+/* ============================================================
+   SORULAR
+   ============================================================ */
+const QUESTIONS = {
+  writing: [
+    "Evinizin bahçesi var mı? Bahçenizde neler yaparsınız?",
+    "En son ne zaman doktora gittiniz? Neden gittiniz?",
+    "Hangi mevsimde doğdunuz? O mevsimi sever misiniz?"
+  ],
+  speaking: [
+    "Evinizin bahçesi var mı? Bahçenizde neler yaparsınız?",
+    "En son ne zaman doktora gittiniz? Neden gittiniz?",
+    "Hangi mevsimde doğdunuz? O mevsimi sever misiniz?"
+  ]
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentUser = null;
+let currentType = 'writing';
+let selectedQ = null;
+let mediaRecorder = null;
+let audioChunks = [];
+let audioBlob = null;
+let isRecording = false;
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+async function doLogin() {
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+
+  if (!username || !password) { errEl.textContent = 'Lütfen tüm alanları doldurun.'; return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+  errEl.textContent = '';
+
+  try {
+    // CONFIG kontrolü
+    if (CONFIG.USERS_SHEET_URL.includes('BURAYA')) {
+      // Demo modu — Google Sheets bağlı değil
+      const demoUsers = [
+        { username: 'ahmet', password: '123', role: 'student', name: 'Ahmet Yılmaz' },
+        { username: 'ayse', password: '123', role: 'student', name: 'Ayşe Demir' },
+        { username: 'ogretmen', password: CONFIG.TEACHER_PASSWORD, role: 'teacher', name: 'Öğretmen' }
+      ];
+      const found = demoUsers.find(u => u.username === username && u.password === password);
+      if (!found) { errEl.textContent = 'Kullanıcı adı veya şifre hatalı.'; btn.disabled=false; btn.textContent='Giriş Yap'; return; }
+      loginSuccess(found);
+      return;
+    }
+
+    // Google Sheets'ten kullanıcı çek
+    const res = await fetch(CONFIG.USERS_SHEET_URL);
+    const text = await res.text();
+    const json = JSON.parse(text.replace(/^[^(]+\(/, '').replace(/\);?$/, ''));
+    const rows = json.table.rows;
+
+    let found = null;
+    for (const row of rows) {
+      const cols = row.c;
+      if (!cols || !cols[0]) continue;
+      const uname = cols[0]?.v?.toString().trim();
+      const pass  = cols[1]?.v?.toString().trim();
+      const role  = cols[2]?.v?.toString().trim() || 'student';
+      const name  = cols[3]?.v?.toString().trim() || uname;
+      if (uname === username && pass === password) { found = { username: uname, password: pass, role, name }; break; }
+    }
+
+    if (!found) { errEl.textContent = 'Kullanıcı adı veya şifre hatalı.'; btn.disabled=false; btn.textContent='Giriş Yap'; return; }
+    loginSuccess(found);
+
+  } catch(e) {
+    errEl.textContent = 'Bağlantı hatası. Config\'i kontrol edin.';
+    btn.disabled = false; btn.innerHTML = 'Giriş Yap';
+  }
+}
+
+function loginSuccess(user) {
+  currentUser = user;
+  document.getElementById('login-screen').classList.remove('active');
+  document.getElementById('main-screen').classList.add('active');
+  document.getElementById('user-avatar').textContent = user.name.charAt(0).toUpperCase();
+  document.getElementById('user-display-name').textContent = user.name;
+
+  if (user.role === 'teacher') {
+    document.getElementById('student-view').style.display = 'none';
+    document.getElementById('teacher-view').style.display = 'block';
+    loadSubmissions();
+  } else {
+    document.getElementById('student-view').style.display = 'block';
+    document.getElementById('teacher-view').style.display = 'none';
+    renderQuestions();
+    renderAnswerZone();
+    loadMyAnswers();
+    if (CONFIG.USERS_SHEET_URL.includes('BURAYA')) {
+      document.getElementById('config-notice').style.display = 'block';
+    }
+  }
+}
+
+function showTeacherLogin() {
+  document.getElementById('login-username').value = 'ogretmen';
+  document.getElementById('login-password').focus();
+  showToast('Öğretmen şifrenizi girin');
+}
+
+function doLogout() {
+  currentUser = null; selectedQ = null; audioBlob = null;
+  document.getElementById('main-screen').classList.remove('active');
+  document.getElementById('login-screen').classList.add('active');
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').textContent = '';
+  document.getElementById('login-btn').disabled = false;
+  document.getElementById('login-btn').textContent = 'Giriş Yap';
+}
+
+document.getElementById('login-password').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+/* ============================================================
+   STUDENT — TASK
+   ============================================================ */
+function switchMainTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-task').style.display = tab === 'task' ? 'block' : 'none';
+  document.getElementById('tab-myanswers').style.display = tab === 'myanswers' ? 'block' : 'none';
+  if (tab === 'myanswers') loadMyAnswers();
+}
+
+function setType(type) {
+  currentType = type; selectedQ = null; audioBlob = null;
+  document.getElementById('tbtn-writing').classList.toggle('active', type === 'writing');
+  document.getElementById('tbtn-speaking').classList.toggle('active', type === 'speaking');
+  renderQuestions(); renderAnswerZone();
+}
+
+function renderQuestions() {
+  const qs = QUESTIONS[currentType];
+  document.getElementById('q-list').innerHTML = qs.map((q, i) => `
+    <button class="q-item${selectedQ === i ? ' selected' : ''}" onclick="selectQ(${i})">
+      <span class="q-num">${i + 1}</span>
+      ${q}
+    </button>`).join('');
+}
+
+function selectQ(i) {
+  selectedQ = i; audioBlob = null;
+  renderQuestions(); renderAnswerZone();
+}
+
+function renderAnswerZone() {
+  const zone = document.getElementById('answer-zone');
+  if (selectedQ === null) { zone.innerHTML = ''; return; }
+  if (currentType === 'writing') {
+    zone.innerHTML = `<div class="answer-wrap">
+      <div class="slabel">Cevabın</div>
+      <textarea id="writing-answer" placeholder="Cevabını buraya yaz..."></textarea>
+    </div>`;
+  } else {
+    zone.innerHTML = `<div class="slabel">Ses kaydı</div>
+      <div class="record-area">
+        <button class="rec-btn" id="rec-btn" onclick="toggleRecord()" aria-label="Kayıt başlat/durdur">
+          <svg id="rec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+            <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/>
+          </svg>
+        </button>
+        <div class="rec-status" id="rec-status">Kayda başlamak için mikrofona bas</div>
+        <div class="audio-player" id="audio-player" style="display:none">
+          <audio id="audio-el" controls></audio>
+        </div>
+      </div>`;
+  }
+}
+
+async function toggleRecord() {
+  if (!isRecording) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const url = URL.createObjectURL(audioBlob);
+        const ap = document.getElementById('audio-player');
+        document.getElementById('audio-el').src = url;
+        ap.style.display = 'block';
+        stream.getTracks().forEach(t => t.stop());
+      };
+      mediaRecorder.start();
+      isRecording = true;
+      document.getElementById('rec-btn').classList.add('recording');
+      document.getElementById('rec-icon').innerHTML = `<rect x="6" y="6" width="12" height="12" rx="2"/>`;
+      document.getElementById('rec-status').textContent = '🔴 Kayıt yapılıyor... Durdurmak için bas.';
+    } catch(e) {
+      document.getElementById('rec-status').textContent = '⚠️ Mikrofon erişimi reddedildi.';
+    }
+  } else {
+    mediaRecorder.stop();
+    isRecording = false;
+    document.getElementById('rec-btn').classList.remove('recording');
+    document.getElementById('rec-icon').innerHTML = `<path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/>`;
+    document.getElementById('rec-status').textContent = '✅ Kayıt tamamlandı. Gönderebilirsin.';
+  }
+}
+
+async function submitAnswer() {
+  if (selectedQ === null) { showToast('Lütfen bir soru seçin.'); return; }
+  const qs = QUESTIONS[currentType];
+  let content = '';
+
+  if (currentType === 'writing') {
+    const ta = document.getElementById('writing-answer');
+    if (!ta || !ta.value.trim()) { showToast('Lütfen cevabınızı yazın.'); return; }
+    content = ta.value.trim();
+  } else {
+    if (!audioBlob) { showToast('Lütfen ses kaydı yapın.'); return; }
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Gönderiliyor...';
+
+  try {
+    let audioUrl = '';
+    if (currentType === 'speaking') {
+      if (!CONFIG.CLOUDINARY_CLOUD_NAME.includes('BURAYA')) {
+        audioUrl = await uploadToCloudinary(audioBlob);
+      } else {
+        audioUrl = '[Demo - Cloudinary kurulu değil]';
+      }
+    }
+
+    const payload = {
+      action: 'submit',
+      student: currentUser.username,
+      studentName: currentUser.name,
+      type: currentType,
+      question: qs[selectedQ],
+      answer: content || '',
+      audioUrl: audioUrl,
+      date: new Date().toLocaleDateString('tr-TR'),
+      timestamp: new Date().toISOString(),
+      correction: '',
+      status: 'yeni'
+    };
+
+    if (!CONFIG.ANSWERS_SCRIPT_URL.includes('BURAYA')) {
+      await fetch(CONFIG.ANSWERS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }
+
+    // Demo'da localStorage'a kaydet
+    const saved = JSON.parse(localStorage.getItem('egitim_subs') || '[]');
+    saved.unshift({ ...payload, id: Date.now() });
+    localStorage.setItem('egitim_subs', JSON.stringify(saved));
+
+    showToast('✅ Gönderildi! Öğretmen düzeltecek.');
+    selectedQ = null; audioBlob = null;
+    renderQuestions(); renderAnswerZone();
+  } catch(e) {
+    showToast('❌ Hata oluştu, tekrar deneyin.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Gönder`;
+  }
+}
+
+async function uploadToCloudinary(blob) {
+  const fd = new FormData();
+  fd.append('file', blob, 'ses-kaydi.webm');
+  fd.append('upload_preset', CONFIG.CLOUDINARY_UPLOAD_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CONFIG.CLOUDINARY_CLOUD_NAME}/video/upload`, {
+    method: 'POST', body: fd
+  });
+  const data = await res.json();
+  return data.secure_url;
+}
+
+/* ============================================================
+   STUDENT — MY ANSWERS
+   ============================================================ */
+async function loadMyAnswers() {
+  const list = document.getElementById('my-answers-list');
+  list.innerHTML = '<div class="empty"><div class="empty-icon">⏳</div>Yükleniyor...</div>';
+
+  try {
+    let subs = [];
+    if (!CONFIG.ANSWERS_SCRIPT_URL.includes('BURAYA')) {
+      // Gerçek mod: Sheets'ten çek
+      const res = await fetch(CONFIG.ANSWERS_SCRIPT_URL + '?action=getAll');
+      const all = await res.json();
+      subs = all.filter(s => s.student === currentUser.username);
+      // localStorage'a da yaz (offline cache)
+      const local = JSON.parse(localStorage.getItem('egitim_subs') || '[]');
+      const localMine = local.filter(s => s.student !== currentUser.username);
+      localStorage.setItem('egitim_subs', JSON.stringify([...subs, ...localMine]));
+    } else {
+      // Demo mod: localStorage
+      subs = JSON.parse(localStorage.getItem('egitim_subs') || '[]')
+        .filter(s => s.student === currentUser.username);
+    }
+    renderMyAnswers(subs);
+  } catch(e) {
+    // Hata durumunda localStorage'a bak
+    const subs = JSON.parse(localStorage.getItem('egitim_subs') || '[]')
+      .filter(s => s.student === currentUser.username);
+    renderMyAnswers(subs);
+  }
+}
+
+function renderMyAnswers(subs) {
+  const list = document.getElementById('my-answers-list');
+  if (!subs.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">📭</div>Henüz gönderiminiz yok.</div>';
+    return;
+  }
+  list.innerHTML = subs.map(s => `
+    <div class="my-sub-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span class="badge ${s.type==='writing'?'badge-write':'badge-speak'}">${s.type==='writing'?'✏️ Yazma':'🎙️ Konuşma'}</span>
+        <span style="font-size:12px;color:var(--muted)">${s.date}</span>
+      </div>
+      <div class="my-sub-q">${s.question}</div>
+      <div class="my-sub-ans">${
+        s.answer
+          ? s.answer
+          : (s.audioUrl && !s.audioUrl.includes('Demo')
+              ? `<a href="${s.audioUrl}" target="_blank" style="color:var(--accent)">🎧 Ses kaydını dinle</a>`
+              : '—')
+      }</div>
+      ${s.correction
+        ? `<div class="my-corr"><div class="my-corr-label">📝 Öğretmen düzeltmesi</div>${s.correction}</div>`
+        : `<span class="pending-badge">⏳ Düzeltme bekleniyor</span>`}
+    </div>`).join('');
+}
+
+/* ============================================================
+   TEACHER — SUBMISSIONS
+   ============================================================ */
+async function loadSubmissions() {
+  const list = document.getElementById('submissions-list');
+  list.innerHTML = '<div class="empty"><div class="empty-icon">⏳</div>Yükleniyor...</div>';
+
+  try {
+    if (!CONFIG.ANSWERS_SCRIPT_URL.includes('BURAYA')) {
+      // Gerçek mod: Apps Script'ten çek
+      const res = await fetch(CONFIG.ANSWERS_SCRIPT_URL + '?action=getAll');
+      const data = await res.json();
+      // Cache
+      localStorage.setItem('egitim_subs', JSON.stringify(data));
+      renderSubmissions(data);
+    } else {
+      // Demo mod
+      const subs = JSON.parse(localStorage.getItem('egitim_subs') || '[]');
+      renderSubmissions(subs);
+    }
+  } catch(e) {
+    const subs = JSON.parse(localStorage.getItem('egitim_subs') || '[]');
+    renderSubmissions(subs);
+    showToast('⚠️ Bağlantı hatası, önbellek gösteriliyor.');
+  }
+}
+
+function renderSubmissions(subs) {
+  const list = document.getElementById('submissions-list');
+  if (!subs.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">📂</div>Henüz gönderim yok.</div>';
+    return;
+  }
+
+  // Filtrele: önce yeniler
+  const sorted = [...subs].sort((a,b) => (a.status==='yeni'?0:1) - (b.status==='yeni'?0:1));
+
+  list.innerHTML = sorted.map((s, i) => `
+    <div class="sub-card" id="subcard-${i}">
+      <div class="sub-header">
+        <div>
+          <div class="sub-name">${escHtml(s.studentName || s.student)}</div>
+          <div class="sub-date">${escHtml(s.date)}</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+          <span class="badge ${s.type==='writing'?'badge-write':'badge-speak'}">${s.type==='writing'?'✏️ Yazma':'🎙️ Konuşma'}</span>
+          <span class="badge ${s.status==='yeni'?'badge-new':'badge-done'}">${s.status==='yeni'?'🟡 Yeni':'✅ Düzeltildi'}</span>
+        </div>
+      </div>
+      <div class="sub-q">💬 ${escHtml(s.question)}</div>
+      ${s.answer ? `<div class="sub-answer">${escHtml(s.answer)}</div>` : ''}
+      ${s.audioUrl && !s.audioUrl.includes('Demo') && !s.audioUrl.includes('kurulu')
+          ? `<a class="audio-link" href="${s.audioUrl}" target="_blank">🎧 Sesi dinle</a>` : ''}
+      ${s.status !== 'yeni'
+        ? `<div class="corr-done">✅ <span>${escHtml(s.correction)}</span></div>`
+        : `<div class="corr-area">
+            <div class="slabel">Düzeltme / Geri bildirim yaz</div>
+            <textarea id="corr-${i}" placeholder="Hatalar, öneriler, puan... Dilediğin gibi yaz."></textarea>
+            <button class="send-corr-btn" onclick="sendCorrection(${i}, '${escAttr(s.id)}')">📨 Gönder</button>
+          </div>`}
+    </div>`).join('');
+
+  // Sorted listeyi global'e sakla
+  window._teacherSubs = sorted;
+}
+
+async function sendCorrection(i, id) {
+  const ta = document.getElementById('corr-' + i);
+  if (!ta || !ta.value.trim()) { showToast('Lütfen düzeltme yazın.'); return; }
+
+  const btn = ta.nextElementSibling;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+
+  const correction = ta.value.trim();
+
+  try {
+    if (!CONFIG.ANSWERS_SCRIPT_URL.includes('BURAYA')) {
+      // Gerçek mod: Apps Script'e gönder
+      await fetch(CONFIG.ANSWERS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'correct', id, correction })
+      });
+    }
+
+    // localStorage güncelle
+    const subs = JSON.parse(localStorage.getItem('egitim_subs') || '[]');
+    const idx = subs.findIndex(s => s.id?.toString() === id?.toString());
+    if (idx !== -1) {
+      subs[idx].correction = correction;
+      subs[idx].status = 'düzeltildi';
+      localStorage.setItem('egitim_subs', JSON.stringify(subs));
+    }
+
+    showToast('✅ Düzeltme gönderildi!');
+    // Sayfayı yeniden yükle
+    await loadSubmissions();
+  } catch(e) {
+    showToast('❌ Hata oluştu, tekrar deneyin.');
+    btn.disabled = false;
+    btn.textContent = '📨 Gönder';
+  }
+}
+
+/* ============================================================
+   UTILS
+   ============================================================ */
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(str) {
+  return String(str || '').replace(/'/g,"\\'");
+}
+
+/* ============================================================
+   UTILS
+   ============================================================ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>
