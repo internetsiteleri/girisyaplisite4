@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deyimler Çarkı — TDK Deyimler Oyunu | Hamza Hoca</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  transition: opacity 0.3s;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+/* OYUN ÖZEL STİLLER */
+#app { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+.game-header {
+  text-align: center;
+  margin-bottom: 32px;
+  animation: fadeDown 0.6s ease;
+}
+.game-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 6vw, 52px);
+  font-weight: 900;
+  color: #F5C842;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+.game-header p {
+  color: rgba(255,255,255,0.45);
+  font-size: 15px;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.mode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.mode-card {
+  background: #1a2332;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 28px 20px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+.mode-card:hover { background: #232e40; border-color: rgba(245,200,66,0.3); transform: translateY(-2px); }
+.mode-card.selected { border-color: #F5C842; background: rgba(245,200,66,0.08); }
+.mode-card .icon { font-size: 40px; margin-bottom: 10px; }
+.mode-card .label { font-size: 17px; font-weight: 800; color: white; }
+.mode-card .desc { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; font-weight: 600; }
+
+.input-block { margin-bottom: 16px; }
+.input-block label { display: block; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.45); margin-bottom: 7px; letter-spacing: 0.5px; text-transform: uppercase; }
+.input-block input {
+  width: 100%;
+  background: #1a2332;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  color: white;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-block input:focus { border-color: #F5C842; }
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: #F5C842; color: #1a1200; }
+.btn-primary:hover { background: #ffd94a; }
+.btn-secondary { background: #232e40; color: white; margin-top: 10px; }
+.btn-secondary:hover { background: #2d3a50; }
+.btn-green { background: #43e97b; color: #0a2a1a; }
+.btn-green:hover { background: #5cf592; }
+
+.game-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 720px) {
+  .game-layout { grid-template-columns: 1fr; }
+  .mode-grid { grid-template-columns: 1fr; }
+}
+
+.scoreboard {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.score-card {
+  flex: 1;
+  background: #1a2332;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: all 0.3s;
+}
+.score-card.active {
+  border-color: #F5C842;
+  background: rgba(245,200,66,0.08);
+  box-shadow: 0 0 20px rgba(245,200,66,0.15);
+}
+.score-card .sc-name { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.45); margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.score-card .sc-pts { font-size: 24px; font-weight: 900; color: white; }
+.score-card.active .sc-pts { color: #F5C842; }
+.score-card .sc-streak { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; height: 14px; }
+
+.wheel-section { display: flex; flex-direction: column; align-items: center; }
+#wheelCanvas {
+  border-radius: 50%;
+  cursor: pointer;
+  display: block;
+  filter: drop-shadow(0 0 30px rgba(245,200,66,0.25));
+  transition: filter 0.3s;
+}
+#wheelCanvas.spinning { filter: drop-shadow(0 0 50px rgba(245,200,66,0.5)); }
+
+.wheel-pointer {
+  width: 0; height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 32px solid #ff6b6b;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.8));
+  z-index: 10;
+}
+
+#spinBtn {
+  margin-top: 16px;
+  width: 200px;
+  padding: 12px;
+  background: #F5C842;
+  color: #1a1200;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.3px;
+}
+#spinBtn:hover:not(:disabled) { background: #ffd94a; transform: translateY(-1px); }
+#spinBtn:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+.question-section { display: flex; flex-direction: column; gap: 14px; }
+
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.08);
+  height: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar { height: 5px; border-radius: 3px; background: #F5C842; transition: width 0.3s; }
+
+.progress-info { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.45); }
+
+.timer-wrap { background: rgba(255,255,255,0.08); height: 4px; border-radius: 2px; overflow: hidden; }
+.timer-bar { height: 4px; border-radius: 2px; background: #43e97b; transition: width 0.1s linear; }
+.timer-bar.warn { background: #F5C842; }
+.timer-bar.danger { background: #ff6b6b; }
+
+.deyim-card {
+  background: #1a2332;
+  border: 2px solid rgba(245,200,66,0.25);
+  border-radius: 16px;
+  padding: 20px 18px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.3s;
+}
+.deyim-card.has-q { border-color: #F5C842; background: rgba(245,200,66,0.05); }
+.deyim-text { font-size: 17px; font-weight: 800; color: white; line-height: 1.4; }
+.deyim-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 4px; font-weight: 600; }
+
+.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.opt-btn {
+  background: #1a2332;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.4;
+  transition: all 0.15s;
+}
+.opt-btn:hover:not(:disabled) { background: #232e40; border-color: rgba(245,200,66,0.4); }
+.opt-btn:disabled { cursor: default; }
+.opt-btn.correct { background: rgba(67,233,123,0.15); border-color: #43e97b; color: #43e97b; }
+.opt-btn.wrong { background: rgba(255,107,107,0.15); border-color: #ff6b6b; color: #ff6b6b; }
+
+.result-msg {
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  display: none;
+}
+.result-msg.correct { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+.result-msg.wrong { background: rgba(255,107,107,0.12); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.3); }
+.result-msg.info { background: rgba(79,172,254,0.12); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+
+.turn-badge {
+  display: inline-block;
+  background: rgba(245,200,66,0.15);
+  border: 1px solid rgba(245,200,66,0.35);
+  color: #F5C842;
+  padding: 5px 14px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.final-wrap { max-width: 560px; margin: 0 auto; text-align: center; }
+.winner-banner {
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05));
+  border: 2px solid rgba(245,200,66,0.4);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 24px;
+}
+.winner-banner .trophy { font-size: 52px; margin-bottom: 8px; }
+.winner-banner h2 { font-family: 'Playfair Display', serif; font-size: 26px; color: #F5C842; margin-bottom: 4px; }
+.winner-banner p { color: rgba(255,255,255,0.45); font-size: 14px; font-weight: 600; }
+
+.final-scores-grid { display: flex; gap: 12px; margin-bottom: 24px; justify-content: center; flex-wrap: wrap; }
+.final-score-card {
+  background: #1a2332;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 18px 22px;
+  text-align: center;
+  min-width: 120px;
+}
+.final-score-card.first { border-color: #F5C842; background: rgba(245,200,66,0.08); }
+.final-score-card .medal-icon { font-size: 28px; margin-bottom: 6px; }
+.final-score-card .fc-name { font-size: 14px; font-weight: 800; color: white; }
+.final-score-card .fc-pts { font-size: 22px; font-weight: 900; color: #F5C842; margin-top: 2px; }
+.final-score-card .fc-streak { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 3px; }
+
+.lb-section { text-align: left; background: #1a2332; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+.lb-section h3 { font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.45); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; }
+.lb-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.lb-row:last-child { border-bottom: none; }
+.lb-rank { font-size: 16px; min-width: 28px; text-align: center; }
+.lb-name { flex: 1; font-size: 14px; font-weight: 700; color: white; }
+.lb-date { font-size: 11px; color: rgba(255,255,255,0.45); }
+.lb-pts { font-size: 16px; font-weight: 900; color: #F5C842; }
+.lb-empty { color: rgba(255,255,255,0.45); font-size: 14px; font-weight: 600; text-align: center; padding: 16px; }
+
+.btn-row { display: flex; gap: 10px; }
+.btn-row .btn { margin: 0; }
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+.pop { animation: popIn 0.25s ease; }
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap" id="backBtnWrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ TDK Deyimler Oyunu ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Deyimler Çarkı</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div id="app">
+
+<!-- EKRAN 1: MOD SEÇİMİ -->
+<div id="s-mode" class="screen active">
+  <div class="game-header">
+    <h1>Deyimler Çarkı</h1>
+    <p>TDK deyimleriyle eğlenceli bilgi yarışması</p>
+  </div>
+
+  <div class="mode-grid">
+    <div class="mode-card" id="card-solo" onclick="selectMode('solo')">
+      <div class="icon">🎯</div>
+      <div class="label">Tek kişilik</div>
+      <div class="desc">Kendi rekorunu kır, sıralamaya gir</div>
+    </div>
+    <div class="mode-card" id="card-duo" onclick="selectMode('duo')">
+      <div class="icon">⚔️</div>
+      <div class="label">İki kişilik</div>
+      <div class="desc">Arkadaşınla yarış, şampiyon ol</div>
+    </div>
+  </div>
+
+  <div id="name-inputs"></div>
+
+  <button class="btn btn-primary" id="start-btn" style="display:none;" onclick="startGame()">Oyuna Başla →</button>
+
+  <div id="lb-home" style="margin-top:28px;display:none;">
+    <div class="lb-section">
+      <h3>🏆 Şampiyonlar Tablosu</h3>
+      <div id="home-lb-rows"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EKRAN 2: OYUN -->
+<div id="s-game" class="screen">
+  <div id="scoreboard" class="scoreboard"></div>
+  <div id="turn-badge-wrap" style="text-align:center;display:none;"><span class="turn-badge" id="turn-badge"></span></div>
+
+  <div class="game-layout">
+    <div class="wheel-section">
+      <div style="position:relative; display:inline-block;">
+        <canvas id="wheelCanvas" width="420" height="420"></canvas>
+        <div class="wheel-pointer" style="position:absolute; top:-20px; left:50%; transform:translateX(-50%);"></div>
+      </div>
+      <button id="spinBtn" onclick="spinWheel()">🎡 Çarkı Çevir</button>
+    </div>
+
+    <div class="question-section">
+      <div class="progress-info">
+        <span id="q-counter">Soru 0 / 20</span>
+        <span id="streak-label" style="color:#F5C842;"></span>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="prog-bar" style="width:0%"></div></div>
+      <div class="timer-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+
+      <div class="deyim-card" id="deyim-card">
+        <div class="deyim-text" id="deyim-text">Çarkı çevirerek başla!</div>
+        <div class="deyim-sub" id="deyim-sub">20 deyim · 10 puan / doğru cevap</div>
+      </div>
+
+      <div class="options-grid" id="options"></div>
+      <div class="result-msg" id="result-msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EKRAN 3: SONUÇ -->
+<div id="s-final" class="screen">
+  <div class="final-wrap">
+    <div class="winner-banner" id="winner-banner">
+      <div class="trophy" id="trophy-icon">🏆</div>
+      <h2 id="winner-title">Oyun Bitti!</h2>
+      <p id="winner-sub"></p>
+    </div>
+
+    <div class="final-scores-grid" id="final-scores"></div>
+
+    <div class="lb-section" id="lb-final-wrap">
+      <h3>🏆 Şampiyonlar Tablosu</h3>
+      <div id="final-lb-rows"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="restartGame()">Tekrar Oyna</button>
+      <button class="btn btn-secondary" onclick="goHome()">Ana Menü</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+
+<script>
+const DEYIMLER = [
+  {d:"Ağzı kulaklarına varmak",a:"Çok sevinmek, sevindiği her hâlinden belli olmak",y:["Çok şaşırmak, ne söyleyeceğini bilememek","Bağırıp çağırmak","Bir şeyi anlatmaya çalışmak"]},
+  {d:"Baklayı ağzından çıkarmak",a:"Gizli tuttuğu şeyleri açıklamak, sabrı tükenince söylemek",y:["Yemek yerken konuşmak","Aklına birden bir şey gelmek","Sürekli yalan söylemek"]},
+  {d:"Başının etini yemek",a:"Bıktırıncaya kadar ısrarla bir şey istemek",y:["Birine zarar vermek","Bir kişiyi şikayet etmek","Sürekli eleştirmek"]},
+  {d:"Ateşle oynamak",a:"Çok tehlikeli bir işe girişmek",y:["Çok hızlı hareket etmek","Bir işi aceleci yapmak","Sinirli davranmak"]},
+  {d:"Kabak tadı vermek",a:"Bıktırmak, usanç vermek, tatsız olmaya başlamak",y:["İşe yaramamak","Yavaş ilerlemek","Kimseyle geçinememek"]},
+  {d:"Kabuğuna çekilmek",a:"Tek başına kalmak, dış dünyayla ilgisini kesmek",y:["Utangaç davranmak","Hasta olmak, yatağa düşmek","Sessizce çalışmak"]},
+  {d:"Kafadan atmak",a:"Araştırmadan, rastgele konuşmak",y:["Aptalca davranmak","Çok hızlı düşünmek","Birini küçümsemek"]},
+  {d:"Avucunu yalamak",a:"Umduğunu elde edememek, beklediğini bulamamak",y:["Pişman olmak","Açgözlü davranmak","Sevinçten ne yapacağını bilememek"]},
+  {d:"Ecel terleri dökmek",a:"Çok korkmak, korku ve bunalım içinde olmak",y:["Çok yorulmak, tükenmek","Çok çalışmak, emek harcamak","Büyük bir başarı kazanmak"]},
+  {d:"Edebiyat yapmak",a:"Gerçeği yansıtmayan boş ve süslü sözler söylemek",y:["Kitap okumak, kültürlü olmak","Şiir yazmak","Bir konuda çok bilgi vermek"]},
+  {d:"Eli ayağına dolaşmak",a:"Heyecanlanmak, ne yapacağını şaşırıp dengesini kaybetmek",y:["Çok yorgun olmak, yürüyememek","Aşırı tembellik etmek","Birini taklit etmeye çalışmak"]},
+  {d:"Kabına sığmamak",a:"Sevinç ve heyecanından taşkın hareketlerde bulunmak",y:["Sinirini tutamamak, patlamak","Çok şişman olmak","Bir yere sığamamak"]},
+  {d:"Açık kapı bırakmak",a:"Bir konuya yeniden dönebilme imkânı bırakmak",y:["Evde olmak, kapıyı unutmak","Birine yardım etmek","Düşüncesizce davranmak"]},
+  {d:"Göz hapsine almak",a:"Gözetlemek, bakışlarını bir şeyden ayırmamak",y:["Polis gözetiminde tutmak","Birine kötü bakmak","Uyumaya çalışmak"]},
+  {d:"Jetonu geç düşmek",a:"Bir konuyu geç ve güç anlamak",y:["Geç kalmak, işe geç gitmek","Çok para harcamak","Yavaş yavaş sıkılmak"]},
+  {d:"Başı dik gezmek",a:"Utanılacak durumu olmadan, onurlu biçimde yaşamak",y:["Kibirli olmak, büyüklenmek","Spor yapmak, sağlıklı olmak","Güçlü görünmek"]},
+  {d:"Çürük tahtaya basmak",a:"Tedbirsiz hareket edip kötü sonuçlanacak bir işe girişmek",y:["Eski bir arkadaşla görüşmek","Sağlam adımlarla ilerlemek","Yanlış bir mekâna girmek"]},
+  {d:"Dal budak salmak",a:"Karmaşık biçimde yayılıp genişlemek",y:["Ağaç dikmek","Sinirlenmek, çıkışmak","Bir iş kurmak"]},
+  {d:"Dalavere çevirmek",a:"Hile ve yalan ile gizlice başkasını aldatmak",y:["Çok hızlı konuşmak","Birini öfkelendirmek","İşini ciddiye almamak"]},
+  {d:"Leb demeden leblebiyi anlamak",a:"Daha sözün başında ne demek istendiğini anlamak",y:["Çok az konuşmak","Yemekte seçici olmak","Her şeyi abartmak"]}
+];
+
+const WHEEL_COLORS = [
+  "#f5c842","#4facfe","#ff6b6b","#43e97b","#c471ed","#f7971e",
+  "#12c2e9","#f64f59","#43cea2","#b06ab3","#f7971e","#4facfe",
+  "#ff6b6b","#43e97b","#f5c842","#c471ed","#12c2e9","#f64f59",
+  "#43cea2","#b06ab3"
+];
+const TEXT_COLORS = [
+  "#1a1200","#0a1a2e","#2a0a0a","#0a2a1a","#1a0a2a","#1a0a00",
+  "#0a1a1a","#1a0a0a","#0a1a10","#1a0a1a","#1a0a00","#0a1a2e",
+  "#2a0a0a","#0a2a1a","#1a1200","#1a0a2a","#0a1a1a","#1a0a0a",
+  "#0a1a10","#1a0a1a"
+];
+
+let mode = null, players = [], scores = [], streaks = [], bestStreaks = [];
+let currentPlayer = 0, round = 0;
+let usedIndices = [], currentQ = null, answered = false;
+let timerInterval = null, timerLeft = 15;
+let wheelAngle = 0, isSpinning = false;
+const TOTAL = 20;
+
+function selectMode(m) {
+  mode = m;
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('card-' + m).classList.add('selected');
+  const ni = document.getElementById('name-inputs');
+  if (m === 'solo') {
+    ni.innerHTML = `<div class="input-block"><label>Adın</label><input id="p1" type="text" placeholder="Adını gir" maxlength="20" /></div>`;
+    document.getElementById('lb-home').style.display = 'block';
+    document.getElementById('home-lb-rows').innerHTML = renderLbRows();
+  } else {
+    ni.innerHTML = `<div class="input-block"><label>1. Oyuncu</label><input id="p1" type="text" placeholder="1. oyuncu adı" maxlength="20" /></div><div class="input-block"><label>2. Oyuncu</label><input id="p2" type="text" placeholder="2. oyuncu adı" maxlength="20" /></div>`;
+    document.getElementById('lb-home').style.display = 'none';
+  }
+  document.getElementById('start-btn').style.display = 'block';
+}
+
+function startGame() {
+  const v1 = document.getElementById('p1')?.value.trim() || 'Oyuncu 1';
+  if (mode === 'solo') {
+    players = [v1]; scores = [0]; streaks = [0]; bestStreaks = [0];
+  } else {
+    const v2 = document.getElementById('p2')?.value.trim() || 'Oyuncu 2';
+    players = [v1, v2]; scores = [0, 0]; streaks = [0, 0]; bestStreaks = [0, 0];
+  }
+  currentPlayer = 0; round = 0; usedIndices = []; answered = false;
+  showScreen('s-game');
+  renderScoreboard();
+  drawWheel();
+  resetUI();
+}
+
+function drawWheel() {
+  const canvas = document.getElementById('wheelCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, cx = W / 2, cy = W / 2, r = W / 2 - 8;
+  ctx.clearRect(0, 0, W, W);
+  const n = DEYIMLER.length;
+  const slice = (Math.PI * 2) / n;
+  for (let i = 0; i < n; i++) {
+    const start = wheelAngle + i * slice;
+    const end = start + slice;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, end); ctx.closePath();
+    ctx.fillStyle = WHEEL_COLORS[i]; ctx.fill();
+    ctx.strokeStyle = '#0f1117'; ctx.lineWidth = 2.5; ctx.stroke();
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(start + slice / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = TEXT_COLORS[i];
+    const label = DEYIMLER[i].d.length > 20 ? DEYIMLER[i].d.slice(0, 18) + '…' : DEYIMLER[i].d;
+    ctx.font = `bold 13px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`;
+    ctx.fillText(label, r - 12, 5);
+    ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(245,200,66,0.35)'; ctx.lineWidth = 3; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+  ctx.fillStyle = '#0f1117'; ctx.fill();
+  ctx.strokeStyle = 'rgba(245,200,66,0.6)'; ctx.lineWidth = 2.5; ctx.stroke();
+}
+
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTick() {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(900, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.04);
+    gain.gain.setValueAtTime(0.18, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.07);
+  } catch(e) {}
+}
+
+function spinWheel() {
+  if (isSpinning) return;
+  if (round >= TOTAL) { endGame(); return; }
+  isSpinning = true;
+  clearResult();
+  document.getElementById('spinBtn').disabled = true;
+  document.getElementById('wheelCanvas').classList.add('spinning');
+  const remaining = DEYIMLER.map((_, i) => i).filter(i => !usedIndices.includes(i));
+  if (remaining.length === 0) { endGame(); return; }
+  const targetIdx = remaining[Math.floor(Math.random() * remaining.length)];
+  const n = DEYIMLER.length;
+  const sliceAngle = (Math.PI * 2) / n;
+  const targetAngle = -(targetIdx * sliceAngle + sliceAngle / 2) - Math.PI / 2;
+  const extraSpins = (5 + Math.floor(Math.random() * 4)) * Math.PI * 2;
+  const finalAngle = targetAngle - (wheelAngle % (Math.PI * 2)) + extraSpins;
+  const duration = 3000 + Math.random() * 1000;
+  const startAngle = wheelAngle;
+  const start = performance.now();
+  const canvas = document.getElementById('wheelCanvas');
+  let lastSliceIdx = Math.floor((((-wheelAngle % (Math.PI*2)) + Math.PI*2) % (Math.PI*2)) / sliceAngle);
+  function frame(now) {
+    const elapsed = now - start;
+    const t = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 4);
+    wheelAngle = startAngle + finalAngle * ease;
+    drawWheel();
+    const currentSliceIdx = Math.floor((((-wheelAngle % (Math.PI*2)) + Math.PI*2) % (Math.PI*2)) / sliceAngle);
+    if (currentSliceIdx !== lastSliceIdx) {
+      const speed = (1 - t);
+      if (speed > 0.05) playTick();
+      lastSliceIdx = currentSliceIdx;
+    }
+    if (t < 1) { requestAnimationFrame(frame); return; }
+    wheelAngle = targetAngle; drawWheel();
+    isSpinning = false;
+    canvas.classList.remove('spinning');
+    usedIndices.push(targetIdx);
+    showQuestion(targetIdx);
+  }
+  requestAnimationFrame(frame);
+}
+
+function showQuestion(idx) {
+  round++;
+  document.getElementById('q-counter').textContent = `Soru ${round} / ${TOTAL}`;
+  document.getElementById('prog-bar').style.width = ((round - 1) / TOTAL * 100) + '%';
+  currentQ = { ...DEYIMLER[idx], idx };
+  answered = false;
+  const card = document.getElementById('deyim-card');
+  card.classList.add('has-q');
+  document.getElementById('deyim-text').textContent = currentQ.d;
+  document.getElementById('deyim-sub').textContent = 'Doğru anlamı seçin';
+  const opts = [currentQ.a, ...currentQ.y].sort(() => Math.random() - 0.5);
+  const og = document.getElementById('options');
+  og.innerHTML = opts.map(o => `<button class="opt-btn" onclick="checkAnswer(this,'${o.replace(/'/g, "\\'")}')">${o}</button>`).join('');
+  startTimer();
+  document.getElementById('result-msg').style.display = 'none';
+}
+
+function checkAnswer(btn, chosen) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+  document.getElementById('timer-bar').style.width = '0%';
+  const correct = chosen === currentQ.a;
+  document.querySelectorAll('.opt-btn').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === currentQ.a) b.classList.add('correct');
+  });
+  if (!correct) btn.classList.add('wrong');
+  if (correct) {
+    scores[currentPlayer] += 10;
+    streaks[currentPlayer]++;
+    if (streaks[currentPlayer] > bestStreaks[currentPlayer]) bestStreaks[currentPlayer] = streaks[currentPlayer];
+    const sLabel = streaks[currentPlayer] >= 2 ? ` 🔥 ${streaks[currentPlayer]} seri` : '';
+    showResult('correct', `✓ Doğru! +10 puan${sLabel}`);
+  } else {
+    streaks[currentPlayer] = 0;
+    showResult('wrong', `✗ Yanlış! Doğru: "${currentQ.a}"`);
+  }
+  renderScoreboard();
+  document.getElementById('streak-label').textContent = streaks[currentPlayer] >= 2 ? `🔥 ${streaks[currentPlayer]} seri` : '';
+  setTimeout(() => {
+    clearResult();
+    document.getElementById('deyim-card').classList.remove('has-q');
+    document.getElementById('options').innerHTML = '';
+    document.getElementById('deyim-text').textContent = 'Çarkı çevirerek devam et!';
+    document.getElementById('deyim-sub').textContent = '';
+    if (round >= TOTAL) { endGame(); return; }
+    if (mode === 'duo') { currentPlayer = (currentPlayer + 1) % 2; renderScoreboard(); }
+    document.getElementById('spinBtn').disabled = false;
+  }, 2200);
+}
+
+function startTimer() {
+  timerLeft = 15;
+  const bar = document.getElementById('timer-bar');
+  bar.style.width = '100%';
+  bar.className = 'timer-bar';
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timerLeft -= 0.1;
+    const pct = Math.max((timerLeft / 15) * 100, 0);
+    bar.style.width = pct + '%';
+    if (pct < 40) bar.className = 'timer-bar warn';
+    if (pct < 20) bar.className = 'timer-bar danger';
+    if (timerLeft <= 0) { clearInterval(timerInterval); if (!answered) timeUp(); }
+  }, 100);
+}
+
+function timeUp() {
+  answered = true;
+  document.querySelectorAll('.opt-btn').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === currentQ.a) b.classList.add('correct');
+  });
+  streaks[currentPlayer] = 0;
+  showResult('wrong', `⏱ Süre doldu! Doğru: "${currentQ.a}"`);
+  renderScoreboard();
+  setTimeout(() => {
+    clearResult();
+    document.getElementById('deyim-card').classList.remove('has-q');
+    document.getElementById('options').innerHTML = '';
+    document.getElementById('deyim-text').textContent = 'Çarkı çevirerek devam et!';
+    document.getElementById('deyim-sub').textContent = '';
+    if (round >= TOTAL) { endGame(); return; }
+    if (mode === 'duo') { currentPlayer = (currentPlayer + 1) % 2; renderScoreboard(); }
+    document.getElementById('spinBtn').disabled = false;
+  }, 2200);
+}
+
+function renderScoreboard() {
+  const sb = document.getElementById('scoreboard');
+  sb.innerHTML = players.map((p, i) => `
+    <div class="score-card ${i === currentPlayer ? 'active' : ''}">
+      <div class="sc-name">${p}</div>
+      <div class="sc-pts">${scores[i]}</div>
+      <div class="sc-streak">${streaks[i] >= 2 ? '🔥 ' + streaks[i] + ' seri' : ''}</div>
+    </div>`).join('');
+  const tb = document.getElementById('turn-badge-wrap');
+  if (mode === 'duo') { tb.style.display = 'block'; document.getElementById('turn-badge').textContent = `Sıra: ${players[currentPlayer]}`; }
+  else { tb.style.display = 'none'; }
+}
+
+function showResult(type, msg) { const el = document.getElementById('result-msg'); el.textContent = msg; el.className = 'result-msg ' + type; el.style.display = 'block'; }
+function clearResult() { document.getElementById('result-msg').style.display = 'none'; }
+
+function resetUI() {
+  document.getElementById('q-counter').textContent = `Soru 0 / ${TOTAL}`;
+  document.getElementById('prog-bar').style.width = '0%';
+  document.getElementById('timer-bar').style.width = '100%';
+  document.getElementById('timer-bar').className = 'timer-bar';
+  document.getElementById('options').innerHTML = '';
+  document.getElementById('deyim-text').textContent = 'Çarkı çevirerek başla!';
+  document.getElementById('deyim-sub').textContent = '20 deyim · 10 puan / doğru cevap';
+  document.getElementById('deyim-card').classList.remove('has-q');
+  document.getElementById('result-msg').style.display = 'none';
+  document.getElementById('streak-label').textContent = '';
+  document.getElementById('spinBtn').disabled = false;
+}
+
+function endGame() { clearInterval(timerInterval); if (mode === 'solo') saveLb(); renderFinal(); showScreen('s-final'); }
+function saveLb() { const lb = getLb(); lb.push({ name: players[0], score: scores[0], best: bestStreaks[0], date: new Date().toLocaleDateString('tr-TR') }); lb.sort((a,b) => b.score - a.score); try { localStorage.setItem('soz_carki_v2', JSON.stringify(lb.slice(0,10))); } catch(e) {} }
+function getLb() { try { return JSON.parse(localStorage.getItem('soz_carki_v2')) || []; } catch { return []; } }
+function renderLbRows() { const lb = getLb(); if (!lb.length) return '<div class="lb-empty">Henüz kayıt yok — ilk rekoru sen koy!</div>'; const medals = ['🥇','🥈','🥉']; return lb.map((e,i) => `<div class="lb-row"><div class="lb-rank">${medals[i] || (i+1)+'.'}</div><div class="lb-name">${e.name}</div><div class="lb-date">${e.date || ''}</div><div class="lb-pts">${e.score} pt</div></div>`).join(''); }
+
+function renderFinal() {
+  const wb = document.getElementById('winner-banner'); const wt = document.getElementById('winner-title'); const ws = document.getElementById('winner-sub'); const ti = document.getElementById('trophy-icon');
+  if (mode === 'solo') {
+    ti.textContent = '🏆'; wt.textContent = players[0]; ws.textContent = `${scores[0]} puan · En uzun seri: ${bestStreaks[0]} doğru`;
+    document.getElementById('final-scores').innerHTML = `<div class="final-score-card first"><div class="medal-icon">🎯</div><div class="fc-name">${players[0]}</div><div class="fc-pts">${scores[0]} puan</div><div class="fc-streak">Seri: ${bestStreaks[0]}</div></div>`;
+  } else {
+    const sorted = [0,1].map(i => ({ name: players[i], score: scores[i], streak: bestStreaks[i] })).sort((a,b) => b.score - a.score);
+    const tie = sorted[0].score === sorted[1].score;
+    ti.textContent = tie ? '🤝' : '🏆'; wt.textContent = tie ? 'Beraberlik!' : `Şampiyon: ${sorted[0].name}`; ws.textContent = tie ? `Her ikisi de ${sorted[0].score} puan aldı` : `${sorted[0].score} puana karşı ${sorted[1].score} puan`;
+    const medals = ['🥇','🥈']; document.getElementById('final-scores').innerHTML = sorted.map((x,i) => `<div class="final-score-card ${i===0?'first':''}"><div class="medal-icon">${medals[i]}</div><div class="fc-name">${x.name}</div><div class="fc-pts">${x.score} puan</div><div class="fc-streak">Seri: ${x.streak}</div></div>`).join('');
+  }
+  const lbWrap = document.getElementById('lb-final-wrap'); if (mode === 'solo') { lbWrap.style.display = 'block'; document.getElementById('final-lb-rows').innerHTML = renderLbRows(); } else { lbWrap.style.display = 'none'; }
+}
+
+function restartGame() { scores = players.map(()=>0); streaks = players.map(()=>0); bestStreaks = players.map(()=>0); currentPlayer = 0; round = 0; usedIndices = []; answered = false; wheelAngle = 0; showScreen('s-game'); renderScoreboard(); drawWheel(); resetUI(); }
+function goHome() { showScreen('s-mode'); if (mode === 'solo') { document.getElementById('lb-home').style.display = 'block'; document.getElementById('home-lb-rows').innerHTML = renderLbRows(); } }
+function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+window.addEventListener('scroll', () => {
+  const btnWrap = document.getElementById('backBtnWrap');
+  if (window.scrollY > 60) { btnWrap.style.opacity = '0'; btnWrap.style.pointerEvents = 'none'; }
+  else { btnWrap.style.opacity = '1'; btnWrap.style.pointerEvents = 'auto'; }
+});
+</script>
+</body>
+</html>
