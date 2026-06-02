@@ -14,7 +14,7 @@
 <title>Hamza Hoca ile Türkçe Öğreniyorum</title>
 <style>
 /* ═══════════════════════════════════════
-   RESET & BASE
+   RESET & BASE - AYNI
 ═══════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,7 +23,9 @@ body {
   background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
   min-height: 100vh;
   color: white;
+  position: relative;
 }
+
 
 .page-wrapper {
   max-width: 1100px;
@@ -70,41 +72,6 @@ header h1 {
   text-transform: uppercase;
 }
 
-/* ─── PROFİL BUTONU (header içinde) ─── */
-.profile-bar {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 14px;
-}
-.profile-bar.show { display: flex; }
-.profile-bar .pb-avatar {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: linear-gradient(135deg,#c9960a,#F5C842);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 13px; color: #0D1B2A;
-}
-.profile-bar .pb-name {
-  font-size: 14px; font-weight: 600; color: #F5C842;
-}
-.profile-bar a.pb-link {
-  font-size: 12px; color: #F5C842;
-  background: rgba(245,200,66,0.12);
-  border: 1px solid rgba(245,200,66,0.35);
-  border-radius: 20px; padding: 5px 14px;
-  text-decoration: none; transition: background .2s;
-}
-.profile-bar a.pb-link:hover { background: rgba(245,200,66,0.22); }
-.profile-bar button.pb-logout {
-  font-size: 12px; color: rgba(255,255,255,0.5);
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 20px; padding: 5px 14px;
-  cursor: pointer; transition: all .2s;
-}
-.profile-bar button.pb-logout:hover { color: white; border-color: rgba(255,255,255,0.35); }
-
 /* ═══════════════════════════════════════
    BUTTON GRID
 ═══════════════════════════════════════ */
@@ -130,6 +97,8 @@ header h1 {
   gap: 10px;
   transition: background .22s, transform .18s, box-shadow .22s;
   width: 100%;
+  height: 110px;
+  justify-content: center;
 }
 
 .cat-btn:hover {
@@ -334,10 +303,24 @@ footer span { color: #F5C842; }
   font-size: 0.75rem;
 }
 
-.visitor-counter .vc-icon { font-size: 0.8rem; }
-.visitor-counter .vc-divider { color: rgba(245,200,66,0.4); margin: 0 1px; }
-.visitor-counter .vc-daily  { color: #F5C842; font-weight: 700; }
-.visitor-counter .vc-total  { color: #F5C842; font-weight: 700; }
+.visitor-counter .vc-icon {
+  font-size: 0.8rem;
+}
+
+.visitor-counter .vc-divider {
+  color: rgba(245,200,66,0.4);
+  margin: 0 1px;
+}
+
+.visitor-counter .vc-daily {
+  color: #F5C842;
+  font-weight: 700;
+}
+
+.visitor-counter .vc-total {
+  color: #F5C842;
+  font-weight: 700;
+}
 
 @keyframes popIn {
   from { opacity: 0; transform: scale(.93) translateY(10px); }
@@ -360,58 +343,142 @@ footer span { color: #F5C842; }
 
 .tg-icon {
   flex-shrink: 0;
-  width: 44px; height: 44px;
+  width: 44px;
+  height: 44px;
   background: #229ED9;
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.tg-icon svg { width: 24px; height: 24px; fill: white; }
+
+.tg-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
 
 .tg-body {
   flex: 1;
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .tg-bubble {
   background: #229ED9;
   color: white;
-  font-size: 0.88rem; font-weight: 500;
+  font-size: 0.88rem;
+  font-weight: 500;
   padding: 10px 14px;
   border-radius: 16px 16px 16px 4px;
   line-height: 1.4;
-  display: inline-block; max-width: 100%;
+  display: inline-block;
+  max-width: 100%;
 }
 
 .tg-send-btn {
   align-self: flex-start;
   background: linear-gradient(135deg, #229ED9, #1a7fb5);
-  color: white; border: none; border-radius: 20px;
-  padding: 7px 18px; font-size: 0.78rem; font-weight: 700;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-size: 0.78rem;
+  font-weight: 700;
   cursor: pointer;
-  display: flex; align-items: center; gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   transition: transform .15s, box-shadow .15s;
-  text-decoration: none; letter-spacing: 0.03em;
+  text-decoration: none;
+  letter-spacing: 0.03em;
 }
-.tg-send-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(34,158,217,0.4); }
-.tg-send-btn svg { width: 14px; height: 14px; fill: white; }
+
+.tg-send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34,158,217,0.4);
+}
+
+.tg-send-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: white;
+}
+
+/* LOGO */
+.site-logo {
+  position: absolute;
+  top: 20px;
+  width: auto;
+  height: auto;
+  max-width: 130px;
+  max-height: 130px;
+  z-index: 50;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.site-logo.left {
+  left: 20px;
+}
+
+.site-logo.right {
+  right: 20px;
+}
+
+@media (max-width: 1100px) {
+  .site-logo {
+    max-width: 100px;
+    max-height: 100px;
+  }
+  .site-logo.left { left: 15px; top: 15px; }
+  .site-logo.right { right: 15px; top: 15px; }
+}
+@media (max-width: 700px) {
+  .site-logo {
+    max-width: 70px;
+    max-height: 70px;
+  }
+  .site-logo.left { left: 10px; top: 10px; }
+  .site-logo.right { right: 10px; top: 10px; }
+}
+@media (max-width: 500px) {
+  .site-logo {
+    max-width: 55px;
+    max-height: 55px;
+  }
+}
+
+.site-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 </style>
 </head>
 <body>
+
+<div class="site-logo left">
+  <img src="https://github.com/hamzaozaydin/testmerkezi/blob/main/sitenin_logosu.png?raw=true" alt="Logo Sol">
+</div>
+<div class="site-logo right">
+  <img src="https://github.com/hamzaozaydin/testmerkezi/blob/main/sitenin_logosu.png?raw=true" alt="Logo Sağ">
+</div>
+
 <div class="page-wrapper">
 
-  <header>
+<header>
     <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
     <div class="header-line"></div>
     <div class="stars">★ ★ ★ ★ ★</div>
     <p class="subtitle">Türkçe Öğrenme Platformu</p>
-
-    <!-- GİRİŞ YAPILMIŞSA GÖSTER -->
-    <div class="profile-bar" id="profile-bar">
-      <div class="pb-avatar" id="pb-avatar">?</div>
-      <span class="pb-name" id="pb-name"></span>
-      <a href="profil.html" class="pb-link">👤 Profilim</a>
-      <button class="pb-logout" onclick="doLogout()">Çıkış</button>
-    </div>
   </header>
 
   <div class="btn-grid">
@@ -455,54 +522,94 @@ footer span { color: #F5C842; }
       <span class="emoji">📗</span>
       <span class="label">E-KİTAPLAR / SESLİ KİTAPLAR</span>
     </button>
-    <button class="cat-btn" onclick="toggle('oyunlar', this)">
-      <span class="emoji">🎯</span>
+     <button class="cat-btn" onclick="toggle('oyunlar', this)">
+       <span class="emoji">🎯</span>
       <span class="label">OYUNLAR</span>
     </button>
-    <button class="cat-btn" onclick="window.location.href='video_sorucozmeteknikleri_1.html'">
-      <span class="emoji">🎬</span>
-      <span class="label">VİDEOLAR (SORU ÇÖZME TEKNİKLERİ)</span>
+     <button class="cat-btn" onclick="window.location.href='video_sorucozmeteknikleri_1.html'">
+       <span class="emoji">🎬</span>
+     <span class="label">VİDEOLAR (SORU ÇÖZME TEKNİKLERİ)</span>
     </button>
-    <button class="cat-btn" onclick="toggle('ogretmenler-icin', this)">
+      <button class="cat-btn" onclick="toggle('ogretmenler-icin', this)">
       <span class="emoji">👩‍🏫</span>
       <span class="label">ÖĞRETMENLER İÇİN</span>
     </button>
     <button class="cat-btn" onclick="window.location.href='yazma_alistirmalari.html'">
-      <span class="emoji">✏️</span>
-      <span class="label">YAZMA ALIŞTIRMALARI</span>
+  <span class="emoji">✏️</span>
+  <span class="label">YAZMA ALIŞTIRMALARI</span>
+</button>
+    <button class="cat-btn" id="odevGonderBtn">
+      <span class="emoji">📤</span>
+      <span class="label">YAZMA ÖDEVİ GÖNDER</span>
     </button>
-  </div>
+    <button class="cat-btn" id="konusmaOdevGonderBtn">
+      <span class="emoji">🎙️</span>
+      <span class="label">KONUŞMA KAYDI GÖNDER</span>
+    </button>
+    </div>
 
-  <!-- ── OKUMA SINAVLARI ── -->
   <div class="content-panel" id="okuma-testleri">
     <div class="panel-header"><h2>📖 Okuma Sınavları</h2></div>
     <div class="panel-body">
       <div class="items-grid">
-        <div class="item-card" onclick="openLogin('okuma1.html')"><span class="item-name">Okuma Sınavı 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('okuma-testi-2.html')"><span class="item-name">Okuma Sınavı 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('okuma_testi_3.html')"><span class="item-name">Okuma Sınavı 3</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('okuma_testi_4.html')"><span class="item-name">Okuma Sınavı 4</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('okuma_testi_5.html')"><span class="item-name">Okuma Sınavı 5</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('okuma_testi_6.html')"><span class="item-name">Okuma Sınavı 6</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('okuma_testi_7.html')"><span class="item-name">Okuma Sınavı 7</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('okuma_testi_8.html')"><span class="item-name">Okuma Sınavı 8</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('TYS_okuma_testi_1.html')"><span class="item-name">Okuma Sınavı 9 (TYS)</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+        <div class="item-card" onclick="openExamLogin('okuma1.html')">
+          <span class="item-name">Okuma Sınavı 1</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('okuma-testi-2.html')">
+          <span class="item-name">Okuma Sınavı 2</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('okuma_testi_3.html')">
+          <span class="item-name">Okuma Sınavı 3</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('okuma_testi_4.html')">
+          <span class="item-name">Okuma Sınavı 4</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('okuma_testi_5.html')">
+          <span class="item-name">Okuma Sınavı 5</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+         <div class="item-card" onclick="openExamLogin('okuma_testi_6.html')">
+          <span class="item-name">Okuma Sınavı 6</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+         <div class="item-card" onclick="openExamLogin('okuma_testi_7.html')">
+          <span class="item-name">Okuma Sınavı 7</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+         <div class="item-card" onclick="openExamLogin('okuma_testi_8.html')">
+          <span class="item-name">Okuma Sınavı 8</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+          <div class="item-card" onclick="openExamLogin('TYS_okuma_testi_1.html')">
+          <span class="item-name">Okuma Sınavı 9 (TYS)</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
       </div>
       <div class="tg-widget">
-        <div class="tg-icon"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div>
+        <div class="tg-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </div>
         <div class="tg-body">
           <span class="tg-bubble">Merhaba hocam. Ben bu testleri satın almak istiyorum.</span>
-          <a class="tg-send-btn" href="https://t.me/HamzaOzaydin?text=Merhaba%20hocam.%20Ben%20bu%20testleri%20sat%C4%B1n%20almak%20istiyorum." target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>Gönder</a>
+          <a class="tg-send-btn" href="https://t.me/HamzaOzaydin?text=Merhaba%20hocam.%20Ben%20bu%20testleri%20sat%C4%B1n%20almak%20istiyorum." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            Gönder
+          </a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── A1 KELİME KARTLARI ── -->
   <div class="content-panel" id="a1-kelime">
-    <div class="panel-header"><h2>🃏 A1 Kelime Kartları</h2></div>
+    <div class="panel-header"><h2>🃏 A1/A2 Kelime Kartları</h2></div>
     <div class="panel-body">
       <div class="items-grid">
+        <a class="item-card" href="a1_turk_alfabesi.html"><span class="item-name">Alfabe Kartları</span><span class="badge badge-free">✅ Ücretsiz</span></a>
+        <a class="item-card" href="a1_unlu_harfler.html"><span class="item-name">Ünlü Harfler</span><span class="badge badge-free">✅ Ücretsiz</span></a>
         <a class="item-card" href="kartlar.html"><span class="item-name">Selamlaşma Kartları</span><span class="badge badge-free">✅ Ücretsiz</span></a>
         <a class="item-card" href="gunler.html"><span class="item-name">Günler</span><span class="badge badge-free">✅ Ücretsiz</span></a>
         <a class="item-card" href="a1_es_anlamli_kelimeler.html"><span class="item-name">Eş Anlamlı Kelimeler 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
@@ -515,177 +622,465 @@ footer span { color: #F5C842; }
         <a class="item-card" href="a1_kelime_bulmaca_2.html"><span class="item-name">Kelime Bulmaca 2</span><span class="badge badge-free">✅ Ücretsiz</span></a>
         <a class="item-card" href="a1_hal_ekleri.html"><span class="item-name">Hal Ekleri</span><span class="badge badge-free">✅ Ücretsiz</span></a>
         <a class="item-card" href="a1_isim_tamlamalari.html"><span class="item-name">İsim Tamlamaları</span><span class="badge badge-free">✅ Ücretsiz</span></a>
+         <a class="item-card" href="a1_karisik_kelimeler_1.html"><span class="item-name">Karışık Kelimeler 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
       </div>
     </div>
   </div>
 
-  <!-- ── B2/C1 KELİME KARTLARI ── -->
   <div class="content-panel" id="b2c1-kelime">
     <div class="panel-header"><h2>📚 B2/C1 Kelime Kartları</h2></div>
     <div class="panel-body">
       <div class="two-col-grid">
+
         <div>
           <div class="col-label col-label-free">✅ Ücretsiz</div>
           <div class="col-items">
-            <a class="item-card" href="kroki_kelimeleri.html"><span class="item-name">Kroki Kelimeleri</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="kelimeler1.html"><span class="item-name">Kelimeler 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="b2c1_kelimeler_ucretsiz2.html"><span class="item-name">Kelimeler 2</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="b2c1_kelimeler_ucretsiz_3.html"><span class="item-name">Kelimeler 3</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="cumle_kurma_alistirmasi_ucretsiz_1.html"><span class="item-name">Cümle Kurma Alıştırması 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="deyimler_b2_ucretsiz_1.html"><span class="item-name">Deyimler 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="gunluk_ifadeler_ucretsiz_1.html"><span class="item-name">Günlük İfadeler 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
+            <a class="item-card" href="kroki_kelimeleri.html">
+              <span class="item-name">Kroki Kelimeleri</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="kelimeler1.html">
+              <span class="item-name">Kelimeler 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="b2c1_kelimeler_ucretsiz2.html">
+              <span class="item-name">Kelimeler 2</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="b2c1_kelimeler_ucretsiz_3.html">
+              <span class="item-name">Kelimeler 3</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="cumle_kurma_alistirmasi_ucretsiz_1.html">
+              <span class="item-name">Cümle Kurma Alıştırması 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="deyimler_b2_ucretsiz_1.html">
+              <span class="item-name">Deyimler 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="gunluk_ifadeler_ucretsiz_1.html">
+              <span class="item-name">Günlük İfadeler 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="https://hamzahocaileturkceogreniyorum1.base44.app/" target="_self">
+              <span class="item-name">Özbekçe-Türkçe Aktarım 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+<a class="item-card" href="b2_c1_kelime_bulmaca_ucretsiz.html">
+              <span class="item-name">Kelime Bulmaca 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
           </div>
         </div>
+
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLogin('baglaçlar.html')"><span class="item-name">Bağlaçlar</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('b2_kelimeler_2.html')"><span class="item-name">Kelimeler 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('b2_kelimeler_3.html')"><span class="item-name">Kelimeler 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('b2_kelimeler_33.html')"><span class="item-name">Kelimeler 3</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('b2_kelimeler_4.html')"><span class="item-name">Kelimeler 4</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('cumle_kurma_alistirmasi_1.html')"><span class="item-name">Cümle Kurma Alıştırması 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('cumle_kurma_alistirmasi_2.html')"><span class="item-name">Cümle Kurma Alıştırması 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('B2_es_anlamli_kelime_oyunu_1.html')"><span class="item-name">Eş Anlamlı Kelime Alıştırması 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('gunluk_ifadeler_1.html')"><span class="item-name">Günlük İfadeler 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('gunluk_ifadeler_2.html')"><span class="item-name">Günlük İfadeler 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('gunluk_ifadeler_3.html')"><span class="item-name">Günlük İfadeler 3</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('deyimler_b2_1.html')"><span class="item-name">Deyimler 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('deyimler_b2_2.html')"><span class="item-name">Deyimler 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+            <div class="item-card" onclick="openExamLogin('baglaçlar.html')">
+              <span class="item-name">Bağlaçlar</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+          <div class="item-card" onclick="openExamLogin('b2_birlesik_zamanlar.html')">
+              <span class="item-name">Birleşik Zamanlar</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('b2_kelimeler_2.html')">
+              <span class="item-name">Kelimeler 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('b2_kelimeler_3.html')">
+              <span class="item-name">Kelimeler 2</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('b2_kelimeler_33.html')">
+              <span class="item-name">Kelimeler 3</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('b2_kelimeler_4.html')">
+              <span class="item-name">Kelimeler 4</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('cumle_kurma_alistirmasi_1.html')">
+              <span class="item-name">Cümle Kurma Alıştırması 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('cumle_kurma_alistirmasi_2.html')">
+              <span class="item-name">Cümle Kurma Alıştırması 2</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('B2_es_anlamli_kelime_oyunu_1.html')">
+              <span class="item-name">Eş Anlamlı Kelime Alıştırması 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+              <div class="item-card" onclick="openExamLogin('gunluk_ifadeler_1.html')">
+              <span class="item-name">Günlük İfadeler 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('gunluk_ifadeler_2.html')">
+              <span class="item-name">Günlük İfadeler 2</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('gunluk_ifadeler_3.html')">
+              <span class="item-name">Günlük İfadeler 3</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('gunluk_ifadeler_4.html')">
+              <span class="item-name">Günlük İfadeler 4</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('deyimler_b2_1.html')">
+              <span class="item-name">Deyimler 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('deyimler_b2_2.html')">
+              <span class="item-name">Deyimler 2</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- ── DİNLEME SINAVLARI ── -->
   <div class="content-panel" id="dinleme-testleri">
     <div class="panel-header"><h2>🎧 Dinleme Sınavları</h2></div>
     <div class="panel-body">
       <div class="items-grid">
-        <div class="item-card" onclick="openLogin('dinleme_sinavi.html')"><span class="item-name">Dinleme Sınavı 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_2.html')"><span class="item-name">Dinleme Sınavı 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_3.html')"><span class="item-name">Dinleme Sınavı 3</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_4.html')"><span class="item-name">Dinleme Sınavı 4</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_5.html')"><span class="item-name">Dinleme Sınavı 5</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_6.html')"><span class="item-name">Dinleme Sınavı 6</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-        <div class="item-card" onclick="openLogin('TYS_dinleme_testi_1.html')"><span class="item-name">Dinleme Sınavı 7 (TYS)</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+        <div class="item-card" onclick="openExamLogin('dinleme_sinavi.html')">
+          <span class="item-name">Dinleme Sınavı 1</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_2.html')">
+          <span class="item-name">Dinleme Sınavı 2</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_3.html')">
+          <span class="item-name">Dinleme Sınavı 3</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_4.html')">
+          <span class="item-name">Dinleme Sınavı 4</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_5.html')">
+          <span class="item-name">Dinleme Sınavı 5</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+         <div class="item-card" onclick="openExamLogin('dinleme_testi_6.html')">
+          <span class="item-name">Dinleme Sınavı 6</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+         <div class="item-card" onclick="openExamLogin('TYS_dinleme_testi_1.html')">
+          <span class="item-name">Dinleme Sınavı 7 (TYS)</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_8.html')">
+          <span class="item-name">Dinleme Sınavı 8</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
       </div>
       <div class="tg-widget">
-        <div class="tg-icon"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div>
+        <div class="tg-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </div>
         <div class="tg-body">
           <span class="tg-bubble">Merhaba hocam. Ben bu testleri satın almak istiyorum.</span>
-          <a class="tg-send-btn" href="https://t.me/HamzaOzaydin?text=Merhaba%20hocam.%20Ben%20bu%20testleri%20sat%C4%B1n%20almak%20istiyorum." target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>Gönder</a>
+          <a class="tg-send-btn" href="https://t.me/HamzaOzaydin?text=Merhaba%20hocam.%20Ben%20bu%20testleri%20sat%C4%B1n%20almak%20istiyorum." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            Gönder
+          </a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── KONUŞMA SORULARI ── -->
   <div class="content-panel" id="konusma-sorulari">
     <div class="panel-header"><h2>💬 Konuşma Soruları</h2></div>
     <div class="panel-body">
       <div class="two-col-grid">
+
+        <!-- SOL TARAF: ÜCRETSİZ İÇERİKLER (Olduğu gibi) -->
         <div>
           <div class="col-label col-label-free">✅ Ücretsiz</div>
           <div class="col-items">
-            <a class="item-card" href="2026_ocak_nisan_cikmis_sorular.html"><span class="item-name">2026 Ocak-Nisan Çıkmış Sorular</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="konuşma_soruları_1.html"><span class="item-name">Konuşma Soruları 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="konuşma_soruları_2.html"><span class="item-name">Konuşma Soruları 2</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="konusma_soruları_ucretsiz_3.html"><span class="item-name">Konuşma Soruları 3</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="konusma_soruları_ucretsiz_4.html"><span class="item-name">Konuşma Soruları 4</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="konusma_soruları_ucretsiz_5.html"><span class="item-name">Konuşma Soruları 5</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="konusma_soruları_ucretsiz_6.html"><span class="item-name">Konuşma Soruları 6</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="konusma_soruları_ucretsiz_7.html"><span class="item-name">Konuşma Soruları 7</span><span class="badge badge-free">✅ Ücretsiz</span></a>
+            <a class="item-card" href="2026_ocak_nisan_cikmis_sorular.html">
+              <span class="item-name">2026 Ocak-Nisan Çıkmış Sorular</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="konuşma_soruları_1.html">
+              <span class="item-name">Konuşma Soruları 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="konuşma_soruları_2.html">
+              <span class="item-name">Konuşma Soruları 2</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="konusma_soruları_ucretsiz_3.html">
+              <span class="item-name">Konuşma Soruları 3</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="konusma_soruları_ucretsiz_4.html">
+              <span class="item-name">Konuşma Soruları 4</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="konusma_soruları_ucretsiz_5.html">
+              <span class="item-name">Konuşma Soruları 5</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="konusma_soruları_ucretsiz_6.html">
+              <span class="item-name">Konuşma Soruları 6</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+               <a class="item-card" href="konusma_soruları_ucretsiz_7.html">
+              <span class="item-name">Konuşma Soruları 7</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="konusma_soruları_ucretsiz_8.html">
+              <span class="item-name">Konuşma Soruları 8</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
           </div>
-          <div class="col-label col-label-free" style="margin-top:18px;">🎬 Video Sorular</div>
-          <div class="col-items">
-            <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_1.mp4')"><span class="item-name">Video Sorular 1</span><span class="badge badge-free">✅ Ücretsiz</span></div>
-            <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretsiz_2.mp4')"><span class="item-name">Video Sorular 2</span><span class="badge badge-free">✅ Ücretsiz</span></div>
-            <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretsiz_3.mp4')"><span class="item-name">Video Sorular 3</span><span class="badge badge-free">✅ Ücretsiz</span></div>
-          </div>
+
+          <div class="col-label col-label-free" style="margin-top: 18px;">🎬 Video Sorular</div>
+            <div class="col-items">
+              <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_1.mp4')">
+                <span class="item-name">Video Sorular 1</span>
+                <span class="badge badge-free">✅ Ücretsiz</span>
+              </div>
+              <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretsiz_2.mp4')">
+                <span class="item-name">Video Sorular 2</span>
+                <span class="badge badge-free">✅ Ücretsiz</span>
+              </div>
+              <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretsiz_3.mp4')">
+                <span class="item-name">Video Sorular 3</span>
+                <span class="badge badge-free">✅ Ücretsiz</span>
+              </div>
+              <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretsiz_4.mp4')">
+                <span class="item-name">Video Sorular 4</span>
+                <span class="badge badge-free">✅ Ücretsiz</span>
+              </div>
+            </div>
         </div>
+
+        <!-- SAĞ TARAF: SADECE GİRİŞ GEREKLİ OLANLAR -->
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLogin('konuşma_soruları_3.html')"><span class="item-name">Konuşma Soruları 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konuşma_soruları_4.html')"><span class="item-name">Konuşma Soruları 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_5.html')"><span class="item-name">Konuşma Soruları 3</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_6.html')"><span class="item-name">Konuşma Soruları 4</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konuşma_soruları_7.html')"><span class="item-name">Konuşma Soruları 5</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_66.html')"><span class="item-name">Konuşma Soruları 6</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_77.html')"><span class="item-name">Konuşma Soruları 7</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_8.html')"><span class="item-name">Konuşma Soruları 8</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_9.html')"><span class="item-name">Konuşma Soruları 9</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_10.html')"><span class="item-name">Konuşma Soruları 10</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_11.html')"><span class="item-name">Konuşma Soruları 11</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_12.html')"><span class="item-name">Konuşma Soruları 12</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_13.html')"><span class="item-name">Konuşma Soruları 13</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+            <div class="item-card" onclick="openExamLogin('konuşma_soruları_3.html')">
+              <span class="item-name">Konuşma Soruları 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('konuşma_soruları_4.html')">
+              <span class="item-name">Konuşma Soruları 2</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('konusma_sorulari_5.html')">
+              <span class="item-name">Konuşma Soruları 3</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('konusma_sorulari_6.html')">
+              <span class="item-name">Konuşma Soruları 4</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('konusma_soruları_7.html')">
+              <span class="item-name">Konuşma Soruları 5</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_66.html')">
+              <span class="item-name">Konuşma Soruları 6</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_77.html')">
+              <span class="item-name">Konuşma Soruları 7</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_8.html')">
+              <span class="item-name">Konuşma Soruları 8</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_9.html')">
+              <span class="item-name">Konuşma Soruları 9</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_10.html')">
+              <span class="item-name">Konuşma Soruları 10</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_11.html')">
+              <span class="item-name">Konuşma Soruları 11</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_12.html')">
+              <span class="item-name">Konuşma Soruları 12</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_13.html')">
+              <span class="item-name">Konuşma Soruları 13</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
           </div>
-          <div class="col-label col-label-locked" style="margin-top:18px;">🎬 Video Sorular</div>
-          <div class="col-items">
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_1.mp4')"><span class="item-name">Video Sorular 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_2.mp4')"><span class="item-name">Video Sorular 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_3.mp4')"><span class="item-name">Video Sorular 3</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_4.mp4')"><span class="item-name">Video Sorular 4</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_5.mp4')"><span class="item-name">Video Sorular 5</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-          </div>
+
+          <div class="col-label col-label-locked" style="margin-top: 18px;">🎬 Video Sorular</div>
+            <div class="col-items">
+              <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_1.mp4')">
+                <span class="item-name">Video Sorular 1</span>
+                <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+              </div>
+              <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_2.mp4')">
+                <span class="item-name">Video Sorular 2</span>
+                <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+              </div>
+              <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_3.mp4')">
+                <span class="item-name">Video Sorular 3</span>
+                <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+              </div>
+              <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_4.mp4')">
+                <span class="item-name">Video Sorular 4</span>
+                <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+              </div>
+              <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_5.mp4')">
+                <span class="item-name">Video Sorular 5</span>
+                <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+              </div>
+              <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_6.mp4')">
+                <span class="item-name">Video Sorular 6</span>
+                <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+              </div>
+              <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_7.mp4')">
+                <span class="item-name">Video Sorular 7</span>
+                <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+              </div>
+              <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_8.mp4')">
+                <span class="item-name">Video Sorular 8</span>
+                <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+              </div>
+            </div>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- ── OKUMA METİNLERİ ── -->
-  <div class="content-panel" id="okuma-metinleri">
+ <div class="content-panel" id="okuma-metinleri">
     <div class="panel-header"><h2>📖 Okuma Metinleri</h2></div>
     <div class="panel-body">
       <div class="two-col-grid">
         <div>
           <div class="col-label col-label-free">✅ Ücretsiz</div>
           <div class="col-items">
-            <a class="item-card" href="kuresel_isinma.html"><span class="item-name">Küresel Isınma</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="elektrikli_araclar.html"><span class="item-name">Elektrikli Araçlar</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="yapay_zeka.html"><span class="item-name">Yapay Zeka</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="geri_donusum.html"><span class="item-name">Geri Dönüşümün Önemi</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="sosyal_medya.html"><span class="item-name">Sosyal Medyanın İnsanlar Üzerindeki Etkisi</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="teknoloji.html"><span class="item-name">Teknolojinin İnsan Hayatındaki Yeri</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="cevre_temizligi.html"><span class="item-name">Çevre Temizliği</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="ceviri_1.html"><span class="item-name">Özbekçe-Türkçe Metin 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
+            <a class="item-card" href="kuresel_isinma.html">
+              <span class="item-name">Küresel Isınma</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="elektrikli_araclar.html">
+              <span class="item-name">Elektrikli Araçlar</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="yapay_zeka.html">
+              <span class="item-name">Yapay Zeka</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="geri_donusum.html">
+              <span class="item-name">Geri Dönüşümün Önemi</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="sosyal_medya.html">
+              <span class="item-name">Sosyal Medyanın İnsanlar Üzerindeki Etkisi</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="teknoloji.html">
+              <span class="item-name">Teknolojinin İnsan Hayatındaki Yeri</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+             <a class="item-card" href="cevre_temizligi.html">
+              <span class="item-name">Çevre Temizliği</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="ceviri_1.html">
+              <span class="item-name">Özbekçe-Türkçe Metin 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="ceviri_2.html">
+              <span class="item-name">Özbekçe-Türkçe Metin 2</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
           </div>
         </div>
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLogin('ormanlar.html')"><span class="item-name">Ormanların Yok Olmasının Sebepleri ve Korunma Yolları</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('ogretmen_yapay_zeka.html')"><span class="item-name">Dil Öğreniminde Öğretmen Rehberliği mi, Yapay Zeka mı Daha Etkilidir?</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('dort_gun_calisma.html')"><span class="item-name">Haftada Dört Gün Çalışma Verimliliği ve Sağlığı Artırır mı?</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('egitimde_yapay_zeka.html')"><span class="item-name">Eğitimde yapay zeka kullanımı, öğrencilerin eleştirel düşünme becerilerini köreltiyor mu?</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('sosyal_medya_dostluklari.html')"><span class="item-name">Sosyal medya aracılığıyla kurulan bağlar, gerçek dostlukların yerini tutabilir mi?</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
-            <div class="item-card" onclick="openLogin('mekandan_bagimsiz_calisma.html')"><span class="item-name">Uzaktan çalışma modeli, bireylerin sosyal bağlarını zayıflatıyor mu?</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+            <div class="item-card" onclick="openExamLogin('ormanlar.html')">
+              <span class="item-name">Ormanların Yok Olmasının Sebepleri ve Korunma Yolları</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('ogretmen_yapay_zeka.html')">
+              <span class="item-name">Dil Öğreniminde Öğretmen Rehberliği mi, Yapay Zeka mı Daha Etkilidir?</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('dort_gun_calisma.html')">
+              <span class="item-name">Haftada Dört Gün Çalışma Verimliliği ve Sağlığı Artırır mı?</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('egitimde_yapay_zeka.html')">
+              <span class="item-name">Eğitimde yapay zeka kullanımı, öğrencilerin eleştirel düşünme becerilerini köreltiyor mu yoksa onlara yeni ufuklar mı açıyor? Okullarda Yapay zeka kullanımı yasaklanmalı mı yoksa müfredata mı dahil edilmelidir?</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('sosyal_medya_dostluklari.html')">
+              <span class="item-name">Sosyal medya aracılığıyla kurulan bağlar, gerçek dostlukların yerini tutabilir mi?</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openExamLogin('mekandan_bagimsiz_calisma.html')">
+              <span class="item-name">Uzaktan çalışma modeli, bireylerin sosyal bağlarını zayıflatıyor mu? İş ve özel hayat dengesini korumak için fiziksel ofislere hala ihtiyaç var mı?</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── DİNLEME ALIŞTIRMALARI ── -->
   <div class="content-panel" id="dinleme-alistirmalar">
     <div class="panel-header"><h2>🎤 Dinleme Alıştırmaları</h2></div>
     <div class="panel-body">
       <div class="items-grid">
-        <a class="item-card" href="dinleme_alistirmasi_1.html"><span class="item-name">Dinleme Alıştırması 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="dinleme_alistirmasi_2.html"><span class="item-name">Dinleme Alıştırması 2</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="dinleme_alistirmasi_3.html"><span class="item-name">Dinleme Alıştırması 3</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="dinleme_alistirmasi_4.html"><span class="item-name">Dinleme Alıştırması 4</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="dinleme_alistirmasi_5.html"><span class="item-name">Dinleme Alıştırması 5</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="b2_kroki_alıştırmasi_1.html"><span class="item-name">Dinleme Alıştırması 6</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="dinleme_alistimasikroki_7.html"><span class="item-name">Dinleme Alıştırması 7</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="dinleme_alistimasikroki_8.html"><span class="item-name">Dinleme Alıştırması 8</span><span class="badge badge-free">✅ Ücretsiz</span></a>
+        <a class="item-card" href="dinleme_alistirmasi_1.html">
+          <span class="item-name">Dinleme Alıştırması 1</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="dinleme_alistirmasi_2.html">
+          <span class="item-name">Dinleme Alıştırması 2</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="dinleme_alistirmasi_3.html">
+          <span class="item-name">Dinleme Alıştırması 3</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="dinleme_alistirmasi_4.html">
+          <span class="item-name">Dinleme Alıştırması 4</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+         <a class="item-card" href="dinleme_alistirmasi_5.html">
+          <span class="item-name">Dinleme Alıştırması 5</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+         <a class="item-card" href="b2_kroki_alıştırmasi_1.html">
+          <span class="item-name">Dinleme Alıştırması 6</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+         <a class="item-card" href="dinleme_alistimasikroki_7.html">
+          <span class="item-name">Dinleme Alıştırması 7</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="dinleme_alistimasikroki_8.html">
+          <span class="item-name">Dinleme Alıştırması 8</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
       </div>
     </div>
   </div>
 
-  <!-- ── OKUMA ALIŞTIRMALARI ── -->
   <div class="content-panel" id="okuma-alistirmalar">
     <div class="panel-header"><h2>✍️ Okuma Alıştırmaları</h2></div>
     <div class="panel-body">
@@ -693,61 +1088,111 @@ footer span { color: #F5C842; }
         <div>
           <div class="col-label col-label-free">✅ Ücretsiz</div>
           <div class="col-items">
-            <a class="item-card" href="okuma_alistirmasi_1.html"><span class="item-name">Okuma Alıştırması 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="okuma_alistirmasi_2.html"><span class="item-name">Okuma Alıştırması 2</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="okuma_alistirmasi_3.html"><span class="item-name">Okuma Alıştırması 3</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="okuma_alistirmasi_4.html"><span class="item-name">Okuma Alıştırması 4</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="okuma_alistirmasi_5.html"><span class="item-name">Okuma Alıştırması 5</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="tys_okuma_alistirmasi_ucretsiz_1.html"><span class="item-name">TYS Okuma Alıştırması 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
+            <a class="item-card" href="okuma_alistirmasi_1.html">
+              <span class="item-name">Okuma Alıştırması 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="okuma_alistirmasi_2.html">
+              <span class="item-name">Okuma Alıştırması 2</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="okuma_alistirmasi_3.html">
+              <span class="item-name">Okuma Alıştırması 3</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="okuma_alistirmasi_4.html">
+              <span class="item-name">Okuma Alıştırması 4</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="okuma_alistirmasi_5.html">
+              <span class="item-name">Okuma Alıştırması 5</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="tys_okuma_alistirmasi_ucretsiz_1.html">
+              <span class="item-name">TYS Okuma Alıştırması 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
           </div>
         </div>
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLogin('tys_okuma_alistirmasi_1.html')"><span class="item-name">TYS Okuma Alıştırması 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+            <div class="item-card" onclick="openExamLogin('tys_okuma_alistirmasi_1.html')">
+              <span class="item-name">TYS Okuma Alıştırması 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('okuma_alistirmasi_ucretli_1.html')">
+              <span class="item-name">Okuma Alıştırması 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+             <div class="item-card" onclick="openExamLogin('okuma_alistirmasi_ucretli_2.html')">
+              <span class="item-name">Okuma Alıştırması 2</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- ── OYUNLAR ── -->
-  <div class="content-panel" id="oyunlar">
-    <div class="panel-header"><h2>🎯 Oyunlar</h2></div>
-    <div class="panel-body">
-      <div class="two-col-grid">
-        <div>
-          <div class="col-label col-label-free">✅ Ücretsiz</div>
-          <div class="col-items">
-            <a class="item-card" href="deyimler_carki.html"><span class="item-name">Deyim Çarkı 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-            <a class="item-card" href="fiiller_carki_b1_1.unite.html"><span class="item-name">B1-Fiiller Çarkı 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-          </div>
+<div class="content-panel" id="oyunlar">
+  <div class="panel-header"><h2>🎯 Oyunlar</h2></div>
+  <div class="panel-body">
+    <div class="two-col-grid">
+      <div>
+        <div class="col-label col-label-free">✅ Ücretsiz</div>
+        <div class="col-items">
+          <a class="item-card" href="deyimler_carki.html">
+            <span class="item-name">Deyim Çarkı 1</span>
+            <span class="badge badge-free">✅ Ücretsiz</span>
+          </a>
+          <a class="item-card" href="fiiller_carki_b1_1.unite.html">
+            <span class="item-name">B1-Fiiller Çarkı 1</span>
+            <span class="badge badge-free">✅ Ücretsiz</span>
+          </a>
         </div>
-        <div>
-          <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
-          <div class="col-items">
-            <div class="item-card" onclick="openLogin('kelimeler_carki_c1_1.unite.html')"><span class="item-name">C1-Kelimeler Çarkı 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+      </div>
+      <div>
+        <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
+        <div class="col-items">
+          <div class="item-card" onclick="openExamLogin('kelimeler_carki_c1_1.unite.html')">
+            <span class="item-name">C1-Kelimeler Çarkı 1</span>
+            <span class="badge badge-locked">🔒 Giriş Gerekli</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- ── ÖĞRETMENLER İÇİN ── -->
+</div>
   <div class="content-panel" id="ogretmenler-icin">
     <div class="panel-header"><h2>👩‍🏫 Öğretmenler İçin</h2></div>
     <div class="panel-body">
       <div class="items-grid">
-        <a class="item-card" href="kronometre.html"><span class="item-name">Kronometre</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="hikaye_galerisi_1.html"><span class="item-name">Resimli Hikayeler 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="hikaye_galerisi_2.html"><span class="item-name">Resimli Hikayeler 2</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="karikaturler_1.html"><span class="item-name">Karikatürler 1</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="munazara_carki.html"><span class="item-name">Münazara Çarkı</span><span class="badge badge-free">✅ Ücretsiz</span></a>
-        <a class="item-card" href="sessiz_filmler.html"><span class="item-name">Sessiz Filmler</span><span class="badge badge-free">✅ Ücretsiz</span></a>
+        <a class="item-card" href="kronometre.html">
+          <span class="item-name">Kronometre</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="hikaye_galerisi_1.html">
+          <span class="item-name">Resimli Hikayeler 1</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="hikaye_galerisi_2.html">
+          <span class="item-name">Resimli Hikayeler 2</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="karikaturler_1.html">
+          <span class="item-name">Karikatürler 1</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="munazara_carki.html">
+          <span class="item-name">Münazara Çarkı</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="sessiz_filmler.html">
+          <span class="item-name">Sessiz Filmler</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
       </div>
     </div>
   </div>
-
   <footer>
     <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
     <div class="visitor-counter">
@@ -759,20 +1204,18 @@ footer span { color: #F5C842; }
   </footer>
 </div>
 
-<!-- VIDEO OVERLAY -->
 <div class="modal-overlay" id="videoOverlay" onclick="closeVideoOutside(event)" style="z-index:200;">
-  <div style="background:#000;border-radius:16px;padding:12px;width:min(720px,96vw);position:relative;">
+  <div style="background:#000; border-radius:16px; padding:12px; width:min(720px,96vw); position:relative;">
     <button onclick="closeVideo()" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.4rem;color:#fff;cursor:pointer;z-index:1;">✕</button>
     <video id="videoPlayer" controls style="width:100%;border-radius:10px;display:block;"></video>
   </div>
 </div>
 
-<!-- LOGIN MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h2>🔐 Giriş Yap</h2>
-    <p class="sub">Bu içeriğe erişmek için giriş yapmalısınız.</p>
+    <p class="sub" id="modalSubTitle">Bu içeriğe erişmek için giriş yapmalısınız.</p>
     <div class="form-group"><label>Kullanıcı Adı</label><input type="text" id="inputUser" placeholder="kullanici_adi"></div>
     <div class="form-group"><label>Şifre</label><input type="password" id="inputPass" placeholder="••••••••"></div>
     <button class="btn-login" id="btnLogin" onclick="doLogin()">GİRİŞ YAP</button>
@@ -782,182 +1225,328 @@ footer span { color: #F5C842; }
 
 <script>
 const SHEET_ID  = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
-const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet2`;
 
-/* ── PANEL TOGGLE ── */
+// Üç farklı sheet için URL'ler
+const EXAM_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet2`;      // Sınav kullanıcıları
+const WRITING_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet3`;  // Yazma ödevi kullanıcıları
+const SPEAKING_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet4`; // Konuşma ödevi kullanıcıları
+
+// Yetki türleri
+const ACCESS_TYPE = {
+  EXAM: 'exam',      // Sheet2 - sınavlar, kelimeler, tüm kilitli içerikler
+  WRITING: 'writing', // Sheet3 - sadece yazma ödevi
+  SPEAKING: 'speaking' // Sheet4 - sadece konuşma ödevi
+};
+
+// Yönlendirme hedefleri (global)
+let targetPage = '';
+let targetUrl = '';
+let targetVideoSrc = null;
+
 function toggle(id, btn) {
   const panel = document.getElementById(id);
   if (!panel) return;
   const isOpen = panel.classList.contains('open');
-  document.querySelectorAll('.content-panel').forEach(p => { p.classList.remove('open'); p.style.maxHeight = '0'; });
+
+  document.querySelectorAll('.content-panel').forEach(p => {
+    p.classList.remove('open');
+    p.style.maxHeight = '0';
+  });
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+
   if (!isOpen) {
     panel.classList.add('open');
     panel.style.maxHeight = panel.scrollHeight + 'px';
     btn.classList.add('active');
-    setTimeout(() => { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+    setTimeout(() => {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
   }
 }
 
-/* ── VIDEO ── */
 function openVideo(src) {
   const player = document.getElementById('videoPlayer');
-  player.src = src; player.load();
+  player.src = src;
+  player.load();
   document.getElementById('videoOverlay').classList.add('show');
 }
 function closeVideo() {
   const player = document.getElementById('videoPlayer');
-  player.pause(); player.src = '';
+  player.pause();
+  player.src = '';
   document.getElementById('videoOverlay').classList.remove('show');
 }
-function closeVideoOutside(e) { if (e.target === document.getElementById('videoOverlay')) closeVideo(); }
+function closeVideoOutside(e) {
+  if (e.target === document.getElementById('videoOverlay')) closeVideo();
+}
 
-/* ── LOGIN ── */
-let targetPage = '';
-let targetVideoSrc = '';
+// Yeni Yetki Kontrol Sistemi
+function checkAccessAndOpen(requiredAccessType, successCallback, targetType, targetValue) {
+  const storedType = sessionStorage.getItem('hamzaAccessType');
+  const storedUser = sessionStorage.getItem('hamzaUser');
+  
+  if (storedUser && storedType === requiredAccessType) {
+    // Zaten doğru giriş yapılmış, hemen yönlendir
+    if (successCallback) successCallback();
+    return true;
+  } else if (storedUser && storedType !== requiredAccessType) {
+    let requiredText = '';
+    if (requiredAccessType === ACCESS_TYPE.EXAM) requiredText = 'Sınav (Sheet2)';
+    else if (requiredAccessType === ACCESS_TYPE.WRITING) requiredText = 'Yazma Ödevi (Sheet3)';
+    else if (requiredAccessType === ACCESS_TYPE.SPEAKING) requiredText = 'Konuşma Ödevi (Sheet4)';
+    
+    alert(`Bu içeriğe erişmek için ${requiredText} hesabıyla giriş yapmalısınız. Mevcut oturumunuz kapatılacak.`);
+    sessionStorage.removeItem('hamzaUser');
+    sessionStorage.removeItem('hamzaAccessType');
+    return false;
+  } else {
+    // Hiç giriş yok
+    return false;
+  }
+}
 
-function openLogin(page) {
-  if (getUser()) { window.location.href = page; return; }
-  targetPage = page; targetVideoSrc = '';
-  document.getElementById('errorMsg').classList.remove('show');
+// Sınav içerikleri için (Sheet2)
+function openExamLogin(page) {
+  if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => { window.location.href = page; }, 'page', page)) return;
+  targetPage = page;
+  targetUrl = '';
+  targetVideoSrc = null;
+  document.getElementById('modalSubTitle').innerHTML = 'Bu sınav içeriğine erişmek için <strong>Sınav</strong> hesabınızla giriş yapmalısınız.';
   document.getElementById('modalOverlay').classList.add('show');
 }
-function openLoginVideo(src) {
-  if (getUser()) { openVideo(src); return; }
-  targetVideoSrc = src; targetPage = '';
-  document.getElementById('errorMsg').classList.remove('show');
+
+function openExamLoginVideo(src) {
+  if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => { openVideo(src); }, 'video', src)) return;
+  targetVideoSrc = src;
+  targetPage = '';
+  targetUrl = '';
+  document.getElementById('modalSubTitle').innerHTML = 'Bu video içeriğine erişmek için <strong>Sınav</strong> hesabınızla giriş yapmalısınız.';
   document.getElementById('modalOverlay').classList.add('show');
 }
-function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+// Yazma ödevi için (Sheet3)
+function openWritingOdev() {
+  const targetWritingUrl = 'https://hamzahocaodevkontrolu.base44.app/';
+  if (checkAccessAndOpen(ACCESS_TYPE.WRITING, () => { window.location.href = targetWritingUrl; }, 'url', targetWritingUrl)) return;
+  targetUrl = targetWritingUrl;
+  targetPage = '';
+  targetVideoSrc = null;
+  document.getElementById('modalSubTitle').innerHTML = 'Yazma ödevi göndermek için <strong>Yazma Ödevi</strong> hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+// Konuşma ödevi için (Sheet4)
+function openSpeakingOdev() {
+  const targetSpeakingUrl = 'https://hamzahocailekonusmapratigi.base44.app/';
+  if (checkAccessAndOpen(ACCESS_TYPE.SPEAKING, () => { window.location.href = targetSpeakingUrl; }, 'url', targetSpeakingUrl)) return;
+  targetUrl = targetSpeakingUrl;
+  targetPage = '';
+  targetVideoSrc = null;
+  document.getElementById('modalSubTitle').innerHTML = 'Konuşma ödevi göndermek için <strong>Konuşma Ödevi</strong> hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() { 
+  document.getElementById('modalOverlay').classList.remove('show');
+}
 function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 
-/* ── GİRİŞ / ÇIKIŞ ── */
-function getUser() {
-  return sessionStorage.getItem('hamzaUser') || localStorage.getItem('hamzaUser') || '';
-}
-function doLogout() {
-  sessionStorage.removeItem('hamzaUser');
-  localStorage.removeItem('hamzaUser');
-  updateProfileBar();
-}
+// Buton eventleri
+document.addEventListener('DOMContentLoaded', function() {
+  const writingBtn = document.getElementById('odevGonderBtn');
+  if (writingBtn) {
+    writingBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openWritingOdev();
+    });
+  }
+
+  const speakingBtn = document.getElementById('konusmaOdevGonderBtn');
+  if (speakingBtn) {
+    speakingBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openSpeakingOdev();
+    });
+  }
+});
 
 async function doLogin() {
   const username = document.getElementById('inputUser').value.trim();
   const password = document.getElementById('inputPass').value.trim();
   if (!username || !password) return;
-
+  
   const btn = document.getElementById('btnLogin');
-  btn.disabled = true; btn.textContent = 'Kontrol ediliyor...';
-
+  btn.disabled = true; 
+  btn.textContent = 'Kontrol ediliyor...';
+  
+  // Hangi modda olduğumuzu modal'daki metinden anlayalım
+  const modalSubTitle = document.getElementById('modalSubTitle').innerText;
+  let requiredAccessType = ACCESS_TYPE.EXAM; // varsayılan
+  
+  if (modalSubTitle.includes('Sınav (Sheet2)')) requiredAccessType = ACCESS_TYPE.EXAM;
+  else if (modalSubTitle.includes('Yazma Ödevi (Sheet3)')) requiredAccessType = ACCESS_TYPE.WRITING;
+  else if (modalSubTitle.includes('Konuşma Ödevi (Sheet4)')) requiredAccessType = ACCESS_TYPE.SPEAKING;
+  
   try {
-    const res  = await fetch(SHEET_URL);
+    // requiredAccessType'a göre doğru sheet'i seç
+    let sheetUrl = '';
+    if (requiredAccessType === ACCESS_TYPE.EXAM) sheetUrl = EXAM_SHEET_URL;
+    else if (requiredAccessType === ACCESS_TYPE.WRITING) sheetUrl = WRITING_SHEET_URL;
+    else sheetUrl = SPEAKING_SHEET_URL;
+    
+    const res = await fetch(sheetUrl);
     const rows = parseCSV(await res.text());
-    let found  = false;
+    let found = false;
+    let isExpired = false;
 
     for (let i = 1; i < rows.length; i++) {
-      const [sheetUser, sheetPass] = rows[i].map(c => (c||'').trim());
+      const [sheetUser, sheetPass, expiryDateRaw] = rows[i].map(c => (c || '').trim());
       if (sheetUser.toLowerCase() === username.toLowerCase() && sheetPass === password) {
         found = true;
-
-        // sessionStorage (eski sistem) + localStorage (profil için kalıcı)
+        // Tarih kontrolü
+        if (expiryDateRaw && expiryDateRaw !== '') {
+          const parts = expiryDateRaw.split('-');
+          if (parts.length === 3) {
+            const day = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const year = parseInt(parts[2], 10);
+            const expiry = new Date(year, month, day);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (today > expiry) {
+              isExpired = true;
+              continue;
+            }
+          }
+        }
+        // Giriş başarılı - session'a kaydet
         sessionStorage.setItem('hamzaUser', username);
-        localStorage.setItem('hamzaUser', username);
-
+        sessionStorage.setItem('hamzaAccessType', requiredAccessType);
         closeModal();
-
-        // Eğer belirli bir sayfaya gitmek istiyorsa oraya, yoksa profile git
+        
+        // Yönlendirme yap
         if (targetVideoSrc) {
           openVideo(targetVideoSrc);
-          updateProfileBar();
+          targetVideoSrc = null;
+        } else if (targetUrl) {
+          window.location.href = targetUrl;
+          targetUrl = '';
         } else if (targetPage) {
           window.location.href = targetPage;
-        } else {
-          window.location.href = 'profil.html';
+          targetPage = '';
         }
         return;
       }
     }
 
     if (!found) {
-      document.getElementById('errorMsg').textContent = 'Kullanıcı adı veya şifre hatalı!';
-      document.getElementById('errorMsg').classList.add('show');
+      let sheetName = '';
+      if (requiredAccessType === ACCESS_TYPE.EXAM) sheetName = 'Sınav (Sheet2)';
+      else if (requiredAccessType === ACCESS_TYPE.WRITING) sheetName = 'Yazma Ödevi (Sheet3)';
+      else sheetName = 'Konuşma Ödevi (Sheet4)';
+      alert(`Hatalı kullanıcı adı veya şifre! (${sheetName} hesabı)`);
+    } else if (isExpired) {
+      alert('Üyelik süreniz dolmuştur. Lütfen yenilemek için Hamza Hoca ile iletişime geçiniz.');
     }
   } catch(err) {
-    document.getElementById('errorMsg').textContent = 'Bağlantı hatası, lütfen tekrar dene.';
-    document.getElementById('errorMsg').classList.add('show');
+    console.error(err);
+    alert('Bağlantı hatası! Lütfen daha sonra tekrar deneyin.');
   } finally {
-    btn.disabled = false; btn.textContent = 'GİRİŞ YAP';
+    btn.disabled = false; 
+    btn.textContent = 'GİRİŞ YAP';
   }
 }
 
-/* ── PROFIL BARINI GÖSTER/GİZLE ── */
-function updateProfileBar() {
-  const user = getUser();
-  const bar  = document.getElementById('profile-bar');
-  if (user) {
-    document.getElementById('pb-avatar').textContent = user.substring(0,2).toUpperCase();
-    document.getElementById('pb-name').textContent   = user;
-    bar.classList.add('show');
-  } else {
-    bar.classList.remove('show');
-  }
-}
-
-window.addEventListener('pageshow', function() {
+window.addEventListener('pageshow', function(e) {
   closeModal();
-  updateProfileBar();
+  targetVideoSrc = null;
+  targetPage = '';
+  targetUrl = '';
 });
 
-/* ── CSV PARSER ── */
 function parseCSV(text) {
-  return text.split('\n').filter(l => l.trim()).map(line => {
-    const cols = []; let cur = '', inQ = false;
-    for (const c of line) {
-      if (c === '"') inQ = !inQ;
-      else if (c === ',' && !inQ) { cols.push(cur); cur = ''; }
-      else cur += c;
+  const rows = [];
+  const lines = text.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (line === '') continue;
+    const cols = [];
+    let cur = '';
+    let inQuote = false;
+    for (let j = 0; j < line.length; j++) {
+      const ch = line[j];
+      if (ch === '"') {
+        inQuote = !inQuote;
+      } else if (ch === ',' && !inQuote) {
+        cols.push(cur);
+        cur = '';
+      } else {
+        cur += ch;
+      }
     }
     cols.push(cur);
-    return cols.map(c => c.replace(/^"|"$/g,'').trim());
-  });
+    rows.push(cols.map(c => c.replace(/^"|"$/g, '').trim()));
+  }
+  return rows;
 }
 
-/* ── ZİYARETÇİ SAYACI ── */
+/* ═══════════════════════════════════════
+   ZİYARETÇİ SAYACI
+═══════════════════════════════════════ */
 (function() {
   const BASE_URL  = 'https://countapi.mileshilliard.com/api/v1';
   const TOTAL_KEY = 'hamzahoca-total-ziyaretci';
+
   let visitorId = localStorage.getItem('hamzaVisitorId');
   if (!visitorId) {
     visitorId = 'v_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
     localStorage.setItem('hamzaVisitorId', visitorId);
   }
+
   const today = new Date().toISOString().split('T')[0];
   const DAILY_KEY = 'hamzahoca-gunluk-' + today;
+
   const countedToday = localStorage.getItem('hamzaCountedDay') === today;
 
   async function updateCounters() {
     try {
-      let dailyUrl = countedToday ? `${BASE_URL}/get/${DAILY_KEY}` : `${BASE_URL}/hit/${DAILY_KEY}`;
-      let totalUrl = countedToday ? `${BASE_URL}/get/${TOTAL_KEY}` : `${BASE_URL}/hit/${TOTAL_KEY}`;
-      if (!countedToday) localStorage.setItem('hamzaCountedDay', today);
-      const [dRes, tRes] = await Promise.all([fetch(dailyUrl), fetch(totalUrl)]);
-      const [dData, tData] = await Promise.all([dRes.json(), tRes.json()]);
-      if (dData?.value !== undefined) document.getElementById('vcDaily').textContent = dData.value;
-      if (tData?.value !== undefined) {
-        document.getElementById('vcTotal').textContent = tData.value;
-        localStorage.setItem('hamzaTotalEst', tData.value);
+      let dailyUrl;
+      if (!countedToday) {
+        dailyUrl = `${BASE_URL}/hit/${DAILY_KEY}`;
+        localStorage.setItem('hamzaCountedDay', today);
+      } else {
+        dailyUrl = `${BASE_URL}/get/${DAILY_KEY}`;
       }
+      const dailyRes = await fetch(dailyUrl);
+      const dailyData = await dailyRes.json();
+      if (dailyData && (typeof dailyData.value === 'number' || typeof dailyData.value === 'string')) {
+        document.getElementById('vcDaily').textContent = dailyData.value;
+      }
+
+      let totalUrl;
+      if (!countedToday) {
+        totalUrl = `${BASE_URL}/hit/${TOTAL_KEY}`;
+      } else {
+        totalUrl = `${BASE_URL}/get/${TOTAL_KEY}`;
+      }
+      const totalRes = await fetch(totalUrl);
+      const totalData = await totalRes.json();
+      if (totalData && (typeof totalData.value === 'number' || typeof totalData.value === 'string')) {
+        document.getElementById('vcTotal').textContent = totalData.value;
+        localStorage.setItem('hamzaTotalEst', totalData.value);
+      }
+
     } catch(e) {
       const localTotal = parseInt(localStorage.getItem('hamzaTotalEst') || '0');
       document.getElementById('vcTotal').textContent = localTotal || '—';
       document.getElementById('vcDaily').textContent = '—';
     }
   }
+
   updateCounters();
 })();
-
-/* ── BAŞLAT ── */
-updateProfileBar();
 </script>
 </body>
 </html>
