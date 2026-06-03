@@ -253,7 +253,7 @@ footer { margin-top: 60px; font-size: 0.8rem; color: rgba(255,255,255,0.5); disp
   <p class="subtitle">Türkçe Öğrenme Platformu</p>
 </header>
 
-<!-- 9 ANA KATEGORİ -->
+<!-- 10 ANA KATEGORİ (Deneme Sınavı eklendi) -->
 <div class="cat-grid">
   <button class="cat-main-btn" data-cat="sinavlar"><span class="emoji">📝</span><span class="label">Sınavlar</span></button>
   <button class="cat-main-btn" data-cat="alistirmalar"><span class="emoji">✍️</span><span class="label">Alıştırmalar</span></button>
@@ -264,7 +264,7 @@ footer { margin-top: 60px; font-size: 0.8rem; color: rgba(255,255,255,0.5); disp
   <button class="cat-main-btn" data-cat="oyunlar"><span class="emoji">🎯</span><span class="label">Oyunlar</span></button>
   <button class="cat-main-btn" data-cat="ogretmen"><span class="emoji">👩‍🏫</span><span class="label">Öğretmenler için</span></button>
   <button class="cat-main-btn" data-cat="videolar"><span class="emoji">🎬</span><span class="label">Videolar & Sorular</span></button>
-  <button class="cat-main-btn" data-cat="Sınav"><span class="emoji">✍️</span><span class="label">Deneme Sınavı</span></button>
+  <button class="cat-main-btn" data-cat="deneme"><span class="emoji">✍️</span><span class="label">Deneme Sınavı</span></button>
 </div>
 
 <!-- ===================== Sınavlar Paneli ===================== -->
@@ -483,6 +483,51 @@ footer { margin-top: 60px; font-size: 0.8rem; color: rgba(255,255,255,0.5); disp
   </div>
 </div>
 
+<!-- ===================== DENEME SINAVI PANELİ (YENİ) ===================== -->
+<div id="panel-deneme" class="content-panel">
+  <div class="panel-header"><h2>✍️ Deneme Sınavları (Okuma, Dinleme, Konuşma, Yazma)</h2></div>
+  <div class="panel-body">
+    <div class="two-col-grid">
+      <div>
+        <div class="col-label col-label-locked">🔒 Okuma Sınavı</div>
+        <div class="col-items">
+          <div class="item-card" onclick="openExamLogin('okuma_sinavi_3.html')">
+            <span>📖 Okuma Sınavı 3</span>
+            <span class="badge badge-locked">🔒 Giriş</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label col-label-locked">🔒 Dinleme Sınavı</div>
+        <div class="col-items">
+          <div class="item-card" onclick="openExamLogin('dinleme_sinavi_1.html')">
+            <span>🎧 Dinleme Sınavı 1</span>
+            <span class="badge badge-locked">🔒 Giriş</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label col-label-locked">🔒 Konuşma Sınavı</div>
+        <div class="col-items">
+          <div class="item-card" onclick="openExamLoginUrl('https://hamzahocakonusmasinavi1.base44.app/')">
+            <span>🎙️ Konuşma Sınavı</span>
+            <span class="badge badge-locked">🔒 Giriş</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label col-label-locked">🔒 Yazma Sınavı</div>
+        <div class="col-items">
+          <div class="item-card" onclick="openExamLoginUrl('https://hamzahocaodevkontrolu.base44.app')">
+            <span>✍️ Yazma Sınavı</span>
+            <span class="badge badge-locked">🔒 Giriş</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer><p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p><div class="visitor-counter"><span class="vc-icon">👤</span><span class="vc-daily" id="vcDaily">—</span><span class="vc-divider">/</span><span class="vc-total" id="vcTotal">—</span></div></footer>
 </div>
 
@@ -529,6 +574,7 @@ function checkAccessAndOpen(reqType, callback) {
   return false;
 }
 function openExamLogin(page) { if(checkAccessAndOpen(ACCESS_TYPE.EXAM, ()=>window.location.href=page)) return; targetPage=page; targetUrl=''; targetVideoSrc=null; document.getElementById('modalSubTitle').innerHTML = '<strong>Sınav (Sheet2)</strong> hesabıyla giriş yapın.'; document.getElementById('modalOverlay').classList.add('show'); }
+function openExamLoginUrl(url) { if(checkAccessAndOpen(ACCESS_TYPE.EXAM, ()=>window.location.href=url)) return; targetUrl=url; targetPage=''; targetVideoSrc=null; document.getElementById('modalSubTitle').innerHTML = '<strong>Sınav (Sheet2)</strong> hesabıyla giriş yapın.'; document.getElementById('modalOverlay').classList.add('show'); }
 function openExamLoginVideo(src) { if(checkAccessAndOpen(ACCESS_TYPE.EXAM, ()=>openVideo(src))) return; targetVideoSrc=src; document.getElementById('modalSubTitle').innerHTML = '<strong>Sınav hesabı</strong> gerekli.'; document.getElementById('modalOverlay').classList.add('show'); }
 function openWritingOdev() { if(checkAccessAndOpen(ACCESS_TYPE.WRITING, ()=>window.location.href='https://hamzahocaodevkontrolu.base44.app/')) return; targetUrl='https://hamzahocaodevkontrolu.base44.app/'; document.getElementById('modalSubTitle').innerHTML = '<strong>Yazma Ödevi (Sheet3)</strong> hesabı gerekli.'; document.getElementById('modalOverlay').classList.add('show'); }
 function openSpeakingOdev() { if(checkAccessAndOpen(ACCESS_TYPE.SPEAKING, ()=>window.location.href='https://hamzahocailekonusmapratigi.base44.app/')) return; targetUrl='https://hamzahocailekonusmapratigi.base44.app/'; document.getElementById('modalSubTitle').innerHTML = '<strong>Konuşma Ödevi (Sheet4)</strong> hesabı gerekli.'; document.getElementById('modalOverlay').classList.add('show'); }
