@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türkçe Okuma Testi 3 – Hamza Hoca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;800&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209; --paper: #faf7f0; --cream: #f2ead8;
+    --accent: #c0392b; --gold: #b8860b; --muted: #7a6a55;
+    --success: #2e7d52; --error: #c0392b; --border: #d4c5a9;
+    --shadow: rgba(26,18,9,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper); color: var(--ink);
+    line-height: 1.7; min-height: 100vh;
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 1.3rem; background: transparent;
+    border: 2px solid #F5C842; border-radius: 30px;
+    color: #F5C842; font-family: 'Segoe UI', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.06em; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+    position: absolute; top: 1.2rem; left: 1.5rem; z-index: 10;
+  }
+  .back-btn:hover { background: #F5C842; color: #1a2332; }
+  @media (max-width: 600px) {
+    .back-btn { position: static; margin: 0 auto 1rem; display: flex; justify-content: center; width: fit-content; }
+  }
+  header {
+    background: #1a2332; color: var(--paper);
+    padding: 3rem 2rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block; border: 2px solid #D4A017;
+    border-radius: 30px; padding: 0.35rem 1.2rem;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #1a2332; background: #D4A017; margin-bottom: 1.4rem;
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4rem); font-weight: 800;
+    line-height: 1.15; color: #D4A017;
+    text-shadow: 0 1px 12px rgba(212,160,23,0.2);
+    letter-spacing: 0.04em; margin-bottom: 1rem;
+    -webkit-text-stroke: 0.5px #D4A017;
+  }
+  .header-stars { color: #D4A017; font-size: 1.3rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; display: block; }
+  .header-divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, #D4A017, transparent);
+    margin: 0.5rem auto 2rem;
+  }
+  .header-cta-text {
+    font-size: 0.82rem; color: #e8dfc8;
+    margin-bottom: 0.8rem; font-style: normal;
+    letter-spacing: 0.01em; font-weight: 600;
+  }
+  .tg-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.75rem 2rem; background: #D4A017;
+    color: #1a2332; text-decoration: none;
+    border-radius: 8px; font-family: 'Source Serif 4', serif;
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: 0.03em; transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.4);
+    position: relative; z-index: 2;
+  }
+  .tg-btn:hover { background: #c49010; transform: translateY(-2px); }
+  .tg-btn svg { flex-shrink: 0; fill: #229ED9; }
+  .progress-wrap {
+    background: #1a2332; padding: 0 2rem 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .segments-bar { flex: 1; display: flex; gap: 2px; }
+  .seg {
+    flex: 1; height: 8px; border-radius: 2px;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.3s ease;
+  }
+  .seg.filled { background: var(--success); }
+  .progress-text {
+    color: #b8a890; font-size: 0.78rem;
+    letter-spacing: 0.1em; white-space: nowrap;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .section-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 2px; margin-bottom: 2.5rem;
+    box-shadow: 0 2px 12px var(--shadow); overflow: hidden;
+  }
+  .section-header {
+    background: var(--ink); color: var(--paper);
+    padding: 1rem 1.5rem; display: flex;
+    align-items: center; gap: 1rem;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900;
+    color: var(--gold); line-height: 1; min-width: 2rem;
+  }
+  .section-title {
+    font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.18em; font-weight: 600; color: var(--cream);
+  }
+  .section-body { padding: 1.5rem; }
+  .reading-text {
+    background: var(--cream); border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.4rem; margin-bottom: 1.5rem;
+    font-size: 0.92rem; line-height: 1.85;
+    color: #2a1f10; border-radius: 0 2px 2px 0;
+  }
+  .reading-text p { margin-bottom: 0.8rem; }
+  .reading-text p:last-child { margin-bottom: 0; }
+  .instructions {
+    font-size: 0.82rem; color: var(--muted);
+    font-style: italic; margin-bottom: 1.2rem;
+    padding: 0.7rem 1rem; border: 1px dashed var(--border);
+    border-radius: 2px;
+  }
+  .options-label {
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .options-grid {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1.4rem; padding: 0.8rem;
+    background: #fdf9f3; border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .option-pill {
+    padding: 0.3rem 0.8rem; background: white;
+    border: 1px solid var(--border); border-radius: 20px;
+    font-size: 0.82rem; font-family: 'Source Serif 4', serif;
+  }
+  .option-pill strong { color: var(--accent); }
+  .question {
+    margin-bottom: 1.4rem; padding-bottom: 1.4rem;
+    border-bottom: 1px solid #ede5d4;
+  }
+  .question:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q-label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--muted); margin-bottom: 0.4rem;
+  }
+  .q-text { font-size: 0.93rem; margin-bottom: 0.8rem; font-weight: 400; }
+  .q-text .blank {
+    display: inline-block; min-width: 120px;
+    border-bottom: 2px solid var(--gold);
+    text-align: center; padding: 0 4px;
+    font-weight: 600; color: var(--accent);
+  }
+  select {
+    appearance: none; -webkit-appearance: none;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6a55' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+    border: 1.5px solid var(--border); border-radius: 2px;
+    padding: 0.45rem 2rem 0.45rem 0.7rem;
+    font-family: 'Source Serif 4', serif; font-size: 0.88rem;
+    color: var(--ink); cursor: pointer; min-width: 160px;
+    transition: border-color 0.2s;
+  }
+  select:focus { outline: none; border-color: var(--gold); }
+  select.correct { border-color: var(--success); background-color: #f0faf5; }
+  select.wrong { border-color: var(--error); background-color: #fff5f5; }
+  .choices { display: flex; flex-direction: column; gap: 0.5rem; }
+  .choice-label {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    padding: 0.55rem 0.8rem; border: 1.5px solid var(--border);
+    border-radius: 2px; cursor: pointer; font-size: 0.88rem;
+    transition: all 0.15s; background: white;
+  }
+  .choice-label:hover { border-color: var(--gold); background: #fdf8ef; }
+  .choice-label input[type=radio] { display: none; }
+  .choice-key {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    color: var(--muted); min-width: 1.1rem; margin-top: 0.05rem;
+  }
+  .choice-label.selected { border-color: var(--gold); background: #fdf8ef; }
+  .choice-label.correct { border-color: var(--success); background: #f0faf5; }
+  .choice-label.correct .choice-key { color: var(--success); }
+  .choice-label.wrong { border-color: var(--error); background: #fff5f5; }
+  .choice-label.wrong .choice-key { color: var(--error); }
+  .choice-label.show-answer { border-color: var(--success); background: #f0faf5; }
+  .choice-label.show-answer .choice-key { color: var(--success); }
+  .match-row {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 0.8rem; padding: 0.7rem;
+    background: #fdf9f3; border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .match-num {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: 1rem; color: var(--accent);
+    min-width: 1.5rem; padding-top: 0.25rem;
+  }
+  .match-text { flex: 1; font-size: 0.87rem; line-height: 1.5; }
+  .match-select { min-width: 140px; }
+  .submit-wrap {
+    text-align: center; margin-top: 2rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .btn-submit {
+    background: var(--ink); color: var(--paper); border: none;
+    padding: 0.9rem 3rem; font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.05em;
+    cursor: pointer; border-radius: 2px; transition: all 0.2s;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-reset {
+    background: transparent; color: var(--muted);
+    border: 1.5px solid var(--border); padding: 0.9rem 2rem;
+    font-family: 'Source Serif 4', serif; font-size: 0.88rem;
+    cursor: pointer; border-radius: 2px; margin-left: 0.8rem;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--muted); color: var(--ink); }
+  #results {
+    display: none; background: var(--ink); color: var(--paper);
+    border-radius: 2px; padding: 2rem; margin-bottom: 2.5rem;
+    text-align: center; box-shadow: 0 4px 24px var(--shadow);
+    animation: fadeUp 0.5s ease;
+  }
+  #results h2 {
+    font-family: 'Playfair Display', serif; font-size: 2.5rem;
+    font-weight: 900; color: var(--gold);
+  }
+  #results .score-label {
+    font-size: 0.8rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #b8a890; margin-bottom: 0.3rem;
+  }
+  #results .score-detail {
+    font-size: 0.9rem; color: #b8a890;
+    margin-top: 0.5rem; font-style: italic;
+  }
+  #results .feedback {
+    margin-top: 1rem; font-size: 1rem; color: var(--cream);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .q-feedback {
+    display: none; font-size: 0.78rem; margin-top: 0.4rem;
+    padding: 0.3rem 0.6rem; border-radius: 2px; font-style: italic;
+  }
+  .q-feedback.correct { display: block; color: var(--success); background: #f0faf5; }
+  .q-feedback.wrong { display: block; color: var(--error); background: #fff5f5; }
+  @media (max-width: 600px) {
+    .match-row { flex-direction: column; }
+    .match-select, select { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.history.back()">← Geri</button>
+  <div class="header-badge">✦ Okuma Testi 3 ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <span class="header-stars">★★★★★</span>
+  <div class="header-divider"></div>
+  <div class="header-cta-text">Daha fazla içeriğe ücretsiz ulaşmak için Telegram kanalımıza katılın!</div>
+  <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.28 13.6l-2.965-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.959z"/></svg>
+    Kanala Katıl
+  </a>
+</header>
+
+<div class="progress-wrap">
+  <div class="segments-bar" id="segmentsBar"></div>
+  <div class="progress-text" id="progressText">0 / 35</div>
+</div>
+
+<main>
+
+<div id="results">
+  <div class="score-label">Doğru Cevap Sayısı</div>
+  <h2 id="scoreDisplay">–</h2>
+  <div class="score-detail" id="scoreDetail"></div>
+  <div class="feedback" id="feedbackMsg"></div>
+</div>
+
+<!-- BÖLÜM 1: BOŞLUK DOLDURMA -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-title">Okuma Metni — Boşluk Doldurma</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Uzay Araştırmalarının Geleceği · Sorular 1–6</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p>İnsanlığın uzayla ilgilenmesi, gökyüzüne bakışıyla başlamış olsa da modern anlamda uzay araştırmaları 20. yüzyılda hız kazanmıştır. İlk uyduların fırlatılması ve Ay'a yapılan yolculuklar, bu alandaki <strong>(1) ______</strong> oluşturmuştur. Günümüzde ise uzay çalışmaları, devletlerin tekeline olmaktan çıkmış, özel şirketler de bu alana büyük <strong>(2) ______</strong> yapmaya başlamıştır. Mars'a insan gönderme projeleri, uzay turizmi ve Ay'da kalıcı üs kurma planları, yakın gelecekte <strong>(3) ______</strong> dönüşebilecek hedefler arasında yer almaktadır.</p>
+      <p>Ancak uzay araştırmaları beraberinde bazı <strong>(4) ______</strong> da getirmektedir. Uzay çöplüğü sorunu, yörüngedeki binlerce atık parçanın hem aktif uydulara hem de gelecekteki görevlere <strong>(5) ______</strong> oluşturmaktadır. Ayrıca bu çalışmaların maliyeti, eleştirilerin ana noktasını oluşturmaktadır. Uzmanlar, uzay keşifleriyle elde edilecek bilimsel kazanımların, bu <strong>(6) ______</strong> fazlasıyla karşılayacağını savunmaktadır.</p>
+    </div>
+    <div class="instructions">Her sözcük yalnızca bir defa kullanılabilir. Seçmemeniz gereken <strong>iki</strong> seçenek bulunmaktadır.</div>
+    <div class="options-label">Kelime Listesi</div>
+    <div class="options-grid">
+      <div class="option-pill"><strong>A)</strong> tehdit</div>
+      <div class="option-pill"><strong>B)</strong> yatırım</div>
+      <div class="option-pill"><strong>C)</strong> sorumluluk</div>
+      <div class="option-pill"><strong>D)</strong> temel</div>
+      <div class="option-pill"><strong>E)</strong> gerçeğe</div>
+      <div class="option-pill"><strong>F)</strong> tartışmaları</div>
+      <div class="option-pill"><strong>G)</strong> zorlukları</div>
+      <div class="option-pill"><strong>H)</strong> maliyeti</div>
+    </div>
+    <!-- Q1-6 -->
+    <div class="question" id="qw1"><div class="q-label">Soru 1</div><div class="q-text">İlk uyduların fırlatılması ve Ay'a yapılan yolculuklar, bu alandaki <span class="blank">______</span> oluşturmuştur.</div><select id="q1" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) tehdit</option><option value="B">B) yatırım</option><option value="C">C) sorumluluk</option><option value="D">D) temel</option><option value="E">E) gerçeğe</option><option value="F">F) tartışmaları</option><option value="G">G) zorlukları</option><option value="H">H) maliyeti</option></select><div class="q-feedback" id="fb1"></div></div>
+    <div class="question" id="qw2"><div class="q-label">Soru 2</div><div class="q-text">Özel şirketler de bu alana büyük <span class="blank">______</span> yapmaya başlamıştır.</div><select id="q2" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) tehdit</option><option value="B">B) yatırım</option><option value="C">C) sorumluluk</option><option value="D">D) temel</option><option value="E">E) gerçeğe</option><option value="F">F) tartışmaları</option><option value="G">G) zorlukları</option><option value="H">H) maliyeti</option></select><div class="q-feedback" id="fb2"></div></div>
+    <div class="question" id="qw3"><div class="q-label">Soru 3</div><div class="q-text">Yakın gelecekte <span class="blank">______</span> dönüşebilecek hedefler arasında yer almaktadır.</div><select id="q3" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) tehdit</option><option value="B">B) yatırım</option><option value="C">C) sorumluluk</option><option value="D">D) temel</option><option value="E">E) gerçeğe</option><option value="F">F) tartışmaları</option><option value="G">G) zorlukları</option><option value="H">H) maliyeti</option></select><div class="q-feedback" id="fb3"></div></div>
+    <div class="question" id="qw4"><div class="q-label">Soru 4</div><div class="q-text">Ancak uzay araştırmaları beraberinde bazı <span class="blank">______</span> da getirmektedir.</div><select id="q4" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) tehdit</option><option value="B">B) yatırım</option><option value="C">C) sorumluluk</option><option value="D">D) temel</option><option value="E">E) gerçeğe</option><option value="F">F) tartışmaları</option><option value="G">G) zorlukları</option><option value="H">H) maliyeti</option></select><div class="q-feedback" id="fb4"></div></div>
+    <div class="question" id="qw5"><div class="q-label">Soru 5</div><div class="q-text">Yörüngedeki binlerce atık parçanın hem aktif uydulara hem de gelecekteki görevlere <span class="blank">______</span> oluşturmaktadır.</div><select id="q5" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) tehdit</option><option value="B">B) yatırım</option><option value="C">C) sorumluluk</option><option value="D">D) temel</option><option value="E">E) gerçeğe</option><option value="F">F) tartışmaları</option><option value="G">G) zorlukları</option><option value="H">H) maliyeti</option></select><div class="q-feedback" id="fb5"></div></div>
+    <div class="question" id="qw6"><div class="q-label">Soru 6</div><div class="q-text">Uzay keşifleriyle elde edilecek bilimsel kazanımların, bu <span class="blank">______</span> fazlasıyla karşılayacağını savunmaktadır.</div><select id="q6" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) tehdit</option><option value="B">B) yatırım</option><option value="C">C) sorumluluk</option><option value="D">D) temel</option><option value="E">E) gerçeğe</option><option value="F">F) tartışmaları</option><option value="G">G) zorlukları</option><option value="H">H) maliyeti</option></select><div class="q-feedback" id="fb6"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 2: İLAN-DURUM EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-title">Okuma Metni — İlan-Durum Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Sağlık ve Yaşam Hizmetleri · Sorular 7–14</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Aşağıdaki durumları (A-J) ve ilanları (7-14) eşleştiriniz. Her ilan yalnız bir durumla eşleşecektir. <strong>İki</strong> durum seçilmeyecektir.</div>
+    <div class="options-label">Durumlar (A–J)</div>
+    <div class="options-grid" style="flex-direction:column;gap:0.3rem;">
+      <div class="option-pill"><strong>A)</strong> Dişlerinizdeki çapraşıklığı düzeltmek için tel tedavisi olmak istiyorsunuz.</div>
+      <div class="option-pill"><strong>B)</strong> Evinizin sigorta işlemlerini yaptırmak için bir uzman arıyorsunuz.</div>
+      <div class="option-pill"><strong>C)</strong> Uzun süredir devam eden bel ağrınız için fizik tedavi desteği almak istiyorsunuz.</div>
+      <div class="option-pill"><strong>D)</strong> Çocuğunuza yüzme öğretmek için bir kurs arıyorsunuz.</div>
+      <div class="option-pill"><strong>E)</strong> Yeni aldığınız evin tadilat işlerini yaptırmak istiyorsunuz.</div>
+      <div class="option-pill"><strong>F)</strong> Evcil kedinizin yıllık aşılarını yaptırmak için bir yer arıyorsunuz.</div>
+      <div class="option-pill"><strong>G)</strong> Aşırı kilo sorununuz nedeniyle diyetisyen desteği almak istiyorsunuz.</div>
+      <div class="option-pill"><strong>H)</strong> Yaz aylarında çocuklarınızı yabancı dil eğitimi alabileceği bir kursa göndermek istiyorsunuz.</div>
+      <div class="option-pill"><strong>I)</strong> İş yerinizde çalışanlara yönelik stres yönetimi semineri düzenletmek istiyorsunuz.</div>
+      <div class="option-pill"><strong>J)</strong> Saç ekimi yaptırarak görünümünüzü yenilemek istiyorsunuz.</div>
+    </div>
+    <div id="matchingQuestions">
+      <div class="match-row" id="qw7"><div class="match-num">7</div><div class="match-text"><strong>Ortodonti ve Diş Sağlığı Merkezi:</strong> Diş teli tedavisi, şeffaf plaklar ve diş estetiği alanlarında uzman hekim kadromuzla hizmet vermekteyiz. Çocuk ve yetişkin hastalarımıza kişiye özel tedavi planları sunmaktayız.</div><select id="q7" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb7"></div></div>
+      <div class="match-row" id="qw8"><div class="match-num">8</div><div class="match-text"><strong>Veteriner Kliniği:</strong> Evcil dostlarınızın sağlık kontrolleri, aşı takibi, cerrahi müdahaleler ve acil durum hizmetleri için 7/24 yanınızdayız. Uzman veteriner hekimlerimizle tüm tedavi süreçlerini titizlikle yürütmekteyiz.</div><select id="q8" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb8"></div></div>
+      <div class="match-row" id="qw9"><div class="match-num">9</div><div class="match-text"><strong>Kurumsal Eğitim ve Danışmanlık:</strong> Şirketlere yönelik iletişim becerileri, liderlik, zaman yönetimi ve stresle başa çıkma gibi konularda uzman eğitmenlerle seminer ve atölye çalışmaları düzenlemekteyiz.</div><select id="q9" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb9"></div></div>
+      <div class="match-row" id="qw10"><div class="match-num">10</div><div class="match-text"><strong>Fizik Tedavi ve Rehabilitasyon Merkezi:</strong> Bel, boyun, diz ve omuz rahatsızlıklarında uzman fizyoterapistlerimizle birebir tedavi programları uygulamaktayız. Ağrı yönetimi ve hareket kabiliyetini artırmaya yönelik hizmetlerimizle sağlığınıza kavuşmanızı sağlıyoruz.</div><select id="q10" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb10"></div></div>
+      <div class="match-row" id="qw11"><div class="match-num">11</div><div class="match-text"><strong>Yaz Spor Okulları:</strong> 6-15 yaş arası çocuklar için yüzme, basketbol, voleybol ve tenis branşlarında yaz dönemi boyunca eğlenceli ve öğretici spor programları düzenlemekteyiz. Profesyonel antrenörler eşliğinde güvenli ortamda eğitim vermekteyiz.</div><select id="q11" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb11"></div></div>
+      <div class="match-row" id="qw12"><div class="match-num">12</div><div class="match-text"><strong>Yapı ve Tadilat Hizmetleri:</strong> Konut ve iş yerlerinizin boya, badana, sıhhi tesisat, elektrik, mutfak ve banyo tadilatı gibi her türlü yenileme işlemlerini uygun fiyat ve kaliteli malzeme garantisiyle gerçekleştirmekteyiz.</div><select id="q12" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb12"></div></div>
+      <div class="match-row" id="qw13"><div class="match-num">13</div><div class="match-text"><strong>Sigorta Danışmanlık:</strong> Konut, araç, sağlık ve iş yeri sigortaları konusunda uzman ekibimizle en uygun poliçeleri oluşturmaktayız. Sigorta işlemlerinizde tüm bürokratik süreçleri sizin adınıza yürütüyor, hasar anında yanınızda oluyoruz.</div><select id="q13" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb13"></div></div>
+      <div class="match-row" id="qw14"><div class="match-num">14</div><div class="match-text"><strong>Diyet ve Beslenme Danışmanlığı:</strong> Kişiye özel beslenme programları, kilo verme ve kilo alma süreçlerinde uzman diyetisyenlerimizle birebir danışmanlık hizmeti sunmaktayız. Sağlıklı yaşam hedeflerinize ulaşmanızda size rehberlik ediyoruz.</div><select id="q14" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb14"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BÖLÜM 3: PARAGRAF-BAŞLIK EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-title">Okuma Metni — Paragraf-Başlık Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Kültür ve Sanat · Sorular 15–20</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Her paragraf için uygun başlığı seçiniz (A–H). Her başlık yalnız bir defa kullanılabilir.</div>
+    <div class="options-label">Başlıklar</div>
+    <div class="options-grid" style="flex-direction:column;gap:0.3rem;">
+      <div class="option-pill"><strong>A)</strong> Sanat Eserlerinin Korunmasında Yeni Yöntemler</div>
+      <div class="option-pill"><strong>B)</strong> Müze Ziyaretçilerinin Değişen Profili</div>
+      <div class="option-pill"><strong>C)</strong> Dijital Sanatın Yükselişi ve Tartışmalar</div>
+      <div class="option-pill"><strong>D)</strong> Sanat Eğitiminin Toplumsal Önemi</div>
+      <div class="option-pill"><strong>E)</strong> Geleneksel Sanatların Yaşatılmasında Sivil Toplumun Rolü</div>
+      <div class="option-pill"><strong>F)</strong> Sanat Piyasasında Küreselleşmenin Etkileri</div>
+      <div class="option-pill"><strong>G)</strong> Kamusal Alanda Sanatın Dönüştürücü Gücü</div>
+      <div class="option-pill"><strong>H)</strong> Kültürel Mirasın Gelecek Kuşaklara Aktarımı</div>
+    </div>
+    <div class="match-row" id="qw15"><div class="match-num">I</div><div class="match-text">Müzeler, yalnızca eserlerin sergilendiği mekânlar olmaktan çıkarak ziyaretçilerin aktif katılım gösterdiği etkileşimli alanlara dönüşmektedir. Son yıllarda yapılan araştırmalar, müze ziyaretçilerinin yaş, eğitim düzeyi ve beklentilerinde belirgin bir değişim olduğunu ortaya koymaktadır. Genç ziyaretçiler, geleneksel sergileme biçimleri yerine dijital deneyimler, atölye çalışmaları ve sosyal etkileşim imkânı sunan müzeleri tercih etmektedir. Bu durum, müzelerin koleksiyonlarını sunma biçimlerini yeniden gözden geçirmesine yol açmaktadır.</div><select id="q15" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb15"></div></div>
+    <div class="match-row" id="qw16"><div class="match-num">II</div><div class="match-text">Günümüzde sokaklar, parklar ve meydanlar, heykellerden duvar resimlerine, enstalasyonlardan geçici sergilere kadar pek çok sanat eserine ev sahipliği yapmaktadır. Kamusal alanlarda sanat, yalnızca estetik bir unsur olmanın ötesinde, kent sakinlerinin ortak hafızasını oluşturan, kentsel dönüşüme katkı sunan ve toplumsal mesajların iletildiği bir platform haline gelmiştir. Bu tür projeler, sanatı izleyicinin gündelik hayatının bir parçası yaparak sanata erişimi demokratikleştirmektedir.</div><select id="q16" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb16"></div></div>
+    <div class="match-row" id="qw17"><div class="match-num">III</div><div class="match-text">Bilgisayar ortamında üretilen, etkileşimli ve çoğunlukla izleyicinin katılımına dayanan dijital sanat, son yirmi yılda sanat dünyasında kendine sağlam bir yer edinmiştir. Ancak bu durum, sanat çevrelerinde tartışmalara da yol açmaktadır. Dijital sanatın kalıcılığı, özgünlüğü ve koleksiyon değeri üzerine farklı görüşler bulunmaktadır. Bir kesim bunu sanatın evriminin doğal bir aşaması olarak görürken, diğer kesim geleneksel sanat formlarının değerinin dijital üretimler karşısında zayıflayacağından endişe duymaktadır.</div><select id="q17" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb17"></div></div>
+    <div class="match-row" id="qw18"><div class="match-num">IV</div><div class="match-text">Kültürel mirasın korunmasında devlet kurumlarının yanı sıra sivil toplum kuruluşlarının üstlendiği rol giderek artmaktadır. Dernekler, vakıflar ve gönüllü gruplar, unutulmaya yüz tutmuş el sanatlarının yaşatılmasından tarihi yapıların restorasyonuna, sözlü geleneklerin kayıt altına alınmasından halk danslarının öğretilmesine kadar geniş bir yelpazede çalışmalar yürütmektedir. Bu kuruluşlar, toplumun kültürel mirasa sahip çıkma bilincini geliştirmede kritik bir işlev görmektedir.</div><select id="q18" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb18"></div></div>
+    <div class="match-row" id="qw19"><div class="match-num">V</div><div class="match-text">Sanat eserlerinin zaman içinde bozulmasını önlemek ve onları gelecek kuşaklara aktarmak amacıyla uygulanan konservasyon çalışmaları, günümüzde ileri teknolojilerden yararlanmaktadır. Röntgen görüntüleme, lazer temizlik, 3 boyutlu tarama ve yapay zekâ destekli analizler, restoratörlerin eserleri daha hassas ve etkili biçimde korumasına olanak sağlamaktadır. Bu teknolojiler, aynı zamanda hasar gören eserlerin orijinal hallerine sadık kalınarak onarılmasına da imkân vermektedir.</div><select id="q19" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb19"></div></div>
+    <div class="match-row" id="qw20"><div class="match-num">VI</div><div class="match-text">Sanat eğitimi, bireylerin yaratıcı düşünme becerilerini geliştiren, estetik duyarlılıklarını artıran ve ifade yeteneklerini güçlendiren bir alan olarak eğitim sisteminin ayrılmaz bir parçası olmalıdır. Sanatla erken yaşta tanışan çocukların problem çözme becerilerinin daha gelişmiş olduğu, duygusal zekâlarının daha yüksek olduğu ve özgüvenlerinin daha sağlıklı geliştiği araştırmalarla ortaya konmuştur. Bu nedenle sanat eğitimi, akademik başarının yanı sıra bireyin bütünsel gelişimi açısından da vazgeçilmez bir unsurdur.</div><select id="q20" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb20"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 4: ÇOKTAN SEÇMELİ + D/Y/V -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div>
+      <div class="section-title">Okuma Metni — Çoktan Seçmeli & Doğru/Yanlış/Verilmemiş</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">İklim Değişikliği ve Göç · Sorular 21–29</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p>İklim değişikliği, yalnızca çevresel bir sorun olmanın ötesinde, insanlık tarihinin en büyük göç hareketlerinden birini tetiklemektedir. Kuraklık, çölleşme, deniz seviyesindeki yükselme ve aşırı hava olayları, milyonlarca insanı yaşadıkları toprakları terk etmeye zorlamaktadır. Uluslararası Göç Örgütü'nün verilerine göre, son on yılda iklim kaynaklı göç edenlerin sayısı 200 milyonu aşmıştır. Bu rakam, savaş ve çatışmalardan kaçan mülteci sayısını çoktan geride bırakmış durumdadır. Uzmanlar, önlem alınmadığı takdirde 2050 yılına kadar bu sayının 1,2 milyara ulaşabileceği uyarısında bulunmaktadır.</p>
+      <p>İklim göçü, genellikle yavaş ilerleyen bir süreçtir. Kuraklık nedeniyle tarımın imkânsız hale gelmesi, deniz seviyesinin yükselmesiyle kıyı yerleşimlerinin sular altında kalması veya çölleşmeyle birlikte yaşam koşullarının giderek ağırlaşması, insanları uzun bir zaman diliminde göç etmeye zorlar. Ancak son yıllarda kasırgalar, sel felaketleri ve orman yangınları gibi ani ve şiddetli hava olayları da anlık kitlesel göçlere yol açmaktadır. 2022'de Pakistan'da yaşanan sel felaketinde 8 milyon kişi evini terk etmek zorunda kalmış, bu durum iklim göçünün aciliyetini bir kez daha gözler önüne sermiştir.</p>
+      <p>İklim göçüne maruz kalanlar, uluslararası hukukta henüz "mülteci" statüsü kapsamında değerlendirilmemektedir. 1951 Cenevre Sözleşmesi, mülteci tanımını siyasi, dinsel veya etnik nedenlerle zulüm görenlerle sınırlandırmaktadır. Bu nedenle iklim nedeniyle yerinden edilen insanlar, yasal koruma mekanizmalarından yeterince yararlanamamaktadır. Uzmanlar, bu boşluğun doldurulması için yeni uluslararası düzenlemelerin acilen hayata geçirilmesi gerektiğini vurgulamaktadır.</p>
+      <p>Gelişmekte olan ülkeler, iklim göçünden en fazla etkilenen bölgelerdir. Afrika'da Sahel Kuşağı, Güney Asya'da Bangladeş ve Pasifik'teki küçük ada ülkeleri, deniz seviyesindeki yükselme ve kuraklık nedeniyle en kırılgan bölgeler arasında yer almaktadır. Bu ülkeler, iklim değişikliğine en az katkıda bulunan ülkeler olmalarına rağmen sonuçlarına en ağır şekilde maruz kalmaktadır. Bu durum, iklim adaleti tartışmalarını da beraberinde getirmektedir.</p>
+      <p>Türkiye, coğrafi konumu nedeniyle iklim göçünden etkilenebilecek ülkeler arasında yer almaktadır. Özellikle Güneydoğu Anadolu Bölgesi'nde kuraklığa bağlı tarımsal verim kaybı, iç göçü tetikleyebilecektir. Ayrıca komşu ülkelerde yaşanacak iklim kaynaklı göç hareketlerinin Türkiye'ye de yansıması beklenmektedir. Uzmanlar, kentsel altyapının bu olası göç dalgalarına hazırlanması gerektiğini, su kaynaklarının yönetimi ve tarımsal planlamanın iklim değişikliği senaryolarına göre yeniden düzenlenmesinin kaçınılmaz olduğunu belirtmektedir.</p>
+    </div>
+    <!-- Q21-24 Multiple Choice -->
+    <div class="question" id="qw21"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 21 — Metnin bütününe göre aşağıdaki yargılardan hangisine varılamaz?</div><div class="choices" id="choices21"><label class="choice-label" onclick="selectChoice(this,'q21','A')"><input type="radio" name="q21" value="A"><span class="choice-key">A</span><span>İklim göçü, yavaş ilerleyen süreçlerin yanı sıra ani afetler sonucunda da gerçekleşebilmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','B')"><input type="radio" name="q21" value="B"><span class="choice-key">B</span><span>İklim değişikliğine en az katkıda bulunan ülkeler, sonuçlarına en ağır şekilde maruz kalmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','C')"><input type="radio" name="q21" value="C"><span class="choice-key">C</span><span>İklim göçü nedeniyle yerinden edilen insanlar, uluslararası hukukta mülteci statüsünde kabul edilmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','D')"><input type="radio" name="q21" value="D"><span class="choice-key">D</span><span>Türkiye, iklim göçünden etkilenebilecek ülkeler arasında gösterilmektedir.</span></label></div><div class="q-feedback" id="fb21"></div></div>
+    <div class="question" id="qw22"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 22 — Metinde geçen "iklim adaleti" sözüyle ne anlatılmaktadır?</div><div class="choices" id="choices22"><label class="choice-label" onclick="selectChoice(this,'q22','A')"><input type="radio" name="q22" value="A"><span class="choice-key">A</span><span>İklim göçüyle ilgili uluslararası yasal düzenlemelerin yapılması</span></label><label class="choice-label" onclick="selectChoice(this,'q22','B')"><input type="radio" name="q22" value="B"><span class="choice-key">B</span><span>İklim değişikliğinin sonuçlarından en az sorumlu olanların en fazla zarar görmesi karşısında hakkaniyetli bir yaklaşım geliştirilmesi</span></label><label class="choice-label" onclick="selectChoice(this,'q22','C')"><input type="radio" name="q22" value="C"><span class="choice-key">C</span><span>Gelişmiş ülkelerin iklim göçmenlerine maddi yardım yapması</span></label><label class="choice-label" onclick="selectChoice(this,'q22','D')"><input type="radio" name="q22" value="D"><span class="choice-key">D</span><span>İklim değişikliğiyle mücadelede tüm ülkelerin eşit sorumluluk taşıması</span></label></div><div class="q-feedback" id="fb22"></div></div>
+    <div class="question" id="qw23"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 23 — Aşağıdakilerden hangisinde iklim göçüne dair verilen bilgiler birbiriyle uyumsuzdur?</div><div class="choices" id="choices23"><label class="choice-label" onclick="selectChoice(this,'q23','A')"><input type="radio" name="q23" value="A"><span class="choice-key">A</span><span>İklim göçü, yavaş ilerleyen süreçlerin yanı sıra ani afetler sonucunda da ortaya çıkabilmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','B')"><input type="radio" name="q23" value="B"><span class="choice-key">B</span><span>İklim göçü nedeniyle yerinden edilenlerin sayısı, savaş ve çatışmalardan kaçan mülteci sayısını geçmiştir.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','C')"><input type="radio" name="q23" value="C"><span class="choice-key">C</span><span>Uluslararası hukuk, iklim göçmenlerini mülteci olarak tanıdığı için yasal koruma mekanizmaları işlemektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','D')"><input type="radio" name="q23" value="D"><span class="choice-key">D</span><span>Türkiye'de Güneydoğu Anadolu Bölgesi'nde kuraklığa bağlı olarak iç göç yaşanabileceği öngörülmektedir.</span></label></div><div class="q-feedback" id="fb23"></div></div>
+    <div class="question" id="qw24"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 24 — Metne göre, aşağıdaki bilgilerden hangisi doğrudur?</div><div class="choices" id="choices24"><label class="choice-label" onclick="selectChoice(this,'q24','A')"><input type="radio" name="q24" value="A"><span class="choice-key">A</span><span>İklim göçü yalnızca yavaş ilerleyen süreçler sonucunda ortaya çıkmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','B')"><input type="radio" name="q24" value="B"><span class="choice-key">B</span><span>1951 Cenevre Sözleşmesi, iklim göçmenlerini de mülteci kapsamında değerlendirmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','C')"><input type="radio" name="q24" value="C"><span class="choice-key">C</span><span>Pakistan'daki sel felaketinde 8 milyondan fazla kişi evini terk etmek zorunda kalmıştır.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','D')"><input type="radio" name="q24" value="D"><span class="choice-key">D</span><span>Türkiye'nin iklim göçünden etkilenmeyeceği öngörülmektedir.</span></label></div><div class="q-feedback" id="fb24"></div></div>
+    <hr style="border:none;border-top:1px dashed var(--border);margin:1.2rem 0;">
+    <div class="instructions" style="margin-bottom:1rem;">Aşağıdaki cümleler metne göre <strong>DOĞRU (A)</strong>, <strong>YANLIŞ (B)</strong> ya da <strong>VERİLMEMİŞ (C)</strong> olabilir.</div>
+    <!-- Q25-29 True/False/Not Given -->
+    <div class="question" id="qw25"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 25</div><div class="q-text" style="font-weight:700;color:var(--ink);">İklim göçü, yalnızca gelişmekte olan ülkeleri etkileyen bir sorundur.</div><div class="choices" id="choices25"><label class="choice-label" onclick="selectChoice(this,'q25','A')"><input type="radio" name="q25" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q25','B')"><input type="radio" name="q25" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q25','C')"><input type="radio" name="q25" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb25"></div></div>
+    <div class="question" id="qw26"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 26</div><div class="q-text" style="font-weight:700;color:var(--ink);">2022 yılında Pakistan'da meydana gelen sel felaketi, ani iklim göçüne örnek olarak gösterilmektedir.</div><div class="choices" id="choices26"><label class="choice-label" onclick="selectChoice(this,'q26','A')"><input type="radio" name="q26" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q26','B')"><input type="radio" name="q26" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q26','C')"><input type="radio" name="q26" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb26"></div></div>
+    <div class="question" id="qw27"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 27</div><div class="q-text" style="font-weight:700;color:var(--ink);">Gelişmiş ülkeler, iklim göçmenlerine yönelik yasal düzenlemeleri tamamlamış durumdadır.</div><div class="choices" id="choices27"><label class="choice-label" onclick="selectChoice(this,'q27','A')"><input type="radio" name="q27" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q27','B')"><input type="radio" name="q27" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q27','C')"><input type="radio" name="q27" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb27"></div></div>
+    <div class="question" id="qw28"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 28</div><div class="q-text" style="font-weight:700;color:var(--ink);">Türkiye, iklim göçü konusunda uluslararası düzeyde öncü bir politika geliştirmiştir.</div><div class="choices" id="choices28"><label class="choice-label" onclick="selectChoice(this,'q28','A')"><input type="radio" name="q28" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q28','B')"><input type="radio" name="q28" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q28','C')"><input type="radio" name="q28" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb28"></div></div>
+    <div class="question" id="qw29"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 29</div><div class="q-text" style="font-weight:700;color:var(--ink);">İklim değişikliğine bağlı olarak 2050 yılına kadar göç edenlerin sayısının 1,2 milyara ulaşabileceği öngörülmektedir.</div><div class="choices" id="choices29"><label class="choice-label" onclick="selectChoice(this,'q29','A')"><input type="radio" name="q29" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q29','B')"><input type="radio" name="q29" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q29','C')"><input type="radio" name="q29" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb29"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 5: ÇOKTAN SEÇMELİ + PARAGRAF EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div>
+      <div class="section-title">Okuma Metni — Çoktan Seçmeli & Paragraf Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Dijital Bağımlılık · Sorular 30–35</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p><strong>A)</strong> Dijital bağımlılık, son yirmi yılda özellikle genç nesiller arasında hızla yaygınlaşan bir sorun haline gelmiştir. Akıllı telefonlar, sosyal medya platformları ve çevrimiçi oyunlar, kullanıcıları ekran başında saatlerce tutabilmekte, bu durum bireylerin sosyal ilişkilerini, akademik başarılarını ve fiziksel sağlıklarını olumsuz etkilemektedir. Uzmanlar, dijital bağımlılığın tıpkı madde bağımlılığı gibi beyinde ödül mekanizmasını etkileyerek bağımlılık döngüsü oluşturduğunu belirtmektedir.</p>
+      <p><strong>B)</strong> Dijital bağımlılıkla mücadelede en etkili yöntemlerden biri, bilinçli teknoloji kullanımı alışkanlığı kazandırmaktır. Uzmanlar, ekran süresinin sınırlandırılması, teknolojisiz zaman dilimleri oluşturulması ve dijital detoks uygulamalarını önermektedir. Ayrıca ailelerin, çocuklarıyla birlikte teknoloji kullanım kuralları belirlemesi ve bu kurallara kendilerinin de uyması büyük önem taşımaktadır. Okullarda dijital okuryazarlık eğitimlerinin yaygınlaştırılması da koruyucu önlemler arasında yer almaktadır.</p>
+      <p><strong>C)</strong> Dijital bağımlılığın tedavisinde bilişsel davranışçı terapi, motivasyonel görüşme teknikleri ve aile terapileri gibi yöntemler kullanılmaktadır. Türkiye'de son yıllarda bağımlılıkla mücadele kapsamında Yeşilay Danışmanlık Merkezleri dijital bağımlılıkla ilgili de danışmanlık hizmeti vermeye başlamıştır. Tedavi sürecinde öncelikle bağımlılığın derecesi belirlenmekte, ardından kişiye özel bir müdahale planı oluşturulmaktadır. Tedavi sürecinde ailenin desteği, başarı oranını önemli ölçüde artırmaktadır.</p>
+      <p><strong>D)</strong> Yapılan araştırmalar, dijital bağımlılığın çocukların beyin gelişimini olumsuz etkilediğini ortaya koymaktadır. Özellikle 0-6 yaş döneminde ekran maruziyetinin fazla olması, dil gelişiminde gecikmeler, dikkat eksikliği, duygu düzenlemede zorluklar ve sosyal becerilerde gerilik gibi sorunlara yol açabilmektedir. Uzmanlar, bu yaş grubundaki çocukların teknolojiyle tanışmasının geciktirilmesi ve mümkün olduğunca doğal oyun ortamlarında vakit geçirmeleri gerektiğini vurgulamaktadır.</p>
+      <p><strong>E)</strong> Dijital bağımlılık yalnızca bireysel bir sorun olmayıp toplumsal boyutları da bulunmaktadır. Aşırı teknoloji kullanımı, aile içi iletişimin zayıflamasına, yüz yüze ilişkilerin azalmasına ve toplumsal yalnızlığın artmasına neden olmaktadır. İş yerlerinde ise verimlilik düşüşü, iş kazalarında artış ve çalışan memnuniyetsizliği gibi sorunlara yol açabilmektedir. Bu nedenle dijital bağımlılıkla mücadele, bireysel önlemlerin ötesinde toplumsal bir seferberlik gerektirmektedir.</p>
+    </div>
+    <!-- Q30-32 Multiple Choice -->
+    <div class="question" id="qw30"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 30 — Aşağıdaki cümlelerden hangisi metinden çıkarılamaz?</div><div class="choices" id="choices30"><label class="choice-label" onclick="selectChoice(this,'q30','A')"><input type="radio" name="q30" value="A"><span class="choice-key">A</span><span>Dijital bağımlılık, beyinde madde bağımlılığına benzer bir etki oluşturmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','B')"><input type="radio" name="q30" value="B"><span class="choice-key">B</span><span>Türkiye'de dijital bağımlılıkla mücadelede devlet destekli danışmanlık merkezleri bulunmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','C')"><input type="radio" name="q30" value="C"><span class="choice-key">C</span><span>Dijital bağımlılık tedavisinde yalnızca bireysel terapiler etkili olmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','D')"><input type="radio" name="q30" value="D"><span class="choice-key">D</span><span>0-6 yaş döneminde aşırı ekran maruziyeti çocukların gelişimini olumsuz etkilemektedir.</span></label></div><div class="q-feedback" id="fb30"></div></div>
+    <div class="question" id="qw31"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 31 — Metinde aşağıdaki cümlelerden hangisine değinilmemiştir?</div><div class="choices" id="choices31"><label class="choice-label" onclick="selectChoice(this,'q31','A')"><input type="radio" name="q31" value="A"><span class="choice-key">A</span><span>Dijital bağımlılık, iş yerlerinde verimlilik düşüşüne yol açabilmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','B')"><input type="radio" name="q31" value="B"><span class="choice-key">B</span><span>Günümüzde dijital bağımlılık sorunu yalnızca genç nesiller arasında görülmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','C')"><input type="radio" name="q31" value="C"><span class="choice-key">C</span><span>Dijital bağımlılıkla mücadelede ailelerin teknoloji kullanım kuralları belirlemesi önerilmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','D')"><input type="radio" name="q31" value="D"><span class="choice-key">D</span><span>Tedavi sürecinde aile desteği, başarı oranını artıran bir faktördür.</span></label></div><div class="q-feedback" id="fb31"></div></div>
+    <div class="question" id="qw32"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 32 — Metinden aşağıdaki yargılardan hangisine ulaşılamaz?</div><div class="choices" id="choices32"><label class="choice-label" onclick="selectChoice(this,'q32','A')"><input type="radio" name="q32" value="A"><span class="choice-key">A</span><span>Dijital bağımlılık, bireysel olduğu kadar toplumsal bir sorundur.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','B')"><input type="radio" name="q32" value="B"><span class="choice-key">B</span><span>Dijital bağımlılığın tedavisinde farklı terapi yöntemleri kullanılmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','C')"><input type="radio" name="q32" value="C"><span class="choice-key">C</span><span>Dijital bağımlılık, fiziksel sağlık sorunlarının yanı sıra sosyal ilişkileri de olumsuz etkilemektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','D')"><input type="radio" name="q32" value="D"><span class="choice-key">D</span><span>Dijital bağımlılık tedavisinde kullanılan ilaçlar henüz onaylanmamıştır.</span></label></div><div class="q-feedback" id="fb32"></div></div>
+    <hr style="border:none;border-top:1px dashed var(--border);margin:1.2rem 0;">
+    <div class="instructions" style="margin-bottom:1rem;">Aşağıdaki cümlelerin hangi paragraflara (A-E) ait olduğunu bulunuz. Seçilmemesi gereken <strong>İKİ</strong> paragraf bulunmaktadır.</div>
+    <!-- Q33-35 Paragraph Matching -->
+    <div class="question" id="qw33"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 33</div><div class="q-text" style="font-weight:700;color:var(--ink);">Dijital bağımlılıkla mücadelede bilinçli teknoloji kullanımı alışkanlığının önemi, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices33"><label class="choice-label" onclick="selectChoice(this,'q33','A')"><input type="radio" name="q33" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q33','B')"><input type="radio" name="q33" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q33','C')"><input type="radio" name="q33" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q33','D')"><input type="radio" name="q33" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q33','E')"><input type="radio" name="q33" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb33"></div></div>
+    <div class="question" id="qw34"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 34</div><div class="q-text" style="font-weight:700;color:var(--ink);">Dijital bağımlılığın toplumsal boyutları ve yansımaları, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices34"><label class="choice-label" onclick="selectChoice(this,'q34','A')"><input type="radio" name="q34" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q34','B')"><input type="radio" name="q34" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q34','C')"><input type="radio" name="q34" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q34','D')"><input type="radio" name="q34" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q34','E')"><input type="radio" name="q34" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb34"></div></div>
+    <div class="question" id="qw35"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 35</div><div class="q-text" style="font-weight:700;color:var(--ink);">Dijital bağımlılığın çocukların gelişimi üzerindeki olumsuz etkileri, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices35"><label class="choice-label" onclick="selectChoice(this,'q35','A')"><input type="radio" name="q35" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q35','B')"><input type="radio" name="q35" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q35','C')"><input type="radio" name="q35" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q35','D')"><input type="radio" name="q35" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q35','E')"><input type="radio" name="q35" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb35"></div></div>
+  </div>
+</div>
+
+<div class="submit-wrap">
+  <button class="btn-submit" id="btnFinish" onclick="submitTest()">Testi Bitir</button>
+  <button class="btn-reset" onclick="resetTest()">Sıfırla</button>
+</div>
+
+</main>
+
+<script>
+// ── DÜZELTME: Session kontrolü kaldırıldı, doğrudan test açılabilir ──
+
+const answers = {
+  // Bölüm 1: Boşluk Doldurma (metne göre düzeltildi)
+  q1:'D', q2:'B', q3:'E', q4:'G', q5:'A', q6:'H',
+  // Bölüm 2: İlan-Durum Eşleştirme
+  q7:'A', q8:'F', q9:'I', q10:'C', q11:'D', q12:'E', q13:'B', q14:'G',
+  // Bölüm 3: Paragraf-Başlık Eşleştirme
+  q15:'B', q16:'G', q17:'C', q18:'E', q19:'A', q20:'D',
+  // Bölüm 4: Çoktan Seçmeli + D/Y/V
+  q21:'C', q22:'B', q23:'C', q24:'C',
+  q25:'B', q26:'A', q27:'C', q28:'C', q29:'A',
+  // Bölüm 5: Çoktan Seçmeli + Paragraf Eşleştirme
+  q30:'C', q31:'B', q32:'D',
+  q33:'B', q34:'E', q35:'D'
+};
+
+const totalQ = 35;
+const userAnswers = {};
+
+function selectChoice(label, name, val) {
+  const group = label.closest('.choices');
+  group.querySelectorAll('.choice-label').forEach(l => l.classList.remove('selected'));
+  label.classList.add('selected');
+  userAnswers[name] = val;
+  updateProgress();
+}
+
+function buildSegments() {
+  const bar = document.getElementById('segmentsBar');
+  bar.innerHTML = '';
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.id = 'seg' + i;
+    bar.appendChild(seg);
+  }
+}
+
+function updateProgress() {
+  let filled = 0;
+  Object.keys(answers).forEach(k => {
+    const el = document.getElementById(k);
+    if (el) {
+      if (el.tagName === 'SELECT' && el.value !== '') filled++;
+    } else if (userAnswers[k]) {
+      filled++;
+    }
+  });
+  document.getElementById('progressText').textContent = filled + ' / ' + totalQ;
+}
+
+function fillSegments(correctCount) {
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.getElementById('seg' + i);
+    if (seg) seg.classList.toggle('filled', i < correctCount);
+  }
+  document.getElementById('progressText').textContent = correctCount + ' / ' + totalQ + ' doğru';
+}
+
+function submitTest() {
+  let correct = 0;
+  Object.keys(answers).forEach(k => {
+    const correct_ans = answers[k];
+    let user_ans = '';
+    const el = document.getElementById(k);
+    if (el && el.tagName === 'SELECT') {
+      user_ans = el.value;
+    } else {
+      user_ans = userAnswers[k] || '';
+    }
+    const fb = document.getElementById('fb' + k.replace('q',''));
+    const isCorrect = user_ans === correct_ans;
+    if (isCorrect) {
+      correct++;
+      if (fb) { fb.className='q-feedback correct'; fb.textContent='✓ Doğru'; }
+    } else {
+      if (fb) {
+        fb.className='q-feedback wrong';
+        fb.textContent = user_ans ? `✗ Yanlış — Doğru cevap: ${correct_ans}` : `✗ Boş bırakıldı — Doğru cevap: ${correct_ans}`;
+      }
+    }
+    if (el && el.tagName === 'SELECT') {
+      el.className = 'match-select ' + (isCorrect ? 'correct' : 'wrong');
+    }
+    const choicesDiv = document.getElementById('choices' + k.replace('q',''));
+    if (choicesDiv) {
+      choicesDiv.querySelectorAll('.choice-label').forEach(lbl => {
+        const v = lbl.querySelector('input').value;
+        lbl.classList.remove('selected','correct','wrong','show-answer');
+        if (v === user_ans && !isCorrect) lbl.classList.add('wrong');
+        if (v === correct_ans) lbl.classList.add(isCorrect ? 'correct' : 'show-answer');
+      });
+    }
+  });
+  document.getElementById('scoreDisplay').textContent = correct + ' / ' + totalQ;
+  document.getElementById('scoreDetail').textContent = '35 sorudan ' + correct + ' doğru cevap';
+  let msg = '';
+  if (correct >= 30) msg = '🏆 Mükemmel! Çok iyi bir sonuç elde ettiniz.';
+  else if (correct >= 24) msg = '👍 İyi iş çıkardınız! Biraz daha çalışmayla mükemmel olacaksınız.';
+  else if (correct >= 18) msg = '📚 Orta seviye. Hatalı soruları gözden geçirmenizi öneririz.';
+  else msg = '💪 Daha fazla pratik yapmanız gerekiyor. Pes etmeyin!';
+  document.getElementById('feedbackMsg').textContent = msg;
+  fillSegments(correct);
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'block';
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetTest() { location.reload(); }
+buildSegments();
+</script>
+
+</body>
+</html>
