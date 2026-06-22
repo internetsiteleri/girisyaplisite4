@@ -1,6 +1,0 @@
-.env
-__pycache__/
-*.pyc
-media_files/
-scheduled_posts.json
-*.log
