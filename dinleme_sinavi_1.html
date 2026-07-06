@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+html<script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dinleme Sınavı – Hamza Hoca ile Türkçe Öğreniyorum</title>
@@ -883,29 +889,5 @@ function resetAll() {
   updateProgress();
 }
 </script>
-</script>
-
-<script src="exercise_tracker.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const origCheck = window.checkAll;
-  if (origCheck) {
-    window.checkAll = function() {
-      origCheck.apply(this, arguments);
-      // Dinleme testinde correct global değil, manuel bul
-      const scoreCorrect = parseInt(document.getElementById('score-correct')?.textContent || '0');
-      const scoreTotal = 35; // Dinleme testleri 35 soru
-      if (scoreCorrect > 0) {
-        ExerciseTracker.complete(
-          document.title.replace(' – Hamza Hoca','').replace(' - Hamza Hoca',''),
-          scoreCorrect,
-          scoreTotal
-        );
-      }
-    };
-  }
-});
-</script>
-
 </body>
 </html>
