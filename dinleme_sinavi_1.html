@@ -888,15 +888,18 @@ function resetAll() {
 <script src="exercise_tracker.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const origSubmit = window.submitTest;
-  if (origSubmit) {
-    window.submitTest = function() {
-      origSubmit.apply(this, arguments);
-      if (typeof correct !== 'undefined' && typeof totalQ !== 'undefined') {
+  const origCheck = window.checkAll;
+  if (origCheck) {
+    window.checkAll = function() {
+      origCheck.apply(this, arguments);
+      // Dinleme testinde correct global değil, manuel bul
+      const scoreCorrect = parseInt(document.getElementById('score-correct')?.textContent || '0');
+      const scoreTotal = 35; // Dinleme testleri 35 soru
+      if (scoreCorrect > 0) {
         ExerciseTracker.complete(
           document.title.replace(' – Hamza Hoca','').replace(' - Hamza Hoca',''),
-          correct,
-          totalQ
+          scoreCorrect,
+          scoreTotal
         );
       }
     };
