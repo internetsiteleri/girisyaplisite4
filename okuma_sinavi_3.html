@@ -582,8 +582,26 @@ function submitTest() {
 function resetTest() { location.reload(); }
 buildSegments();
 </script>
+</script>
+
+<script src="exercise_tracker.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const origSubmit = window.submitTest;
+  if (origSubmit) {
+    window.submitTest = function() {
+      origSubmit.apply(this, arguments);
+      if (typeof correct !== 'undefined' && typeof totalQ !== 'undefined') {
+        ExerciseTracker.complete(
+          document.title.replace(' – Hamza Hoca','').replace(' - Hamza Hoca',''),
+          correct,
+          totalQ
+        );
+      }
+    };
+  }
+});
+</script>
 
 </body>
 </html>
-ExerciseTracker.complete(document.title.replace(' – Hamza Hoca',''), correct, totalQ);
-</script>
