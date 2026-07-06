@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+html<script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Türkçe Okuma Testi 3 – Hamza Hoca</title>
@@ -581,26 +587,6 @@ function submitTest() {
 
 function resetTest() { location.reload(); }
 buildSegments();
-</script>
-</script>
-
-<script src="exercise_tracker.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const origSubmit = window.submitTest;
-  if (origSubmit) {
-    window.submitTest = function() {
-      origSubmit.apply(this, arguments);
-      if (typeof correct !== 'undefined' && typeof totalQ !== 'undefined') {
-        ExerciseTracker.complete(
-          document.title.replace(' – Hamza Hoca','').replace(' - Hamza Hoca',''),
-          correct,
-          totalQ
-        );
-      }
-    };
-  }
-});
 </script>
 
 </body>
