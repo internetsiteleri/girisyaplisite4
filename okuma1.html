@@ -1289,6 +1289,7 @@ function submitTest() {
   document.getElementById('feedbackMsg').textContent = msg;
 
   fillSegments(correct);
+  kaydetSonuc("Okuma Testi 9", correct, totalQ, "okuma");
 
   const resultsEl = document.getElementById('results');
   resultsEl.style.display = 'block';
@@ -1302,6 +1303,89 @@ function resetTest() {
 
 // ── INIT ──────────────────────────────────────────────────────
 buildSegments();
+/* ═══════════════════════════════════════════════════════
+   PROFİL KAYDET — Test/Alıştırma dosyalarına eklenecek kod
+   (girisyaplisite.html'deki ProfileSystem ile TAM UYUMLU)
+   ═══════════════════════════════════════════════════════
+   KULLANIM:
+   Test bittiğinde, doğru sayısı ve toplam soru sayısı belli
+   olduğunda şu satırı çağırın:
+
+   kaydetSonuc("Okuma Sınavı 8", dogruSayisi, toplamSoru);
+
+   3. parametre (kategori) opsiyoneldir — verilmezse dosya
+   adından otomatik tahmin edilir (okuma/dinleme/kelime vb.)
+   ═══════════════════════════════════════════════════════ */
+
+function kaydetSonuc(testAdi, dogruSayisi, toplamSoru, kategori) {
+  const kullaniciAdi = sessionStorage.getItem('hamzaUser');
+  if (!kullaniciAdi) return false; // giriş yapmamışsa kaydetme
+
+  const kategoriler = {
+    'okuma':   ['okuma', 'oku', 'metin'],
+    'dinleme': ['dinleme', 'dinle', 'kroki'],
+    'yazma':   ['yazma', 'yaz'],
+    'konusma': ['konusma', 'konuşma'],
+    'kelime':  ['kelime', 'kart', 'deyim', 'bulmaca', 'ifade'],
+    'gramer':  ['gramer', 'eki', 'zaman', 'tamlama', 'benzesme'],
+    'sinav':   ['sinav', 'testi', 'test', 'tys'],
+    'oyun':    ['oyun', 'çarkı', 'carki', 'cark']
+  };
+
+  function kategoriTahminEt(ad) {
+    const lower = ad.toLowerCase();
+    for (const [key, kaliplar] of Object.entries(kategoriler)) {
+      for (const kalip of kaliplar) {
+        if (lower.includes(kalip)) return key;
+      }
+    }
+    return 'diger';
+  }
+
+  const anahtar = `hamzaProfile_${kullaniciAdi}`;
+  let profil = JSON.parse(localStorage.getItem(anahtar) || 'null');
+
+  if (!profil) {
+    profil = {
+      username: kullaniciAdi,
+      joinedDate: new Date().toISOString().split('T')[0],
+      lastLogin: new Date().toISOString(),
+      exercises: [],
+      totalSolved: 0,
+      totalCorrect: 0,
+      totalQuestions: 0
+    };
+  }
+
+  const nihaiKategori = kategori || kategoriTahminEt(testAdi);
+
+  const yeniKayit = {
+    name: testAdi,
+    score: dogruSayisi,
+    totalQuestions: toplamSoru,
+    category: nihaiKategori,
+    date: new Date().toISOString(),
+    dateFormatted: new Date().toLocaleDateString('tr-TR')
+  };
+
+  // Aynı test daha önce çözülmüşse ve yeni skor daha yüksekse güncelle
+  const mevcutIndex = profil.exercises.findIndex(e => e.name === testAdi);
+  if (mevcutIndex >= 0) {
+    if (dogruSayisi > profil.exercises[mevcutIndex].score) {
+      profil.exercises[mevcutIndex] = yeniKayit;
+    }
+  } else {
+    profil.exercises.push(yeniKayit);
+  }
+
+  profil.totalSolved = profil.exercises.length;
+  profil.totalCorrect = profil.exercises.reduce((sum, e) => sum + e.score, 0);
+  profil.totalQuestions = profil.exercises.reduce((sum, e) => sum + e.totalQuestions, 0);
+  profil.lastLogin = new Date().toISOString();
+
+  localStorage.setItem(anahtar, JSON.stringify(profil));
+  return true;
+}
 </script>
 
 </body>
