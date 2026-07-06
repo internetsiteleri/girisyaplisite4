@@ -713,5 +713,26 @@ footer span { color: #F5C842; }
     document.getElementById('score-banner').style.display = 'none';
   }
 </script>
+</script>
+
+<script src="exercise_tracker.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const origSubmit = window.submitTest;
+  if (origSubmit) {
+    window.submitTest = function() {
+      origSubmit.apply(this, arguments);
+      if (typeof correct !== 'undefined' && typeof totalQ !== 'undefined') {
+        ExerciseTracker.complete(
+          document.title.replace(' – Hamza Hoca','').replace(' - Hamza Hoca',''),
+          correct,
+          totalQ
+        );
+      }
+    };
+  }
+});
+</script>
+
 </body>
 </html>
